@@ -1,0 +1,19 @@
+@import '../spliter';
+
+.codeview{
+    .bottom_toolbar{
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        .timer{
+            display: inline-block;
+            color: white;
+            font-size: 20px;
+            font-weight: 900;
+            padding: 5px;
+        }
+        .send{
+            margin-bottom: 5px;
+        }
+    }
+}
