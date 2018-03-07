@@ -1,5 +1,4 @@
 import React from "react";
-
 export default class AssignmentsView extends React.Component {
 
   render() {

@@ -11,7 +11,7 @@ import 'bootstrap';
 import '../styles/index.scss';
 
 //import your own components
-import {Layout} from './Layout.jsx';
+import Layout from './Layout.jsx';
 
 //render your react application
 ReactDOM.render(

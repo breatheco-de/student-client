@@ -1,19 +1,19 @@
-import {FluxStore} from '../libraries/react-flux-dash/index';
+import Flux from 'react-flux-dash';
 
-class UserStore extends FluxStore{
+class UserStore extends Flux.Store{
     constructor(){
         super();
         this.state = {
-            autenticated: false
+            autenticated: false 
         }
     }
     
-    handleActions(actionType){
-        switch (actionType) {
-            case 'LOGGED_IN':
-                this.setStoreState({ autenticated: true });
-            break;
-        }
+    _setAutentication(data){
+        this.setStoreState({ autenticated: data }).emit();
+    }
+    
+    getAutentication(){
+        return this.state.autenticated;
     }
 }
 

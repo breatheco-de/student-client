@@ -1,14 +1,17 @@
 @import '~bootstrap/scss/bootstrap.scss';
+@import 'bootstrap_overrides';
 @import 'colors';
 @import 'utils';
+@import 'fonts';
 @import 'views/login';
 @import 'views/code';
+@import 'views/main_menu';
 
 body {
+  background: $really-dark-grey;
   font-family: sans-serif;
   font-weight: 400;
   font-size: inherit;
-  background: #4d4d4d;
   perspective: 600px;
   .msg {
     position: absolute;
@@ -32,8 +35,8 @@ body {
 #menu {
   z-index: 100;
   position: fixed;
-  width: 40px;
-  height: 40px;
+  width: 55px;
+  height: 55px;
   top: 50px;
   right: 50px;
   background: none;
@@ -42,28 +45,10 @@ body {
   outline: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  transform: rotate(-90deg);
+  img{ width: 100%; }
   &:hover {
     background: #3c57dd;
     transition: all 0.2s ease-in-out;
-  }
-  #line {
-    position: absolute;
-    width: 22px;
-    height: 2px;
-    left: 9px;
-    top: 19px;
-    background: $darkBlue;
-  }
-  #arrow {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    top: 16px;
-    right: 9px;
-    border-top: 2px solid $darkBlue;
-    border-right: 2px solid $darkBlue;
-    transform: rotate(45deg);
   }
   &.on {
     transition: all 0.2s ease-in-out;
@@ -76,10 +61,13 @@ body {
 }
 
 section {
+  div:first-child.with-padding{
+    padding: 40px;
+  }
   position: relative;
   width: 100vw;
   height: 100vh;
-  padding: 0px;
+  padding: 1px 0px 0px 0px;
   background: #FFFFFF;
   transition: all 0.3s ease-in-out;
   .msg {

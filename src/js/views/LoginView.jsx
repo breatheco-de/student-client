@@ -1,9 +1,9 @@
 import React from "react";
+import SessionActions from '../actions/SessionActions';
 
 export default class Login extends React.Component {
 
   render() {
-
     return (
       <div className="container">
         <div className="form-signin">
@@ -17,7 +17,7 @@ export default class Login extends React.Component {
               <input type="checkbox" value="remember-me" /> Remember me
             </label>
           </div>
-          <button onClick={() => this.props.history.push('/code')} className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+          <button onClick={() => SessionActions.loginUser(this.props.history)} className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </div>
       </div>
     );
