@@ -1,0 +1,33 @@
+.checkbox{
+    padding: 5px;
+    cursor: pointer;
+    &:hover{
+        background: $light-grey;
+    }
+    label {
+        cursor: pointer;
+        &:before{
+            cursor: pointer;
+            display: inline-block;
+            margin: 0 10px 0 0;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #5b5b5b;
+            vertical-align: middle;
+            border-radius: 20%;
+            color: #28a745;
+            font-size: 22px;
+            text-align: center;
+            font-weight: 700;
+            line-height: 0.9em;
+            transition: transform 0.2s 
+        }  
+    }
+    input[type=checkbox]:checked + label:before{
+      background: white;
+      content: "\2713";
+      color: $green;
+    }
+    
+    input[type=checkbox] { visibility: hidden; width: 0px; }
+}

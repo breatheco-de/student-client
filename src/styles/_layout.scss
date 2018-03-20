@@ -1,0 +1,11 @@
+.layout{
+    height: 100vh;
+    .app-view{
+        overflow: auto;
+        height: "100%";
+        padding: "10px";
+    }
+}
+.white-resizer .Resizer{
+    background: white;
+}
