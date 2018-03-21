@@ -13,23 +13,20 @@ module.exports = {
   module: {
     rules: [
         { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader" },
-        {
-                test: /\.md$/,
-                use: [
-                    {
-                        loader: "html-loader"
-                    },
-                    {
-                        loader: "markdown-loader",
-                        options: {
-                            /* your options here */
-                        }
-                    }
-                ]
+        { test: /\.md$/, use: [
+              {
+                  loader: "html-loader"
+              },
+              {
+                  loader: "markdown-loader",
+                  options: {
+                      /* your options here */
+                  }
+              }
+          ]
         },
         {
-          test: /\.scss$/,
-          use: [{
+          test: /\.scss$/, use: [{
               loader: "style-loader" // creates style nodes from JS strings
           }, {
               loader: "css-loader" // translates CSS into CommonJS

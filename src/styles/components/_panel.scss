@@ -6,9 +6,8 @@
     height: 100vh;
     position: relative;
     .panel-toolbar{
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
+        display: inline-block;
+        margin: auto;
         .bcbutton{ font-size: 20px; }
     }
     &.deph-1 {

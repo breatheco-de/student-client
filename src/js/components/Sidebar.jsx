@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import MainMenu from '../components/MainMenu';
 import TimeLine from '../components/TimeLine';
@@ -17,7 +18,40 @@ class Sidebar extends React.Component{
         ]
         this.state = {
             levels: [this.data[0]],
-            currentOption: this.data[0]
+            currentOption: this.data[0],
+            collapsed: false
+        }
+    }
+    
+    toggle(newCollapsedState){
+        if(this.state.collapsed && !newCollapsedState){
+            this.props.onToggle({ collapsed: false });
+            this.setState({ collapsed: false });
+        } 
+        else if(!this.state.collapsed && newCollapsedState){
+            this.props.onToggle({ collapsed: true });
+            this.setState({    
+                collapsed: true,
+                levels: [this.data[0]],
+                currentOption: this.data[0]
+            });
+        } 
+    }
+    
+    componentWillMount(){
+        this.checkForCollapse(this.props.history.location.pathname);
+        this.props.history.listen((e)=> this.checkForCollapse(e.pathname));
+    }
+    
+    checkForCollapse(pathname){
+        console.log("History change: ",pathname);
+        if(pathname.indexOf('/lesson/') != -1){
+            this.toggle(true);
+            return true;
+        } 
+        else{
+            this.toggle(false);
+            return false;
         }
     }
     
@@ -49,10 +83,19 @@ class Sidebar extends React.Component{
         const CurrentComponent = this.state.currentOption.component;
         return(
             <div className="navbar">
-                <h2><BreadCrumb levels={this.state.levels} onClick={this.onMenuSelect.bind(this)} /></h2>
-                <CurrentComponent onClick={this.onMenuSelect.bind(this)} data={this.state.currentOption.data} />
+                <h2><BreadCrumb levels={this.state.levels} onClick={this.onMenuSelect.bind(this)}  mobile={this.state.collapsed} /></h2>
+                <CurrentComponent mobile={this.state.collapsed} onClick={this.onMenuSelect.bind(this)} data={this.state.currentOption.data} />
             </div>
         )
     }
 }
+Sidebar.propTypes = {
+  // You can declare that a prop is a specific JS primitive. By default, these
+  // are all optional.
+  onSelect: PropTypes.func.isRequired,
+  onToggle: PropTypes.func
+}
+Sidebar.defaultProps = {
+  onToggle: null
+};
 export default withRouter(Sidebar);

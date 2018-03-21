@@ -7,7 +7,7 @@ class Loading extends React.Component{
         if(!this.props.show) return null;
         return(
             <div className="loading">
-                <i class="fas fa-spinner"></i>
+                <i className="fas fa-spinner"></i>
             </div>
         )
     }

@@ -1,21 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import MenuItem from '../components/MenuItem';
 
-class _MainMenu extends React.Component{
+class MainMenu extends React.Component{
     
     render(){
         return(
             <div className="main-menu">
                 <ul>
-                    <MenuItem icon="fas fa-graduation-cap" label="My Journey"
-                        onClick={() => this.props.onClick('syllabus')} />
-                    <MenuItem icon="fas fa-check" label="Todo's"
-                        onClick={() => this.props.onClick('todo')} />
+                    <MenuItem icon="fas fa-graduation-cap" label="My Journey" slug="journey" mobile={this.props.mobile}
+                            onClick={() => this.props.onClick('syllabus')} to="/home" />
+                    <MenuItem icon="fas fa-check" label="Todo's" slug="home" mobile={this.props.mobile}
+                        onClick={() => this.props.onClick('todo')} to="/home" />
                 </ul>
             </div>
         )
     }
 }
-var MainMenu = withRouter(_MainMenu);
-export default MainMenu;
+MainMenu.propTypes = {
+  // You can declare that a prop is a specific JS primitive. By default, these
+  // are all optional.
+  onClick: PropTypes.func,
+  mobile: PropTypes.bool
+}
+MainMenu.defaultProps = {
+  mobile: false
+};
+export default withRouter(MainMenu);

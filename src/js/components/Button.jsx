@@ -18,7 +18,7 @@ class Button extends React.Component{
     render(){
         
         return(
-            <button className={"bcbutton "+this.buttonType()}>
+            <button className={"bcbutton "+this.buttonType()} onClick={this.props.onClick.bind(this)}>
                 <i className={this.props.icon+" btnicon"}></i> {this.props.label}
             </button>
         )

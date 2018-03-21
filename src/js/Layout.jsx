@@ -30,10 +30,11 @@ class Layout extends Flux.View{
     constructor() {
         super();
         this.state = {
-            size: undefined,
+            size: 200,
             dragging: false,
             duration: 0
         };
+        this.fixedWidth = false;
         this.handleDragStart = this.handleDragStart.bind(this);
         this.handleDragEnd = this.handleDragEnd.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
@@ -42,29 +43,44 @@ class Layout extends Flux.View{
         this.bindStore(BCStore, ()=> console.log('s'));
     }
     
+    onSidebarToggle(state){
+        if(state.collapsed){
+            this.fixedWidth = 50;
+            this.setState({ size: 50 });
+        }
+        else{
+            this.fixedWidth = null;
+            this.setState({ size: 200 });
+        }
+    }
+    
     handleKeyShorcut(){
         console.log('on the child!');
     }
 
     handleDragStart() {
-        this.setState({
-            dragging: true,
-        });
+        if(!this.fixedWidth) this.setState({ dragging: true });
+        else this.setState({ size: this.fixedWidth });
     }
 
     handleDragEnd() {
-        this.setState({
-            dragging: false,
-        });
-        setTimeout(() => {
-            this.setState({ size: undefined });
-        }, 0);
+        if(!this.fixedWidth){
+            this.setState({ dragging: false });
+            setTimeout(() => {
+                this.setState({ size: undefined });
+            }, 0);
+        }
+        else this.setState({ size: this.fixedWidth });
     }
 
     handleDrag(width) {
-        if (width > 400) this.setState({ size: 400 });
-        else if (width < 100) this.setState({ size: 100 });
-        else this.setState({ size: undefined });
+        if(!this.fixedWidth)
+        {
+            if (width > 400) this.setState({ size: 400 });
+            else if (width < 100) this.setState({ size: 100 });
+            else this.setState({ size: undefined });
+        }
+        else this.setState({ size: this.fixedWidth });
     }
     
     handleStoreChanges(){
@@ -89,17 +105,18 @@ class Layout extends Flux.View{
                 <BrowserRouter>
                     <SplitPane split="vertical"
                         className="white-resizer"
-                        minSize={240}
+                        minSize={50}
                         size={this.state.dragging ? undefined : this.state.size}
                         onChange={this.handleDrag}
                         onDragStarted={this.handleDragStart}
                         onDragFinished={this.handleDragEnd}>
                         <div style={{ height: "100%", padding: '10px 0px 10px 10px' }}>
-                            <Sidebar onSelect={this.onNavBarSelect.bind(this)} />
+                            <Sidebar onSelect={this.onNavBarSelect.bind(this)} onToggle={this.onSidebarToggle.bind(this)} />
                         </div>
                         <div className="app-view" style={{marginLeft: "-5px"}}>
                             <Switch onChange={this.historyChange}>
-                                <Route exact path='/' component={LoginView} />
+                                <Route exact path='/home' render={()=>(<p className="text-center mt-5">Hello Human</p>)} />
+                                <Route exact path='/' render={()=>(<p className="text-center mt-5">Hello Human</p>)} />
                                 <Route exact path='/day/:number' component={DayView} />
                                 <Route exact path='/lesson/:slug' component={LessonView} />
                                 <Route exact path='/login' component={LoginView} />

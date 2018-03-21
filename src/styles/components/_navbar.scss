@@ -17,6 +17,23 @@
                 padding: 3px;
                 margin-right: 5px;
             }
+            &.mobile{
+                text-align: center;
+                span{ display:none;}
+                &:hover{
+                    span{ 
+                        display: inline-block;
+                        position: fixed;
+                        z-index: 999999;
+                        color:$dark-grey;
+                        padding: 2px 5px 0px 5px;
+                        background: white;
+                        border: 1px solid $light-grey;
+                        font-size: 14px;
+                        margin: 0;
+                    }
+                }
+            }
         }
     }
     .breadcrumb{

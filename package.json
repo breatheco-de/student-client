@@ -16,15 +16,16 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
+    "dotenv-webpack": "^1.5.5",
     "file-loader": "^1.1.5",
+    "html-loader": "^0.5.5",
+    "markdown-loader": "^2.0.2",
     "node-sass": "^4.5.3",
+    "react-svg-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.9",
-    "dotenv-webpack": "^1.5.5",
-    "html-loader": "^0.5.5",
-    "markdown-loader": "^2.0.2",
     "webpack-dev-server": "^3.1.0"
   },
   "babel": {
@@ -48,13 +49,14 @@
     "react": "^16.0.0",
     "react-ace": "^5.9.0",
     "react-dom": "^16.0.0",
-    "react-flux-dash": "^1.1.5",
+    "react-flux-dash": "^1.1.6",
     "react-marked": "^0.3.1",
     "react-mousetrap": "^0.2.0",
     "react-polyfills": "0.0.1",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-split-pane": "^0.1.77",
+    "reactstrap": "^5.0.0-beta.3",
     "wordpress-rest-api": "^0.8.0"
   }
 }
