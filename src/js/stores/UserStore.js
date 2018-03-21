@@ -4,7 +4,12 @@ class UserStore extends Flux.Store{
     constructor(){
         super();
         this.state = {
-            autenticated: false 
+            autenticated: false,
+            todos: [
+                { type: 'lesson', label: 'How does the internet works', done: false },
+                { type: 'lesson', label: 'How does the internet works', done: false },
+                { type: 'lesson', label: 'How does the internet works', done: false },
+            ]
         }
     }
     
@@ -14,6 +19,10 @@ class UserStore extends Flux.Store{
     
     getAutentication(){
         return this.state.autenticated;
+    }
+    
+    getTodos(){
+        return this.state.todos;
     }
 }
 

@@ -7,29 +7,6 @@
     label {
         cursor: pointer;
         margin-bottom: 0px;
-        &:before{
-            cursor: pointer;
-            display: inline-block;
-            margin: 0 10px 0 0;
-            width: 20px;
-            height: 20px;
-            border: 1px solid #5b5b5b;
-            vertical-align: middle;
-            border-radius: 20%;
-            color: #28a745;
-            font-size: 30px;
-            padding: 0px 3px 5px 0px;
-            text-align: center;
-            font-weight: 100;
-            line-height: 0.9em;
-            transition: transform 0.2s 
-        }  
     }
-    input[type=checkbox]:checked + label:before{
-      background: white;
-      content: "\2713";
-      color: $green;
-    }
-    
-    input[type=checkbox] { visibility: hidden; width: 0px; }
+    svg{margin-right: 10px;}
 }

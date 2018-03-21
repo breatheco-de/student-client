@@ -68,36 +68,24 @@ export default class DayView extends Flux.View {
   }
   
   render() {
-    const lessonsElms = this.state.lessons.map((l,i) => {
-      return <ActionableItem to={"/lesson/"+l.slug} key={i} done={l.done} label={l.label} dropdown={l.menu} onRead={()=>this.markAsDone(l)} />;
-    });
-    const quizzes = this.state.quizzes.map((l,i) => {
-      return <ActionableItem key={i} done={l.done} label={l.label} dropdown={l.menu} onRead={()=>this.markAsDone(l)} />;
-    });
-    const replits = this.state.replits.map((l,i) => {
-      return <ActionableItem key={i} done={l.done} label={l.label} dropdown={l.menu} onRead={()=>this.markAsDone(l)} />;
-    });
+    const actionable = this.state.lessons.map((l,i) => {
+      return <ActionableItem to={"/lesson/"+l.slug} type="lesson" key={i} done={l.done} label={l.label} dropdown={l.menu} onRead={()=>this.markAsDone(l)} />;
+    })
+    .concat(this.state.quizzes.map((l,i) => {
+      return <ActionableItem key={i} done={l.done} type="quiz" label={l.label} dropdown={l.menu} onRead={()=>this.markAsDone(l)} />;
+    }))
+    .concat(this.state.replits.map((l,i) => {
+      return <ActionableItem key={i} done={l.done} type="repl" label={l.label} dropdown={l.menu} onRead={()=>this.markAsDone(l)} />;
+    }));
     
     return (
       <Panel className="dayview">
         <h1>:Day {this.state.day.number} <ProgressKPI percentage={30} /></h1> 
         <p className="description">{this.state.day.description}</p>
         <DayContent onStart={this.enableDay.bind(this)} blocked={this.state.blocked}>
-          <div className="row">
-            <div className="col-4">
-              <h3>Very short reads</h3>
-              <List>{lessonsElms}</List>
-            </div>
-            <div className="col-4">
-              <h3>Exercises</h3>
-              <List>{replits}</List>
-            </div>
-            <div className="col-4">
-              <h3>Challenges</h3>
-              <List>{quizzes}</List>
-            </div>
-          </div>
-          </DayContent>
+            <h3>To finish this day you have to complete the following actions:</h3>
+            <List>{actionable}</List>
+        </DayContent>
       </Panel>
     );
   }

@@ -2,3 +2,18 @@
     margin: 1px;
     border: none;
 }
+.form-control{
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 30px;
+    line-height: 1.5;
+    color: #6c757d;
+    background-color: #ffffff45;
+    background-clip: padding-box;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+a{
+    text-decoration: underline;
+}

@@ -1,18 +1,10 @@
-$lineColor: #f8f9fa;
 .layout{
     height: 100vh;
     .app-view{
         overflow: auto;
         height: 100%;
     	/* gradients - second red border, first red border, top white space, blue lines */
-        background-image: -webkit-linear-gradient(left, $lineColor, $lineColor), -webkit-linear-gradient(top, white 0px, white 69px, rgba(255,255,255,0) 70px), -webkit-repeating-linear-gradient(white 0px, white 18px, $lineColor 19px, white 20px);
-        background-image: -moz-linear-gradient(left, $lineColor, $lineColor), -moz-linear-gradient(top, white 0px, white 69px, rgba(255,255,255,0) 70px), -moz-repeating-linear-gradient(white 0px, white 18px, $lineColor 19px, white 20px);
-        background-image: -ms-linear-gradient(left, $lineColor, $lineColor), -ms-linear-gradient(top, white 0px, white 69px, rgba(255,255,255,0) 70px), -ms-repeating-linear-gradient(white 0px, white 18px, $lineColor 19px, white 20px);
-        background-image: -o-linear-gradient(left, $lineColor, $lineColor), -o-linear-gradient(top, white 0px, white 69px, rgba(255,255,255,0) 70px), -o-repeating-linear-gradient(white 0px, white 18px, $lineColor 19px, white 20px);
-        background-image: linear-gradient(left, $lineColor, $lineColor), linear-gradient(top, white 0px, white 69px, rgba(255,255,255,0) 70px), repeating-linear-gradient(white 0px, white 18px, $lineColor 19px, white 20px);
-        background-size: 1px, 1px, auto, auto 20px;
-        background-repeat: repeat-y, repeat-y, no-repeat, repeat;
-        background-position: 90% 0px, 10% 0px, 0px 0px, 0px 0px;
+        @include notebook-background;
     }
 }
 .white-resizer .Resizer{

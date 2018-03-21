@@ -14,15 +14,16 @@ import WelcomeView from './views/WelcomeView.jsx';
 import TodoView from './views/TodoView.jsx';
 import AssetsView from './views/AssetsView.jsx';
 import DayView from './views/DayView.jsx';
+import SearchView from './views/SearchView.jsx';
 
 import Flux from 'react-flux-dash';
 import UserStore from './stores/UserStore.js';
 import BCStore from './stores/BCStore.js';
-import WPActions from './actions/WPActions.js';
-import BCActions from './actions/BCActions.js';
+//import WPActions from './actions/WPActions.js';
+//import BCActions from './actions/BCActions.js';
 
-import keymap from '../keymap';
-import withShortcuts from './components/Shortcuts';
+//import keymap from '../keymap';
+//import withShortcuts from './components/Shortcuts';
 
 //create your first component
 class Layout extends Flux.View{
@@ -120,6 +121,7 @@ class Layout extends Flux.View{
                                 <Route exact path='/day/:number' component={DayView} />
                                 <Route exact path='/lesson/:slug' component={LessonView} />
                                 <Route exact path='/login' component={LoginView} />
+                                <Route exact path='/search' component={SearchView} />
                                 <Route exact path='/syllabus/:slug' loggedIn={this.state.autenticated} component={SyllabusView} />
                                 <PrivateRoute exact path='/welcome' loggedIn={this.state.autenticated} component={WelcomeView} />
                                 <PrivateRoute exact path='/todo' loggedIn={this.state.autenticated} component={TodoView} />

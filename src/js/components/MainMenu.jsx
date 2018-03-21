@@ -13,6 +13,8 @@ class MainMenu extends React.Component{
                             onClick={() => this.props.onClick('syllabus')} to="/home" />
                     <MenuItem icon="fas fa-check" label="Todo's" slug="home" mobile={this.props.mobile}
                         onClick={() => this.props.onClick('todo')} to="/home" />
+                    <MenuItem icon="fas fa-search" label="Search" slug="search" mobile={this.props.mobile}
+                        onClick={() => this.props.onClick('search')} to="/search" />
                 </ul>
             </div>
         )

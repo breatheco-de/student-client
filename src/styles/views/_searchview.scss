@@ -1,0 +1,44 @@
+.searchview{
+    .input-group svg{
+        color: $light-grey;
+        padding: 10px;
+        font-size: 50px;
+        font-weight: 100;
+    }
+    input{
+        border: none;
+        &:hover, &:focus{
+            outline: none;
+            box-shadow: none;
+        }
+    }
+    .bclist > li{
+        padding: 0 10px;
+        position: relative;
+        &:hover{
+            background: white;
+            @include deph1;
+            .toolbar{
+                li{list-style: none; padding: 5px; }
+                display: inline-block;
+                position: absolute;
+                color:$dark-grey;
+                font-size: 20px;
+                &.up{ top: 0; right: 0; }
+                &.down{ bottom: 0; right: 0; }
+            }
+        }
+        p.technolgies{
+            font-size: 14px;
+            margin: -10px 0 0 0;
+            color: $light-grey;
+        }
+        .result-description{
+            font-size: 70%;
+            margin-bottom: 5px;
+        }
+        .toolbar{
+            display: none;
+        }
+    }
+}

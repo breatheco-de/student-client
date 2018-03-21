@@ -14,7 +14,8 @@ class Sidebar extends React.Component{
         this.data = [
             {slug:"home", label:"BreatheCode", component: MainMenu, size: 200 },
             {slug:"syllabus", label:"Journey", component: TimeLine, size: 370, data: BCStore.getSyllabusDays() },
-            {slug:"todo", label:"Todo's", component: TodoView, size: 370 }
+            {slug:"todo", label:"Todo's", component: TodoView, size: 370 },
+            {slug:"search", label:"Search", component: MainMenu, size: 250 }
         ]
         this.state = {
             levels: [this.data[0]],

@@ -26,7 +26,7 @@ class DayContent extends React.Component{
             </div>
         );
         
-        return(<div>{this.props.children}</div>)
+        return(<div className="text-center">{this.props.children}</div>)
     }
 }
 DayContent.propTypes = {

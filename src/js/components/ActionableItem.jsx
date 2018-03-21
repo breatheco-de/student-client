@@ -3,6 +3,8 @@ import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DropLink from './DropLink.jsx';
 
+const options = ['lesson', 'repl', 'quiz'];
+
 class ActionableItem extends React.Component{
     
     onClick(force=false){
@@ -19,11 +21,20 @@ class ActionableItem extends React.Component{
         if(option.slug == "mark-done") this.props.onRead(option);
     }
     
+    prependMessage(){
+        switch(this.props.type){
+            case "lesson": return "Read the lesson "; break;
+            case "repl": return "Take the quiz "; break;
+            case "quiz": return "Do the Repl "; break;
+        }
+    }
+    
     render(){
         
         return(
             <li className="actionable-item" onClick={this.onClick.bind(this)}>
                 {(this.props.icon) ? (<i className={this.props.icon+" menuicon"}></i>):''}
+                {this.prependMessage()}
                 <DropLink dropdown={this.props.dropdown} 
                     onSelect={this.onDropdownSelect.bind(this)}>
                     {this.props.label}
@@ -39,7 +50,8 @@ ActionableItem.propTypes = {
   label: PropTypes.string.isRequired,
   dropdown: PropTypes.array,
   isSelected: PropTypes.bool,
-  onRead: PropTypes.func.isRequired
+  onRead: PropTypes.func.isRequired,
+  type: PropTypes.oneOf(options),
 }
 ActionableItem.defaultProps = {
   icon: false,
