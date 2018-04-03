@@ -1,0 +1,24 @@
+.todo-menu{
+    position: relative;
+    height: calc(100vh - 70px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    .show-done{ color: $dark-grey; font-size: 14px;
+        &:hover{ color: $darkBlue; }
+    }
+    .show-status{ color: $dark-grey; font-size: 14px; }
+    ul.todolist{
+        padding: 0;
+        li{
+            list-style: none;
+            .task{
+                .task-title{ margin: 0; }
+                .task-description{ margin: -5px 0 0 30px; font-size: 14px; color:$dark-grey; }
+                &.task-lesson .task-description{ color: $darkBlue; }
+                &.task-replit .task-description{ color: $darkYellow; }
+                &.task-quiz .task-description{ color: $darkGreen; }
+            }
+        }
+    }
+}

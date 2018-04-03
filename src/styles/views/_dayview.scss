@@ -6,9 +6,19 @@
         }
     }
     .description{
-        max-width: 400px;
-        margin: 30px auto;
+        margin: 30px 10vw;
         text-align: center;
     }
-    
+    .actionable-item{
+        .dropdown{
+            display: inline;
+            .btn{
+                padding: 0;
+                font-size: inherit;
+                color: $darkBlue;
+                text-decoration: underline;
+                &:after{display: none;}
+            }
+        }
+    }
 }

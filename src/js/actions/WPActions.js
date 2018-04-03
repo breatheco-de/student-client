@@ -1,4 +1,4 @@
-import Flux from 'react-flux-dash';
+import Flux from '@4geeksacademy/react-flux-dash';
 import WP from 'wordpress-rest-api';
 
 class WPActions extends Flux.Action{

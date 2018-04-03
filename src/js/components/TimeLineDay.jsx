@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class TimeLineDay extends React.Component{
     
     toggleSelected(){
-      this.props.onClick(this.props.number);
+      this.props.onClick(this.props.dayNumber);
     }
     
     render(){
@@ -14,7 +14,7 @@ class TimeLineDay extends React.Component{
         		<div className="direction-r">
         			<div className="flag-wrapper">
         			    <span className="flag-point"></span>
-        				<span className="flag">Day {this.props.number}</span>
+        				<span className="flag">Day {this.props.dayNumber}</span>
         				<span className="time-wrapper">
         				    <span className="time">{this.props.technologies.join(', ')}</span>
         				</span>
@@ -28,7 +28,7 @@ class TimeLineDay extends React.Component{
 TimeLineDay.propTypes = {
   // You can declare that a prop is a specific JS primitive. By default, these
   // are all optional.
-  number: PropTypes.number.isRequired,
+  dayNumber: PropTypes.number.isRequired,
   technologies: PropTypes.array,
   description: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,

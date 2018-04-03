@@ -1,5 +1,5 @@
 import React from "react";
-import Flux from 'react-flux-dash';
+import Flux from '@4geeksacademy/react-flux-dash';
 
 export default class ProjectsView extends Flux.View {
   

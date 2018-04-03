@@ -1,4 +1,4 @@
-import Flux from 'react-flux-dash';
+import Flux from '@4geeksacademy/react-flux-dash';
 
 class _WPStore extends Flux.Store{
     constructor(){

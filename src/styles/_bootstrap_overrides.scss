@@ -17,3 +17,19 @@
 a{
     text-decoration: underline;
 }
+.dropdown-menu{
+    border-radius: 0;
+}
+
+form{
+    .alert{
+        margin: 0;
+        ul{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }   
+    }
+}

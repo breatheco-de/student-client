@@ -1,8 +1,7 @@
-import Flux from 'react-flux-dash';
 import React from 'react';
-import TimeLineDay from './TimeLineDay.jsx';
+import TimeLineDay from '../TimeLineDay.jsx';
 
-export default class TimeLine extends Flux.View{
+export default class TimeLineMenu extends React.Component{
     
     constructor(){
         super();
@@ -20,14 +19,15 @@ export default class TimeLine extends Flux.View{
         };
         const aditionalLineClasses = () => { return this.state.side; }
         const days = this.props.data.map((day, i)=>{
+            if(typeof day.dayNumber === 'undefined') throw new Error('Days must have a dayNumber property');
            return <TimeLineDay key={i} 
-                    number={day.number}
+                    dayNumber={day.dayNumber}
                     description={day.description} 
                     technologies={day.technologies}
-                    isSelected={(this.state.selected == day.number)}
+                    isSelected={(this.state.selected == day.dayNumber)}
                     onClick={()=>{
                         day.course = this.state.course;
-                        this.setState({ selected: day.number });
+                        this.setState({ selected: day.dayNumber });
                         this.props.onClick(day);
             }} />
         });

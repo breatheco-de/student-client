@@ -1,9 +1,19 @@
+/* global localstorage */
 export default (function(){
     
     let publicScope = {};
     let settings = { 
         host: 'https://assets.breatheco.de/apis/',
         token: ''
+    }
+    
+    function setPersistentToken(data){
+        localStorage.setItem('bc_token', JSON.stringify(Object.assign(this.state, data)));
+        return this.setStoreState(data);
+    }
+    function getPersistedToken(data){
+        let persistedState = JSON.parse(localStorage.getItem('bc_token'));
+        return persistedState;
     }
     
     let request = function(method = 'get', url = '', data){

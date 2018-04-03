@@ -1,11 +1,13 @@
-import Flux from 'react-flux-dash';
-
-class BreatheCodeStore extends Flux.Store{
+import Flux from '@4geeksacademy/react-flux-dash';
+import {DayModel} from '../models';
+import StudentStore from './StudentStore';
+class BCStore extends Flux.Store{
     constructor(){
         super();
         this.state = {
-            syllabus: [],
-            days: [
+            syllabus: null,
+            days: [],
+            olddays: [
                 { 
                     number: 1, 
                     description: "Understanding how the internet works and building your first website", 
@@ -77,18 +79,65 @@ class BreatheCodeStore extends Flux.Store{
     
     _setSyllabus(syllabus){ 
         
-        let days = [];
-        syllabus.weeks.forEach(function(week){ days = days.concat(days,week.days); });
-        this.setStoreState({ syllabus, days }).emit('syllabus');
+        let allDays = [];
+        let dayNumber = 0;
+        syllabus.weeks.forEach(function(week){ 
+            week.days.forEach(function(day){ 
+                dayNumber++;
+                day.dayNumber = dayNumber;
+                day.lessons = day.lessons || [];
+                day.replits = day.replits || [];
+                day.quizzes = day.quizzes || [];
+                allDays.push(DayModel(day)); 
+            });
+        });
+        this.setStoreState({ syllabus, days: allDays }).emit('syllabus');
     }
     getSyllabus(){ return this.state.syllabus; }
     
     getSingleDay(number){
-        for(let i=0;i<this.state.days.length;i++) if(this.state.days[i].number == number) return this.state.days[i];
+        for(let i=0;i<this.state.days.length;i++){
+            if(this.state.days[i].dayNumber === parseInt(number)){
+                const day = StudentStore.dayWithTodosReducer(this.state.days[i]);
+                return day;
+            }
+        }
+        
+        ;
+                
         return null;
     }
     
     getSyllabusDays(){ return this.state.days; }
     
+    getDayTodos(day){
+        const todos = day.lessons.map((l) => {
+            return {
+                title: l.title,
+                status: 'pending',
+                type: 'lesson',
+                associated_slug: l.slug
+            };
+        })
+        .concat(day.quizzes.map((q,i) => {
+            return {
+                title: q.label,
+                status: 'pending',
+                type: 'quiz',
+                associated_slug: q.slug
+            };
+        }))
+        .concat(day.replits.map((r,i) => {
+            return {
+                title: r.title,
+                status: 'pending',
+                type: 'replit',
+                associated_slug: r.slug
+            };
+        }));
+        
+        return todos;
+    }
+    
 }
-export default new BreatheCodeStore();
+export default new BCStore();

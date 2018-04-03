@@ -1,4 +1,4 @@
-import Flux from 'react-flux-dash';
+import Flux from '@4geeksacademy/react-flux-dash';
 import React from 'react';
 
 export function mouseTrap(Base, keymap=null) {

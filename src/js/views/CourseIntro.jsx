@@ -1,11 +1,10 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
 import Panel from '../components/Panel.jsx';
-import WPStore from "../stores/WPStore";
 
-export default class WelcomeView extends Flux.View {
+export default class CourseIntro extends Flux.View {
   getMarkdownText() {
-    var rawMarkup = require('../../../messages/welcome.md');
+    var rawMarkup = require('../../../messages/full-stack.md');
     return { __html: rawMarkup };
   }
   

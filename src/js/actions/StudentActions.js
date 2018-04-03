@@ -1,7 +1,11 @@
-import Flux from 'react-flux-dash';
+import Flux from '@4geeksacademy/react-flux-dash';
 import WP from 'wordpress-rest-api';
+import BC from '../utils/BreatheCodeWrapper';
 
-class WPActions extends Flux.Action{
+import StudentStore from '../stores/StudentStore';
+import BCStore from '../stores/BCStore';
+
+class StudentActions extends Flux.Action{
     
     constructor(){
         super();
@@ -35,5 +39,51 @@ class WPActions extends Flux.Action{
         });;
     }
     
+    loginUser(username, password, history){
+     
+        return BC.credentials().autenticate(username, password)
+        .then((data) => {
+            data.history = history;
+            this.dispatch('StudentStore.login', data);
+        });
+    }
+    
+    logoutUser(history){
+        this.dispatch('StudentStore.logout');
+    }
+    
+    startDay(day){
+        const todos = BCStore.getDayTodos(day);
+        const student = StudentStore.getStudent();
+        return BC.todos().add(student.bc_id,todos)
+                .then((data) => {
+                    this.dispatch('StudentStore.appendTodos', data.data || data);
+                });
+    }
+    
+    updateTask(task){
+        const student = StudentStore.getStudent();
+        return BC.todos().update(task)
+                .then((data) => {
+                    this.dispatch('StudentStore.updateSingleTodo', data.data || data);
+                });
+    }
+    
+    fetch(){
+        return {
+            todos: (studentId) =>{
+                BC.todos().getByStudent(studentId)
+                .then((data) => {
+                    if(typeof data.code === 'undefined' || data.code==200)
+                        this.dispatch('StudentStore.setTodos', data.data || data);
+                    else console.error(data);
+                })
+                .catch((data) => {
+                   console.error(data); 
+                });
+            }
+        }
+    }
+    
 }
-export default new WPActions();
+export default new StudentActions();

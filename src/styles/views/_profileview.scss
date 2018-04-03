@@ -1,0 +1,62 @@
+.profile-view{
+    
+    .profile-img {
+        margin: auto;
+        width: 120px; height: 120px;
+        border-radius: 120px;
+        text-align: center;
+        cursor: pointer;
+        img {
+            border-radius: 120px;
+            -webkit-filter: grayscale(0.7);
+            -moz-filter: grayscale(0.7);
+            -ms-filter: grayscale(0.7);
+            filter: grayscale(0.7);
+            opacity: 0.9;
+        }
+        &:before {
+            content: '';
+            position: absolute;
+            left: auto; right: auto;
+            width: 130px; height: 130px;
+            transform: translate(-5px,-5px);
+            border-radius: 162px;
+            border: 1px solid #BCBCBC;
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          left: auto; right: auto;
+          width: 140px; height: 140px;
+          transform: translate(-130px,-10px);
+          border-radius: 172px;
+          border: 1px dashed #81BDA4;
+        }
+        &:hover{
+            img {
+                -webkit-filter: blur(2px);
+                -moz-filter: blur(2px);
+                -o-filter: blur(2px);
+                -ms-filter: blur(2px);
+                filter: blur(2px);
+                opacity: 0.8;
+            }
+            a {
+                background: rgba(217, 217, 217, 0.52);
+                visibility: visible;
+                transform: translate(-120px,0px);
+                color: #494E52;
+            }
+        }
+        a {
+            position: absolute;
+            left: auto; right: auto;
+            width: 120px; height: 120px;
+            border-radius: 120px;
+            line-height: 120px;
+            font-family: 'Oswald';
+            font-size: 20px;
+            visibility: hidden;
+        }
+    }
+}

@@ -33,28 +33,35 @@ class DropLink extends React.Component{
     
     render(){
         
-        const menuOptions = this.props.dropdown.map((opt,i) => (<li key={i} onClick={()=>this.props.onSelect(opt)}>{opt.label}</li>));
+        const menuOptions = this.props.dropdown.map((opt,i) => (<a key={i} className="dropdown-item" onClick={()=>this.props.onSelect(opt)}>{opt.label}</a>));
         return(
-            <a href="#" onClick={(e) => this.onClick(e)} className={"bclink"}>
+            <div className={"dropdown "+this.props.className+((this.state.opened) ? ' show':'')}>
+              <a className="btn dropdown-toggle" data-toggle="dropdown"
+                onClick={(e) => this.onClick(e)}
+              >
                 {this.props.children}
+              </a>
                 {(this.props.dropdown.length>0 && this.state.opened) ?
-                (<ul className="bclink-dropdown" 
+                (<div className={"dropdown-menu"+((this.state.opened) ? ' show':'')}
                     onMouseOut={this.onMouseOut.bind(this)} 
                     onMouseOver={()=>this.beingHovered = true}>
+                >
                     {menuOptions}
-                </ul>)
+                </div>)
                 :''}
-            </a>
-        )
+            </div>
+        );
     }
 }
 DropLink.propTypes = {
   // You can declare that a prop is a specific JS primitive. By default, these
   // are all optional.
   dropdown: PropTypes.array,
-  onSelect: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  onSelect: PropTypes.func.isRequired
 }
 DropLink.defaultProps = {
-  dropdown: []
+  dropdown: [],
+  className: ''
 };
 export default withRouter(DropLink);

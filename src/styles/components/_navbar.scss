@@ -36,22 +36,4 @@
             }
         }
     }
-    .breadcrumb{
-        padding: 0;
-        li{
-            list-style: none;
-            width: inherit;
-            display: inline;
-            padding:0;
-            &:hover{
-                color: $orange;
-            }
-            &:not(:first-child){
-                &:before{
-                    content: ":";
-                    color: $orange;
-                }
-            }
-        }
-    }
 }

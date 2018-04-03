@@ -1,19 +1,25 @@
-import Flux from 'react-flux-dash';
-import BCAssets from '../utils/BCAssets';
-import BCStore from '../stores/BCStore';
+import Flux from '@4geeksacademy/react-flux-dash';
+import BC from '../utils/BreatheCodeWrapper';
+
 class BCActions extends Flux.Action{
     
     constructor(){
         super();
     }
     
-    loadSyllabus(){
-        BCAssets.get('/syllabus/web-dev').then((data) => {
-            this.dispatch('BCStore.setSyllabus', data)
-        }).catch(function( err ) {
-            // handle error 
-            console.log("ERROR!!",err);
-        });;
+    fetch(){
+        return {
+            syllabus: (slug) =>{
+                BC.syllabus().get(slug)
+                .then((data) => {
+                    console.log(data);
+                    this.dispatch('BCStore.setSyllabus', data);
+                })
+                .catch((data) => {
+                   console.error(data); 
+                });
+            }
+        }
     }
     
 }

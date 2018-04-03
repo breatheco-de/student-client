@@ -17,9 +17,11 @@ BreadCrumb.propTypes = {
   // You can declare that a prop is a specific JS primitive. By default, these
   // are all optional.
   onClick: PropTypes.func,
-  mobile: PropTypes.bool
+  mobile: PropTypes.bool,
+  levels: PropTypes.array.isRequired
 }
 BreadCrumb.defaultProps = {
-  mobile: false
+  mobile: false,
+  levels: []
 };
 export default withRouter(BreadCrumb);
