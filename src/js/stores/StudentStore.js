@@ -87,56 +87,14 @@ class StudentStore extends Flux.Store{
         if(!this.state.todos) return false;
         
         let present = this.state.todos.find((item) => {
-            return (item.type === todo.type && item.associated_slug === todo.slug);
+            return (item.type === todo.type && item.associated_slug === todo.associated_slug);
         });
         if(typeof present === 'undefined') return false;
         else return present;
     }
-    dayWithTodosReducer(day){
-        if(day.lessons && day.lessons.length>0){
-            day.lessons = day.lessons.map((todo) => {
-               let studentTodo = this.getSingleTodo(todo);
-                if(studentTodo) todo.status = studentTodo.status;
-                todo.type = "lesson";
-                todo.label = todo.title;
-                return todo;
-            });
-        }
-        if(day.replits && day.replits.length>0){
-            day.replits = day.replits.map((todo) => {
-               let studentTodo = this.getSingleTodo(todo);
-                if(studentTodo) todo.status = studentTodo.status;
-                todo.type = "replit";
-                todo.label = todo.title;
-                return todo;
-            });
-            
-        }
-        if(day.quizzes && day.quizzes.length>0){
-            day.quizzes = day.quizzes.map((todo) => {
-               let studentTodo = this.getSingleTodo(todo);
-                if(studentTodo) todo.status = studentTodo.status;
-                todo.type = "quiz";
-                todo.label = todo.title;
-                return todo;
-            });
-            
-        }
-        return day;
-    }
     
     getStudent(){
         return this.state.user;
-    }
-    
-    hasOpenedDay(day){
-        if(day.lessons && day.lessons.length>0)
-            return this.getSingleTodo(day.lessons[0]);
-        else if(day.replits && day.replits.length>0)
-            return this.getSingleTodo(day.replits[0]);
-        else if(day.quizzes && day.quizzes.length>0)
-            return this.getSingleTodo(day.quizzes[0]);
-        else return true;
     }
     
 }

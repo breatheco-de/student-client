@@ -24,8 +24,8 @@ class ActionableItem extends React.Component{
     prependMessage(){
         switch(this.props.type){
             case "lesson": return "Read the lesson "; break;
-            case "replit": return "Take the quiz "; break;
-            case "quiz": return "Do the Repl "; break;
+            case "quiz": return "Take the quiz "; break;
+            case "replit": return "Do the Repl "; break;
             default: return ""; break;
         }
     }
