@@ -17,10 +17,9 @@ class CheckBox extends React.Component{
         }
     }
     
-    componentWillMount(){
-        this.setState({
-            checked: this.props.checked
-        })
+    componentWillReceiveProps(){
+        if(this.state.checked !== this.props.checked)
+            this.setState({ checked: this.props.checked });
     }
     
     onClick(){
@@ -36,8 +35,12 @@ class CheckBox extends React.Component{
         const Render = this.props.render;
         return(
             <div className="checkbox">
-                <span className={notchecked} onClick={()=>this.onClick()}><i className="far fa-check-square"></i></span>
-                <span className={checked} onClick={()=>this.onClick()}><i className="far fa-square"></i></span>
+                <span className={notchecked} onClick={()=>this.onClick()}>
+                    <i className="far fa-check-square"></i>
+                </span>
+                <span className={checked} onClick={()=>this.onClick()}>
+                    <i className="far fa-square"></i>
+                </span>
                 {
                     (Render) ? <Render /> :
                     (<label htmlFor="checkbox">{this.props.label}</label>)
@@ -51,12 +54,12 @@ CheckBox.propTypes = {
   // are all optional.
   render: PropTypes.func,
   onClick: PropTypes.func,
-  done: PropTypes.bool,
+  checked: PropTypes.bool,
   label: PropTypes.string,
 }
 CheckBox.defaultProps = {
     label: '<No label defined>',
-    done: false,
+    checked: false,
     render: null,
 };
 export default withRouter(CheckBox);

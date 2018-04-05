@@ -16,7 +16,19 @@ class BCActions extends Flux.Action{
                     this.dispatch('BCStore.setSyllabus', data);
                 })
                 .catch((data) => {
-                   console.error(data); 
+                    if(typeof data.pending === 'undefined') console.error(data); 
+                    else console.warn(data.msg)
+                });
+            },
+            projects: (syllabus_slug) =>{
+                BC.projects().all(syllabus_slug)
+                .then((data) => {
+                    console.log(data);
+                    this.dispatch('BCStore.setProjects', data);
+                })
+                .catch((data) => {
+                    if(typeof data.pending === 'undefined') console.error(data); 
+                    else console.warn(data.msg)
                 });
             }
         }

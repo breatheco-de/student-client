@@ -3,7 +3,7 @@ export default (function(){
     
     let publicScope = {};
     let settings = { 
-        host: 'https://assets.breatheco.de/apis/',
+        host: process.env.ASSETS_URL+'/apis/',
         token: ''
     }
     

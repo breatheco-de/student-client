@@ -1,6 +1,8 @@
 import StudentStore from '../stores/StudentStore';
+import BCStore from '../stores/BCStore';
 
-export function getDay(day){
+export default {
+    getDay(day){
 
     day.replits = (function(){
         if(typeof day.replits === 'undefined') return [];
@@ -53,9 +55,8 @@ export function getDay(day){
     day.actionables = day.replits.concat(day.lessons,day.assignments,day.quizzes);
     
     return day;
-}
-
-export function withTodos(day){
+},
+    withTodos(day){
 
     day.opened = false;
     day.totalDone = 0;
@@ -111,10 +112,31 @@ export function withTodos(day){
         });
     })();
     
-    day.actionables = day.replits.concat(day.lessons,day.assignments,day.quizzes);
+    day.actionables = day.lessons.concat(day.replits,day.assignments,day.quizzes);
     
     if(day.actionables.length===0) day.completition = 100;
     else day.completition = Math.round((day.totalDone/day.actionables.length)*100);
     
     return day;
-}
+},
+    withProjects(day){
+    
+        const projects = BCStore.getProjects();
+        if(!projects) return day;
+    
+        day.actionables.map((actionable)=>{
+            if(actionable.type !== 'assignment') return actionable;
+            else{
+                let project = BCStore.getSingleProject(actionable.associated_slug);
+                if(project){
+                    actionable.title = project.title;
+                    actionable.project = project;
+                } 
+                
+                return actionable;
+            }
+        });
+    
+        return day;
+    }
+};

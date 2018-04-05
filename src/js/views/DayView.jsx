@@ -96,13 +96,16 @@ class DayView extends Flux.View {
   show(actionable){
     switch(actionable.type){
       case "lesson":
-        this.props.history.push(this.props.match.url+'/l/'+actionable.slug);
+        this.props.history.push(this.props.match.url+'/l/'+actionable.associated_slug);
       break;
       case "replit":
-        this.props.history.push(this.props.match.url+'/r/'+actionable.slug);
+        this.props.history.push(this.props.match.url+'/r/'+actionable.associated_slug);
       break;
       case "quiz":
-        this.props.history.push(this.props.match.url+'/q/'+actionable.slug);
+        this.props.history.push(this.props.match.url+'/q/'+actionable.associated_slug);
+      break;
+      case "assignment":
+        this.props.history.push(this.props.match.url+'/a/'+actionable.associated_slug);
       break;
     }
   }
@@ -114,7 +117,7 @@ class DayView extends Flux.View {
     const actionable = this.state.actionables.map((l,i) => {
       return <ActionableItem key={i} type={l.type} 
                 done={(l.status === "done")} 
-                label={typeof(l.title !== 'undefined') ? l.title : l.associated_slug} 
+                label={(typeof l.title !== 'undefined') ? l.title : l.associated_slug} 
                 dropdown={l.menu} 
                 onRead={()=>this.markAsDone(l)} 
                 onClick={() => this.show(l)}

@@ -2,9 +2,12 @@
 class Wrapper{
     
     constructor(){
-        this.assetsPath = 'https://assets-alesanchezr.c9users.io/apis';
-        this.apiPath = 'https://talenttree-alesanchezr.c9users.io';
+        this.assetsPath = process.env.ASSETS_URL+'/apis';
+        this.apiPath = process.env.API_URL;
         this.token = null;
+        this.pending = {
+            get: {}, post: {}, put: {}, delete: {}
+        };
     }
     
     setToken(token){
@@ -17,7 +20,6 @@ class Wrapper{
     }
     
     req(method, path, args){
-        
         
         let opts = { 
             method, 
@@ -37,8 +39,14 @@ class Wrapper{
         } 
         
         return new Promise((resolve, reject) => {
+            
+            if(typeof this.pending[method][path] !== 'undefined' && this.pending[method][path])
+                reject({ pending: true, msg: `Request ${method}: ${path} was ignored because a previous one was already pending` });
+            else this.pending[method][path] = true;
+            
             fetch( path, opts)
             .then((resp) => {
+                this.pending[method][path] = false;
                 if(resp.status == 200) return resp.json();
                 else if(resp.status == 403) reject({ msg: 'Invalid username or password', code: 403 }); 
                 else if(resp.status == 401) reject({ msg: 'Unauthorized', code: 401 }); 
@@ -52,6 +60,7 @@ class Wrapper{
                 return json;
             })
             .catch((error) => {
+                this.pending[method][path] = false;
                 console.error(error.message);
                 reject(error.message);
             });
@@ -108,6 +117,14 @@ class Wrapper{
             },
             update: (args) => {
                 return this.post(url+'/task/'+args.id, args);
+            }
+        };
+    }
+    projects(){
+        let url = this.assetsPath;
+        return {
+            all: (syllabus_slug) => {
+                return this.get(url+'/projects/');
             }
         };
     }

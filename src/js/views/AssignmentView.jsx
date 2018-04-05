@@ -16,7 +16,7 @@ export default class LessonView extends Flux.View {
     return (
       <Panel padding={false}>
         <Loading show={this.state.loading} />
-        <iframe onLoad={()=>this.setState({loading: false})} className="lesson-iframe" src={"https://breatheco.de/en/lesson/"+this.props.match.params.lesson_slug} 
+        <iframe onLoad={()=>this.setState({loading: false})} className="assignment-iframe" src={"https://breatheco.de/en/project/?slug="+this.props.match.params.assignment_slug} 
           height="100%" width="100%" frameBorder="0" />
       </Panel>
     );

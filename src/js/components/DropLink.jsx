@@ -36,16 +36,15 @@ class DropLink extends React.Component{
         const menuOptions = this.props.dropdown.map((opt,i) => (<a key={i} className="dropdown-item" onClick={()=>this.props.onSelect(opt)}>{opt.label}</a>));
         return(
             <div className={"dropdown "+this.props.className+((this.state.opened) ? ' show':'')}>
-              <a className="btn dropdown-toggle" data-toggle="dropdown"
-                onClick={(e) => this.onClick(e)}
-              >
-                {this.props.children}
-              </a>
+                <a className="btn dropdown-toggle" 
+                    data-toggle="dropdown" onClick={(e) => this.onClick(e)}
+                >
+                    {this.props.children}
+                </a>
                 {(this.props.dropdown.length>0 && this.state.opened) ?
                 (<div className={"dropdown-menu"+((this.state.opened) ? ' show':'')}
                     onMouseOut={this.onMouseOut.bind(this)} 
                     onMouseOver={()=>this.beingHovered = true}>
-                >
                     {menuOptions}
                 </div>)
                 :''}

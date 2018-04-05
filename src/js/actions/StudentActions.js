@@ -79,7 +79,8 @@ class StudentActions extends Flux.Action{
                     else console.error(data);
                 })
                 .catch((data) => {
-                   console.error(data); 
+                    if(typeof data.pending === 'undefined') console.error(data); 
+                    else console.warn(data.msg)
                 });
             }
         }

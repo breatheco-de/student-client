@@ -34,7 +34,6 @@ class CourseView extends Flux.View{
         };
         //this.sessionUpdated();
         this.bindStore(BCStore, 'syllabus', this.syllabusUpdated.bind(this));
-        this.bindStore(BCStore, this.sessionUpdated.bind(this));
     }
     
     componentWillMount(){
@@ -45,6 +44,7 @@ class CourseView extends Flux.View{
     }
     
     syllabusUpdated(){
+        this.fetchSecondSyllabusPhase();
         this.setState({
             menuItems: [
               {slug:"course", label:"Course", component: CourseMenu, size: 200 },
@@ -55,11 +55,15 @@ class CourseView extends Flux.View{
         });
     }
     
-    sessionUpdated(){
+    fetchSecondSyllabusPhase(){
       const todos = StudentStore.getTodos();
       if(!todos){
         const student = StudentStore.getStudent();
         if(student) StudentActions.fetch().todos(student.bc_id);
+      } 
+      const projects = BCStore.getProjects();
+      if(!projects){
+        BCActions.fetch().projects();
       } 
     }
     

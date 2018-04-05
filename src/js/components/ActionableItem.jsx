@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DropLink from './DropLink.jsx';
 
-const options = ['lesson', 'replit', 'quiz', 'project'];
+const options = ['lesson', 'replit', 'quiz', 'assignment'];
 
 class ActionableItem extends React.Component{
     
@@ -23,9 +23,10 @@ class ActionableItem extends React.Component{
     
     prependMessage(){
         switch(this.props.type){
-            case "lesson": return "Read the lesson "; break;
-            case "quiz": return "Take the quiz "; break;
-            case "replit": return "Do the Repl "; break;
+            case "lesson": return "Read:"; break;
+            case "quiz": return "Answer:"; break;
+            case "replit": return "Practice:"; break;
+            case "assignment": return "Code:"; break;
             default: return ""; break;
         }
     }
@@ -40,7 +41,7 @@ class ActionableItem extends React.Component{
                     onSelect={this.onDropdownSelect.bind(this)}>
                     {this.props.label}
                 </DropLink>
-                {(this.props.done) ? (<i className="fas fa-check done"></i>):''}
+                <i className={"fas fa-check done "+((!this.props.done) ? 'd-none':'')}></i>
             </li>
         )
     }

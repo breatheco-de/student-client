@@ -26,13 +26,22 @@ export default class TodoView extends Flux.View {
     StudentActions.updateTask(task);
   }
   
+  getTaskDescription(td){
+    switch(td.type){
+      case "lesson": return 'Read'; break;
+      case "replit": return 'Practice'; break;
+      case "assignment": return 'Code'; break;
+      case "quiz": return 'Answer'; break;
+    }
+  }
+  
   render() {
     const todoElms = this.state.todos.filter((td) => (!this.state.includeDone) ? (td.status === 'pending') : true).map((td,i)=>{
       return (<li key={i}>
                 <CheckBox checked={(td.status==='done')} render={() => (
                     <div className={"task task-"+td.type}>
                       <p className="task-title">{td.title}</p>
-                      <p className="task-description">{td.type[0].toUpperCase() + td.type.substr(1)}</p>
+                      <p className="task-description">{this.getTaskDescription(td)}</p>
                     </div> 
                   )}
                   onClick={(newvalue) => this.updateTask(td, newvalue)}
