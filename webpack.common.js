@@ -46,20 +46,11 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx'],
   },
-  devtool: "source-map",
-  devServer: {
-    contentBase:  './dist',
-    hot: true,
-    disableHostCheck: true,
-    historyApiFallback: true
-  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       // In case you imported plugins individually, you must also require them here:
       Util: "exports-loader?Util!bootstrap/js/dist/util",
       Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
-    }),
-    new Dotenv()
+    })
   ]
 };

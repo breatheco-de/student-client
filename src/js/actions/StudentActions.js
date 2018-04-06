@@ -9,7 +9,7 @@ class StudentActions extends Flux.Action{
     
     constructor(){
         super();
-        this.wp = new WP({ endpoint: process.env.WP_HOST });
+        this.wp = new WP({ endpoint: process.env.CMS_URL+'/wp-json' });
         this.wp.lessons = this.wp.registerRoute( 'wp/v2', '/lesson/(?P<id>)' );
         this.wp.assets = this.wp.registerRoute( 'wp/v2', '/lesson-asset/(?P<id>)' );
         this.wp.courses = this.wp.registerRoute( 'breathecode/v1', '/courses', {
