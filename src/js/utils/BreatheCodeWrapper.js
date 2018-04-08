@@ -94,7 +94,7 @@ class Wrapper{
         let url = this.assetsPath+'/credentials';
         return {
             autenticate: (username, password) => {
-                return this.post(url+'/autenticate', { username, password });
+                return this.post(url+'/authenticate', { username, password });
             }
         };
     }
