@@ -53,6 +53,42 @@ class BCStore extends Flux.Store{
     }
     
     getSyllabusDays(){ return this.state.days; }
+    getDayTodos(day){
+        const todos = day.lessons.map((l) => {
+            return {
+                title: l.title,
+                status: 'pending',
+                type: 'lesson',
+                associated_slug: l.associated_slug
+            };
+        })
+        .concat(day.quizzes.map((q,i) => {
+            return {
+                title: q.title,
+                status: 'pending',
+                type: 'quiz',
+                associated_slug: q.associated_slug
+            };
+        }))
+        .concat(day.replits.map((r,i) => {
+            return {
+                title: r.title,
+                status: 'pending',
+                type: 'replit',
+                associated_slug: r.associated_slug
+            };
+        }))
+        .concat(day.assignments.map((a,i) => {
+            return {
+                title: a.title,
+                status: 'pending',
+                type: 'assignment',
+                associated_slug: a.associated_slug
+            };
+        }));
+        
+        return todos;
+    }
     
     _setProjects(projects){ 
         this.setStoreState({ projects }).emit('projects');

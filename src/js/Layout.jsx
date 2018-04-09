@@ -27,16 +27,21 @@ class Layout extends Flux.View{
     
     sessionChange(){
         const session = StudentStore.getAutentication();
-        const needsRedirection = (session.autenticated && !this.state.loggedIn);
+        const needsRedirection = (typeof session.history.push !== 'undefined' && (session.autenticated && !this.state.loggedIn));
         this.setState({ 
             loggedIn: session.autenticated, 
             redirection: needsRedirection,
-            history: (needsRedirection) ? session.history : null
+            history: session.history
         });
     }
     
+    redirect(path){
+        this.setState({ history: null });
+        this.state.history.push(path);
+    }
+    
     render() {
-        if(this.state.redirection) this.state.history.push('/home');
+        if(this.state.redirection && this.state.history) this.redirect('/home');
 
         return (
             <div className="layout">

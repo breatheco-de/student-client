@@ -6,7 +6,7 @@
   "scripts": {
     "c9": "webpack-dev-server --mode development --open --host $IP --port $PORT --config webpack.dev.js",
     "dev": "webpack --mode development --config webpack.dev.js",
-    "build": "webpack --mode production --config webpack.prod.js"
+    "build": "webpack --mode development --config webpack.prod.js"
   },
   "author": "",
   "license": "ISC",

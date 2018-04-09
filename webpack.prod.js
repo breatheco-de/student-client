@@ -4,18 +4,18 @@ const common = require('./webpack.common.js');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = merge(common, {
+    devtool: "source-map",
     plugins: [
-        new UglifyJSPlugin({
-            sourceMap: true,
-            uglifyOptions: {
-                ecma: 8,
-                warnings: false,
-                output: {
-                    comments: false,
-                    beautify: false,
-                }
-            }
-        }),
+        // new UglifyJSPlugin({
+        //     cache: false,
+        //     sourceMap: true,
+        //     exclude: /\/stores/,
+        //     uglifyOptions: {
+        //         mangle: {
+        //             keep_classnames: true
+        //         }
+        //     }
+        // }),
         new Dotenv({
             path: './.prod.env'
         })
