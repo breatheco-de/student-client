@@ -55666,7 +55666,7 @@ var Layout = function (_Flux$View) {
         key: 'sessionChange',
         value: function sessionChange() {
             var session = _StudentStore2.default.getAutentication();
-            var needsRedirection = typeof session.history.push !== 'undefined' && session.autenticated && !this.state.loggedIn;
+            var needsRedirection = session.history && typeof session.history.push !== 'undefined' && session.autenticated && !this.state.loggedIn;
             this.setState({
                 loggedIn: session.autenticated,
                 redirection: needsRedirection,
