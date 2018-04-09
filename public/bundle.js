@@ -59405,7 +59405,7 @@ var Login = function (_Flux$View) {
     value: function validateForm() {
       var errors = [];
       if (!_validator2.default.isEmail(this.username)) errors.push('Invalid email');
-      if (!_validator2.default.isEmpty(this.password)) errors.push('Password can contain only letters and numbers');
+      if (_validator2.default.isEmpty(this.password)) errors.push('Password cannot be empty');
 
       return errors.length === 0 ? false : errors;
     }
