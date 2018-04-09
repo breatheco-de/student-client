@@ -27,7 +27,7 @@ class Layout extends Flux.View{
     
     sessionChange(){
         const session = StudentStore.getAutentication();
-        const needsRedirection = (typeof session.history.push !== 'undefined' && (session.autenticated && !this.state.loggedIn));
+        const needsRedirection = (session.history && typeof session.history.push !== 'undefined' && (session.autenticated && !this.state.loggedIn));
         this.setState({ 
             loggedIn: session.autenticated, 
             redirection: needsRedirection,
