@@ -55668,7 +55668,7 @@ var Layout = function (_Flux$View) {
             var session = _StudentStore2.default.getAutentication();
             var needsRedirection = false;
             if (session.history !== null) {
-                if (typeof session.history.push !== 'undefined' && session.autenticated && !this.state.loggedIn) ;
+                if (typeof session.history.push !== 'undefined' && session.autenticated && !this.state.loggedIn) needsRedirection = true;
             }
             this.setState({
                 loggedIn: session.autenticated,
