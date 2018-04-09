@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Sidebar from './Sidebar';
 import DropLink from '../components/DropLink';
 import StudentActions from '../actions/StudentActions';
+import StudentStore from '../stores/StudentStore';
 
 class SplitLayout extends React.Component{
     
@@ -13,9 +14,17 @@ class SplitLayout extends React.Component{
         this.state = {
             size: 200,
             dragging: false,
-            duration: 0
+            duration: 0,
+            student: null,
+            onRootLevel: true
         };
         this.fixedWidth = false;
+    }
+    
+    componentWillMount(){
+        this.setState({
+           student: StudentStore.getStudent() 
+        });
     }
     
     onSidebarToggle(state){
@@ -60,6 +69,8 @@ class SplitLayout extends React.Component{
     
     onNavBarSelect(option){
         if(typeof(option.size) !== 'undefined') this.setState({ size: option.size });
+        if(option.slug == this.props.baseLevel.slug) this.setState({ onRootLevel: true });
+        else this.setState({ onRootLevel: false });
         if(this.props.onNavBarSelect) this.props.onNavBarSelect(option);
     }
     
@@ -81,19 +92,26 @@ class SplitLayout extends React.Component{
                     onDragStarted={this.handleDragStart}
                     onDragFinished={this.handleDragEnd}>
                     <div style={{ height: "100%", padding: '10px 0px 10px 10px' }}>
-                        <DropLink className="settings-item" dropdown={[
-                                {label: 'Profile', slug:'profile'},
-                                {label: 'Logout', slug:'logout'}
-                            ]} 
-                            onSelect={this.onSettingsSelect.bind(this)}>
-                            <i className="fas fa-cog"></i>
-                        </DropLink>
                         <Sidebar 
                             onSelect={this.onNavBarSelect.bind(this)} 
                             onToggle={this.onSidebarToggle.bind(this)} 
                             menuItems={this.props.menuItems}
                             baseLevel={this.props.baseLevel}
                         />
+                        {   
+                            (this.state.onRootLevel) ? 
+                                (<div className="settings-item">
+                                    { (this.state.student) ? this.state.student.full_name : ''}
+                                    <DropLink direction="up" dropdown={[
+                                            {label: 'Profile', slug:'profile'},
+                                            {label: 'Logout', slug:'logout'}
+                                        ]} 
+                                        onSelect={this.onSettingsSelect.bind(this)}>
+                                        <i className="fas fa-cog"></i>
+                                    </DropLink>
+                                </div>)
+                                :''
+                        }
                     </div>
                     <div className="app-view" style={{marginLeft: "-5px"}}>
                         {this.props.children}

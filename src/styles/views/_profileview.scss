@@ -1,5 +1,5 @@
 .profile-view{
-    
+    h2{font-size: 24px;}
     .profile-img {
         margin: auto;
         width: 120px; height: 120px;
@@ -13,6 +13,7 @@
             -ms-filter: grayscale(0.7);
             filter: grayscale(0.7);
             opacity: 0.9;
+            width: 120px; height: 120px;
         }
         &:before {
             content: '';

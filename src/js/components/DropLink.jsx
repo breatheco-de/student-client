@@ -42,7 +42,7 @@ class DropLink extends React.Component{
                     {this.props.children}
                 </a>
                 {(this.props.dropdown.length>0 && this.state.opened) ?
-                (<div className={"dropdown-menu"+((this.state.opened) ? ' show':'')}
+                (<div className={"dropdown-menu "+this.props.direction+((this.state.opened) ? ' show':'')}
                     onMouseOut={this.onMouseOut.bind(this)} 
                     onMouseOver={()=>this.beingHovered = true}>
                     {menuOptions}
@@ -57,10 +57,12 @@ DropLink.propTypes = {
   // are all optional.
   dropdown: PropTypes.array,
   className: PropTypes.string,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  direction: PropTypes.string
 }
 DropLink.defaultProps = {
   dropdown: [],
-  className: ''
+  className: '',
+  direction: 'down'
 };
 export default withRouter(DropLink);

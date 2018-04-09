@@ -60,6 +60,7 @@ class Sidebar extends React.Component{
             if(option == this.props.baseLevel.slug){
                 const levels = [this.props.baseLevel];
                 this.setState({ levels, currentOption: this.props.baseLevel });
+                this.props.onSelect(this.props.baseLevel);
                 this.props.history.push(this.props.baseLevel.path);
             } 
             else

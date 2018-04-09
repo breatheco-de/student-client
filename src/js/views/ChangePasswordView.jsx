@@ -1,28 +1,25 @@
 import React from "react";
 import Flux from "@4geeksacademy/react-flux-dash";
-import {Link} from "react-router-dom";
 import Validator from 'validator';
 import bcLogo from '../../img/bc-icon.png';
 import StudentActions from '../actions/StudentActions';
-import StudentStore from '../stores/StudentStore';
 
-export default class Login extends Flux.View {
+export default class Forgot extends Flux.View {
 
   constructor(){
     super();
     this.state = {
       errorMsg: []
     }
-    this.username = '';
     this.password = '';
+    this.repeat = '';
   }
   
   componentWillMount(){
-    const session = StudentStore.getAutentication();
-    if(session.autenticated) this.props.history.push('/home');
+//    const session = StudentStore.getAutentication();
   }
 
-  login(e){
+  remindSubmit(e){
     const errors = this.validateForm();
     if(!errors){
       StudentActions.loginUser(this.username, this.password, this.props.history)
@@ -51,25 +48,22 @@ export default class Login extends Flux.View {
       <div className="container">
         <div className="form-signin text-center">
           <img src={process.env.STATIC_PATH+bcLogo} />
-          <h2 className="form-signin-heading">Please sign in</h2>
-          <form action="#" onSubmit={(e) => this.login(e)}>
+          <h2 className="form-signin-heading">Choose a new password</h2>
+          <form action="#" onSubmit={(e) => this.remindSubmit(e)}>
           { 
             (errors.length > 0) ? 
               (<div className="alert alert-danger"><ul>{errors}</ul></div>)
               : ''
           }
-            <label htmlFor="inputEmail" className="sr-only">Email address</label>
-            <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus 
-              onChange={(e) => this.username = e.target.value}
-            />
-            <label htmlFor="inputPassword" className="sr-only">Password</label>
-            <input type="password" id="inputPassword" className="form-control" placeholder="Password" required
+            <label htmlFor="inputEmail" className="sr-only">Your new password</label>
+            <input type="password" id="inputEmail" className="form-control" placeholder="New password" required autoFocus 
               onChange={(e) => this.password = e.target.value}
             />
-            <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <div className="checkbox">
-                <Link to="/forgot">Forgot Password</Link>
-            </div>
+            <label htmlFor="inputPassword" className="sr-only">Repeat it</label>
+            <input type="password" id="inputPassword" className="form-control" placeholder="Repeat" required
+              onChange={(e) => this.repeat = e.target.value}
+            />
+            <button className="btn btn-lg btn-primary btn-block" type="submit">Change my password</button>
           </form>
           {
             //<button className="btn btn-lg btn-light btn-block" type="submit">or use Github <i className="fab fa-github"></i></button>

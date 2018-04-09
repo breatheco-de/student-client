@@ -52,6 +52,14 @@ class StudentActions extends Flux.Action{
         this.dispatch('StudentStore.logout');
     }
     
+    remindUser(email){
+     
+        return BC.credentials().remind(email)
+        .then((data) => {
+            this.dispatch('StudentStore.remind', data);
+        });
+    }
+    
     startDay(day){
         const todos = BCStore.getDayTodos(day);
         const student = StudentStore.getStudent();

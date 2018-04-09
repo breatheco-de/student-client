@@ -35,6 +35,13 @@ class StudentStore extends Flux.Store{
             breathecodeToken: data.access_token,
             user: {
                 bc_id: data.id,
+                cohorts: data.cohorts,
+                financial_status: data.financial_status,
+                bio: data.bio,
+                github: data.github,
+                phone: data.phone,
+                currently_active: data.currently_active,
+                total_points: data.total_points,
                 wp_id: data.wp_id,
                 created_at: data.created_at,
                 email: data.username,

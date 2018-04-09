@@ -6,6 +6,7 @@ import {PrivateRoute} from './libraries/react-router-dash/index';
 import CourseView from './views/CourseView';
 import HomeView from './views/HomeView';
 import LoginView from './views/LoginView';
+import ForgotView from './views/ForgotView';
 import ProfileView from './views/ProfileView';
 import StudentStore from './stores/StudentStore';
 
@@ -54,6 +55,7 @@ class Layout extends Flux.View{
                     <div>
                         <Switch>
                             <Route exact path='/login' component={LoginView} />
+                            <Route exact path='/forgot' component={ForgotView} />
                             <PrivateRoute exact path='/' loggedIn={this.state.loggedIn} component={HomeView} />
                             <PrivateRoute exact path='/home' loggedIn={this.state.loggedIn} component={HomeView} />
                             <PrivateRoute exact path='/profile' loggedIn={this.state.loggedIn} component={ProfileView} />

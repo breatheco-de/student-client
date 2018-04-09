@@ -14,10 +14,13 @@ class TimeLineDay extends React.Component{
         		<div className="direction-r">
         			<div className="flag-wrapper">
         			    <span className="flag-point"></span>
-        				<span className="flag">Day {this.props.dayNumber}</span>
-        				<span className="time-wrapper">
-        				    <span className="time">{this.props.technologies.join(', ')}</span>
-        				</span>
+        				<span className="flag">{this.props.label}</span>
+        				{ (this.props.technologies.length > 0) ? 
+          				(<span className="time-wrapper">
+          				    <span className="time">{this.props.technologies.join(', ')}</span>
+          				</span>)
+          				:''
+        				}
         			</div>
         			<div className="desc">{this.props.description}</div>
         		</div>
@@ -28,15 +31,16 @@ class TimeLineDay extends React.Component{
 TimeLineDay.propTypes = {
   // You can declare that a prop is a specific JS primitive. By default, these
   // are all optional.
-  dayNumber: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired,
   technologies: PropTypes.array,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   isSelected: PropTypes.bool,
-}
+};
 TimeLineDay.defaultProps = {
   deph: 1,
+  label: '',
   isSelected: false,
-  description: "No description provided",
+  description: "",
   technologies: []
 };
 export default TimeLineDay;

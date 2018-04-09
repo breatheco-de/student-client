@@ -1,8 +1,9 @@
 # Welcome to 4Geeks Academy!
 
-You are here to become a developer or to become a better coder (if you already code). 
+You are here to become a great developer. Please follow (these guidelines)[https://www.quora.com/What-is-the-best-way-to-learn-JavaScript/answer/Alejandro-Sanchez-4] throught your learning experience.
 
-We are developers teaching code, life is complicated and teaching is really hard as it is, our approeach is to have the simplest possible learning platform for code.
-
-- That is why we are 100% Markdown compatible.
+Useful links:
+1. (Academy Slack)[https://4geeksacademy.slack.com]
+2. (Repl.it)[https://repl.it/student]
+3. (Cloud 9)[https://ide.c9.io/]
 

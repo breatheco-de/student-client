@@ -126,7 +126,7 @@ class DayView extends Flux.View {
 
     return (
       <Panel className="dayview">
-        <h1>:Day {this.state.day.dayNumber} <ProgressKPI progress={this.state.day.completition} /></h1> 
+        <h1>:{this.state.day.label} <ProgressKPI progress={this.state.day.completition} /></h1> 
         <p className="description">{this.state.day.description}</p>
         <DayContent onStart={this.enableDay.bind(this)} blocked={this.state.blocked}>
             <h3>To finish this day you have to complete the following actions:</h3>

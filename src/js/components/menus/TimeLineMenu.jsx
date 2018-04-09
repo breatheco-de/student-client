@@ -21,7 +21,7 @@ export default class TimeLineMenu extends React.Component{
         const days = this.props.data.map((day, i)=>{
             if(typeof day.dayNumber === 'undefined') throw new Error('Days must have a dayNumber property');
            return <TimeLineDay key={i} 
-                    dayNumber={day.dayNumber}
+                    label={day.label}
                     description={day.description} 
                     technologies={day.technologies}
                     isSelected={(this.state.selected == day.dayNumber)}
