@@ -55666,7 +55666,10 @@ var Layout = function (_Flux$View) {
         key: 'sessionChange',
         value: function sessionChange() {
             var session = _StudentStore2.default.getAutentication();
-            var needsRedirection = session.history && typeof session.history.push !== 'undefined' && session.autenticated && !this.state.loggedIn;
+            var needsRedirection = false;
+            if (session.history !== null) {
+                if (typeof session.history.push !== 'undefined' && session.autenticated && !this.state.loggedIn) ;
+            }
             this.setState({
                 loggedIn: session.autenticated,
                 redirection: needsRedirection,
@@ -59402,7 +59405,7 @@ var Login = function (_Flux$View) {
     value: function validateForm() {
       var errors = [];
       if (!_validator2.default.isEmail(this.username)) errors.push('Invalid email');
-      if (!_validator2.default.isAlphanumeric(this.password)) errors.push('Password can contain only letters and numbers');
+      if (!_validator2.default.isEmpty(this.password)) errors.push('Password can contain only letters and numbers');
 
       return errors.length === 0 ? false : errors;
     }

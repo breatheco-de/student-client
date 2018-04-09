@@ -33,7 +33,7 @@ export default class Login extends Flux.View {
   validateForm(){
     let errors = [];
     if(!Validator.isEmail(this.username)) errors.push('Invalid email');
-    if(!Validator.isAlphanumeric(this.password)) errors.push('Password can contain only letters and numbers');
+    if(!Validator.isEmpty(this.password)) errors.push('Password can contain only letters and numbers');
     
     return (errors.length === 0) ? false : errors;
   }
