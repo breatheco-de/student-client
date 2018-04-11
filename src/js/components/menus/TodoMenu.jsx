@@ -36,7 +36,7 @@ export default class TodoView extends Flux.View {
   }
   
   render() {
-    const todoElms = this.state.todos.filter((td) => (!this.state.includeDone) ? (td.status === 'pending') : true).map((td,i)=>{
+    const todoElms = (!this.state.todos) ? [] : this.state.todos.filter((td) => (!this.state.includeDone) ? (td.status === 'pending') : true).map((td,i)=>{
       return (<li key={i}>
                 <CheckBox checked={(td.status==='done')} render={() => (
                     <div className={"task task-"+td.type}>

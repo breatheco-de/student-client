@@ -8,6 +8,7 @@ import List from '../components/List.jsx';
 import ActionableItem from '../components/ActionableItem.jsx';
 import BCStore from '../stores/BCStore';
 import StudentActions from '../actions/StudentActions';
+import StudentStore from '../stores/StudentStore';
 
 class DayView extends Flux.View {
   
@@ -59,11 +60,12 @@ class DayView extends Flux.View {
   }
   
   loadDay(newDayNumber=null){
+    const student = StudentStore.getStudent();
     const singleDay = BCStore.getSingleDay(newDayNumber || this.props.match.params.day_number);
     if(singleDay){
       this.setState({ 
         day: singleDay,
-        blocked: !singleDay.opened,
+        blocked: (student.type !== 'student') ? false : !singleDay.opened,
         actionables: singleDay.actionables
       });
     }

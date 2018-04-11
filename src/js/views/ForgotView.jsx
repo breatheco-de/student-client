@@ -22,9 +22,12 @@ export default class Forgot extends Flux.View {
   formSubmit(e){
     const errors = this.validateForm();
     if(!errors){
+      this.setState({ errorMsg: [], successMsg: null });
       StudentActions.remindUser(this.email)
       .then(() => {
-        this.setState({ successMsg: `Check your email for instructions, if you don't receive th email check your spam folder` });
+        this.setState({ 
+          successMsg: `Check your email for instructions, if you don't receive th email check your spam folder`
+        });
       })
       .catch((errorMsg) => {
         this.setState({ errorMsg: [errorMsg.msg] || [errorMsg] });

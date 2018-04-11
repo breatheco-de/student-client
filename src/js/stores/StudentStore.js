@@ -29,9 +29,11 @@ class StudentStore extends Flux.Store{
     }
     
     _login(data){
-        this.setPersistedState({ 
+        this.setPersistedState({
+            githubToken: null,
             autenticated: true,
             history: data.history,
+            todos: [],
             breathecodeToken: data.access_token,
             user: {
                 bc_id: data.id,
@@ -46,7 +48,8 @@ class StudentStore extends Flux.Store{
                 created_at: data.created_at,
                 email: data.username,
                 avatar: data.avatar_url,
-                full_name: data.full_name
+                full_name: data.full_name,
+                type: data.type || 'student'
             }
         }).emit('session');
     }
