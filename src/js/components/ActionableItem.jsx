@@ -21,6 +21,11 @@ class ActionableItem extends React.Component{
         if(option.slug == "mark-done") this.props.onRead(option);
     }
     
+    componentDidCatch(error, info) {
+        // You can also log the error to an error reporting service
+        console.log(error, info);
+    }
+    
     prependMessage(){
         switch(this.props.type){
             case "lesson": return "Read:"; break;
@@ -32,7 +37,6 @@ class ActionableItem extends React.Component{
     }
     
     render(){
-        
         return(
             <li className="actionable-item" onClick={this.onClick.bind(this)}>
                 {(this.props.icon) ? (<i className={this.props.icon+" menuicon"}></i>):''}
@@ -41,7 +45,10 @@ class ActionableItem extends React.Component{
                     onSelect={this.onDropdownSelect.bind(this)}>
                     {this.props.label}
                 </DropLink>
-                <i className={"fas fa-check done "+((!this.props.done) ? 'd-none':'')}></i>
+                {   (this.props.done) ?
+                        (<i className={"fas fa-check done"}></i>)
+                        : ''
+                }
             </li>
         )
     }

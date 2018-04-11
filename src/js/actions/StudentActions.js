@@ -4,6 +4,7 @@ import BC from '../utils/BreatheCodeWrapper';
 
 import StudentStore from '../stores/StudentStore';
 import BCStore from '../stores/BCStore';
+import NotificationStore from '../stores/NotificationStore';
 
 class StudentActions extends Flux.Action{
     
@@ -56,7 +57,7 @@ class StudentActions extends Flux.Action{
      
         return BC.credentials().remind(email)
         .then((data) => {
-            this.dispatch('StudentStore.remind', data);
+            return data;
         });
     }
     
@@ -66,6 +67,9 @@ class StudentActions extends Flux.Action{
         return BC.todos().add(student.bc_id,todos)
                 .then((data) => {
                     this.dispatch('StudentStore.appendTodos', data.data || data);
+                })
+                .catch(()=>{
+                    this.dispatch('NotificationStore.notify', 'update_todos_error');
                 });
     }
     
@@ -91,7 +95,7 @@ class StudentActions extends Flux.Action{
                     else console.warn(data.msg)
                 });
             }
-        }
+        };
     }
     
 }

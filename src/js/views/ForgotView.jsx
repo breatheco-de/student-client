@@ -9,7 +9,8 @@ export default class Forgot extends Flux.View {
   constructor(){
     super();
     this.state = {
-      errorMsg: []
+      errorMsg: [],
+      successMsg: null
     }
     this.email = '';
   }
@@ -22,6 +23,9 @@ export default class Forgot extends Flux.View {
     const errors = this.validateForm();
     if(!errors){
       StudentActions.remindUser(this.email)
+      .then(() => {
+        this.setState({ successMsg: `Check your email for instructions, if you don't receive th email check your spam folder` });
+      })
       .catch((errorMsg) => {
         this.setState({ errorMsg: [errorMsg.msg] || [errorMsg] });
       });
@@ -53,8 +57,13 @@ export default class Forgot extends Flux.View {
               (<div className="alert alert-danger"><ul>{errors}</ul></div>)
               : ''
           }
+          { 
+            (this.state.successMsg) ? 
+              (<div className="alert alert-success"><ul>{this.state.successMsg}</ul></div>)
+              : ''
+          }
             <label htmlFor="inputEmail" className="sr-only">What's your account email?</label>
-            <input type="email" id="inputEmail" className="form-control" placeholder="Your account email" required autoFocus 
+            <input type="email" id="inputEmail" className="form-control mb-3 mt-3" placeholder="Your account email" required autoFocus 
               onChange={(e) => this.email = e.target.value}
             />
             <button className="btn btn-lg btn-primary btn-block" type="submit">Confirm email</button>

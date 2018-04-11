@@ -10,6 +10,9 @@ import ForgotView from './views/ForgotView';
 import ProfileView from './views/ProfileView';
 import StudentStore from './stores/StudentStore';
 
+import NotificationStore from './stores/NotificationStore';
+import Notifier from './components/Notifier';
+
 class Layout extends Flux.View{
     
     constructor(){
@@ -17,9 +20,11 @@ class Layout extends Flux.View{
         this.state = {
             loggedIn: StudentStore.getAutentication(),
             history: null,
+            errors: null,
             redirection: null
         }
         this.bindStore(StudentStore, 'session', this.sessionChange.bind(this));
+        this.bindStore(NotificationStore, 'notifications', this.notificationsUpdated.bind(this));
     }
     
     componentWillMount(){
@@ -46,6 +51,12 @@ class Layout extends Flux.View{
         this.state.history.push(path);
     }
     
+    notificationsUpdated(){
+        this.setState({
+           notifications: NotificationStore.getAllNotifications()
+        });
+    }
+    
     render() {
         if(this.state.redirection && this.state.history) this.redirect('/home');
 
@@ -53,6 +64,7 @@ class Layout extends Flux.View{
             <div className="layout">
                 <BrowserRouter>
                     <div>
+                        <Notifier notifications={this.state.notifications} />
                         <Switch>
                             <Route exact path='/login' component={LoginView} />
                             <Route exact path='/forgot' component={ForgotView} />

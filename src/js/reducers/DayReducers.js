@@ -54,6 +54,8 @@ export default {
     
     day.actionables = day.replits.concat(day.lessons,day.assignments,day.quizzes);
     
+    if(day.actionables.length > 0) day.opened = true;
+    
     return day;
 },
     withTodos(day){
@@ -114,7 +116,10 @@ export default {
     
     day.actionables = day.lessons.concat(day.replits,day.assignments,day.quizzes);
     
-    if(day.actionables.length===0) day.completition = 100;
+    if(day.actionables.length===0){
+        day.completition = 100;
+        day.opened = true;
+    } 
     else day.completition = Math.round((day.totalDone/day.actionables.length)*100);
     
     return day;

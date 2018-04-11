@@ -7,8 +7,6 @@ import DayContent from '../components/DayContent.jsx';
 import List from '../components/List.jsx';
 import ActionableItem from '../components/ActionableItem.jsx';
 import BCStore from '../stores/BCStore';
-
-import StudentStore from '../stores/StudentStore';
 import StudentActions from '../actions/StudentActions';
 
 class DayView extends Flux.View {
@@ -18,6 +16,7 @@ class DayView extends Flux.View {
     this.state = {
       day: null,
       blocked: true,
+      blockedError: null,
       visibleLesson: null,
       actionables: [],
     }
@@ -90,7 +89,6 @@ class DayView extends Flux.View {
   enableDay(){
     console.log("Enable Day");
     StudentActions.startDay(this.state.day);
-    this.setState({blocked: false});
   }
   
   show(actionable){
@@ -128,10 +126,12 @@ class DayView extends Flux.View {
       <Panel className="dayview">
         <h1>:{this.state.day.label} <ProgressKPI progress={this.state.day.completition} /></h1> 
         <p className="description">{this.state.day.description}</p>
-        <DayContent onStart={this.enableDay.bind(this)} blocked={this.state.blocked}>
-            <h3>To finish this day you have to complete the following actions:</h3>
-            <List>{actionable}</List>
-        </DayContent>
+        {(actionable.length > 0)?
+          (<DayContent onStart={this.enableDay.bind(this)} blocked={this.state.blocked}>
+              <h3>To finish this day you have to complete the following actions:</h3>
+              <List>{actionable}</List>
+          </DayContent>):''
+        }
       </Panel>
     );
   }

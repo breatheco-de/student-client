@@ -97,7 +97,7 @@ class Wrapper{
                 return this.post(url+'/authenticate', { username, password });
             },
             remind: (username) => {
-                return this.post(url+'/remind', { username });
+                return this.post(this.apiPath+'/remind/user/'+encodeURIComponent(username), { username });
             }
         };
     }
