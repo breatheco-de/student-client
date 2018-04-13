@@ -60520,9 +60520,6 @@ var DayView = function (_Flux$View) {
           dropdown: l.menu,
           onDropdownSelect: function onDropdownSelect(option) {
             return _this3.actionableSelected(l, option);
-          },
-          onClick: function onClick() {
-            return _this3.show(l);
           }
         });
       });

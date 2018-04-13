@@ -118,7 +118,6 @@ class DayView extends Flux.View {
                 label={(typeof l.title !== 'undefined') ? l.title : l.associated_slug} 
                 dropdown={l.menu} 
                 onDropdownSelect={(option)=>this.actionableSelected(l,option)} 
-                onClick={() => this.show(l)}
               />;
     });
 
