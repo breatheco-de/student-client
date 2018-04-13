@@ -61357,7 +61357,7 @@ var ReplitView = function (_Flux$View) {
           _react2.default.createElement(_Loading2.default, { show: this.state.loading }),
           _react2.default.createElement('iframe', { onLoad: function onLoad() {
               return _this2.setState({ loading: false });
-            }, className: 'replit-iframe', src: "http://assets.breatheco.de/apps/replit?r=" + this.props.match.params.replit_slug + '&c=' + this.state.cohort,
+            }, className: 'replit-iframe', src: "https://assets.breatheco.de/apps/replit?r=" + this.props.match.params.replit_slug + '&c=' + this.state.cohort,
             height: '100%', width: '100%', frameBorder: '0' })
         ) : _react2.default.createElement(
           'div',
