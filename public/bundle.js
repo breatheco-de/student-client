@@ -57164,12 +57164,6 @@ var ActionableItem = function (_React$Component) {
             }
         }
     }, {
-        key: 'onDropdownSelect',
-        value: function onDropdownSelect(option) {
-            if (option.slug == "goto") this.onClick(true);
-            if (option.slug == "mark-done") this.props.onRead(option);
-        }
-    }, {
         key: 'componentDidCatch',
         value: function componentDidCatch(error, info) {
             // You can also log the error to an error reporting service
@@ -57194,6 +57188,8 @@ var ActionableItem = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             return _react2.default.createElement(
                 'li',
                 { className: 'actionable-item', onClick: this.onClick.bind(this) },
@@ -57202,7 +57198,9 @@ var ActionableItem = function (_React$Component) {
                 _react2.default.createElement(
                     _DropLink2.default,
                     { dropdown: this.props.dropdown,
-                        onSelect: this.onDropdownSelect.bind(this) },
+                        onSelect: function onSelect(option) {
+                            return _this2.props.onDropdownSelect(option);
+                        } },
                     this.props.label
                 ),
                 this.props.done ? _react2.default.createElement('i', { className: "fas fa-check done" }) : ''
@@ -57219,7 +57217,7 @@ ActionableItem.propTypes = {
     label: _propTypes2.default.string.isRequired,
     dropdown: _propTypes2.default.array,
     isSelected: _propTypes2.default.bool,
-    onRead: _propTypes2.default.func.isRequired,
+    onDropdownSelect: _propTypes2.default.func.isRequired,
     type: _propTypes2.default.oneOf(options)
 };
 ActionableItem.defaultProps = {
@@ -57282,7 +57280,7 @@ var BreadCrumb = function (_React$Component) {
             if (this.props.mobile) return _react2.default.createElement(
                 'ul',
                 { className: 'breadcrumb', onClick: function onClick() {
-                        return _this2.props.onClick('home');
+                        return _this2.props.onClick(_this2.props.levels[0].slug);
                     } },
                 _react2.default.createElement(
                     'li',
@@ -58345,7 +58343,9 @@ var Sidebar = function (_React$Component) {
     }, {
         key: 'checkForCollapse',
         value: function checkForCollapse(pathname) {
-            if (pathname.indexOf('/lesson/') != -1) {
+            var courseRegex = /course\/(.*)\/(\d*)\/[l|r|a|q]\/(.*)$/;
+            var match = pathname.match(courseRegex);
+            if (match) {
                 this.toggle(true);
                 return true;
             } else {
@@ -58481,6 +58481,7 @@ var SplitLayout = function (_React$Component) {
 
         _this.state = {
             size: 200,
+            collapsed: false,
             dragging: false,
             duration: 0,
             student: null,
@@ -58502,10 +58503,10 @@ var SplitLayout = function (_React$Component) {
         value: function onSidebarToggle(state) {
             if (state.collapsed) {
                 this.fixedWidth = 50;
-                this.setState({ size: 50 });
+                this.setState({ size: 50, collapsed: true });
             } else {
                 this.fixedWidth = null;
-                this.setState({ size: 200 });
+                this.setState({ size: 200, collapsed: false });
             }
         }
     }, {
@@ -58566,9 +58567,9 @@ var SplitLayout = function (_React$Component) {
                         className: 'white-resizer',
                         minSize: 50,
                         size: this.state.dragging ? undefined : this.state.size,
-                        onChange: this.handleDrag,
-                        onDragStarted: this.handleDragStart,
-                        onDragFinished: this.handleDragEnd },
+                        onChange: this.handleDrag.bind(this),
+                        onDragStarted: this.handleDragStart.bind(this),
+                        onDragFinished: this.handleDragEnd.bind(this) },
                     _react2.default.createElement(
                         'div',
                         { style: { height: "100%", padding: '10px 0px 10px 10px' } },
@@ -58581,7 +58582,7 @@ var SplitLayout = function (_React$Component) {
                         this.state.onRootLevel ? _react2.default.createElement(
                             'div',
                             { className: 'settings-item' },
-                            this.state.student ? this.state.student.full_name : '',
+                            this.state.student && !this.state.collapsed ? this.state.student.full_name : '',
                             _react2.default.createElement(
                                 _DropLink2.default,
                                 { direction: 'up', dropdown: [{ label: 'Profile', slug: 'profile' }, { label: 'Logout', slug: 'logout' }],
@@ -59002,7 +59003,7 @@ var TodoView = function (_Flux$View) {
     value: function render() {
       var _this2 = this;
 
-      var todoElms = this.state.todos.filter(function (td) {
+      var todoElms = !this.state.todos ? [] : this.state.todos.filter(function (td) {
         return !_this2.state.includeDone ? td.status === 'pending' : true;
       }).map(function (td, i) {
         return _react2.default.createElement(
@@ -59173,6 +59174,7 @@ exports.default = {
                 return {
                     title: repl.title,
                     associated_slug: repl.associated_slug || repl.slug,
+                    menu: [{ label: 'View it in Repl.it', slug: 'goto' }, { label: 'Mark as done', slug: 'mark-done' }],
                     status: "pending",
                     type: "replit"
                 };
@@ -59186,6 +59188,7 @@ exports.default = {
                     title: less.title,
                     associated_slug: less.associated_slug || less.slug,
                     status: "pending",
+                    menu: [{ label: 'Go to lesson', slug: 'goto' }, { label: 'Mark as read', slug: 'mark-done' }],
                     type: "lesson"
                 };
             });
@@ -59197,6 +59200,7 @@ exports.default = {
                 return {
                     title: q.title,
                     associated_slug: q.associated_slug || q.slug,
+                    menu: [{ label: 'Take quiz', slug: 'goto' }, { label: 'Mark as done', slug: 'mark-done' }],
                     status: "pending",
                     type: "quiz"
                 };
@@ -59209,6 +59213,7 @@ exports.default = {
                 return {
                     title: a.title,
                     associated_slug: a.associated_slug || a.slug || a,
+                    menu: [{ label: 'Read instructions', slug: 'goto' }, { label: 'Deliver assignment', slug: 'mark-done' }],
                     status: "pending",
                     type: "assignment"
                 };
@@ -59636,8 +59641,10 @@ var StudentStore = function (_Flux$Store) {
         key: '_login',
         value: function _login(data) {
             this.setPersistedState({
+                githubToken: null,
                 autenticated: true,
                 history: data.history,
+                todos: [],
                 breathecodeToken: data.access_token,
                 user: {
                     bc_id: data.id,
@@ -59652,7 +59659,8 @@ var StudentStore = function (_Flux$Store) {
                     created_at: data.created_at,
                     email: data.username,
                     avatar: data.avatar_url,
-                    full_name: data.full_name
+                    full_name: data.full_name,
+                    type: data.type || 'student'
                 }
             }).emit('session');
         }
@@ -59705,12 +59713,12 @@ var StudentStore = function (_Flux$Store) {
         }
     }, {
         key: 'getSingleTodo',
-        value: function getSingleTodo(todo) {
+        value: function getSingleTodo(actionable) {
 
             if (!this.state.todos) return false;
 
             var present = this.state.todos.find(function (item) {
-                return item.type === todo.type && item.associated_slug === todo.associated_slug;
+                return item.type === actionable.type && item.associated_slug === actionable.associated_slug;
             });
             if (typeof present === 'undefined') return false;else return present;
         }
@@ -60368,6 +60376,10 @@ var _StudentActions = __webpack_require__(/*! ../actions/StudentActions */ "./sr
 
 var _StudentActions2 = _interopRequireDefault(_StudentActions);
 
+var _StudentStore = __webpack_require__(/*! ../stores/StudentStore */ "./src/js/stores/StudentStore.js");
+
+var _StudentStore2 = _interopRequireDefault(_StudentStore);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60436,32 +60448,31 @@ var DayView = function (_Flux$View) {
     value: function loadDay() {
       var newDayNumber = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
+      var student = _StudentStore2.default.getStudent();
       var singleDay = _BCStore2.default.getSingleDay(newDayNumber || this.props.match.params.day_number);
       if (singleDay) {
         this.setState({
           day: singleDay,
-          blocked: !singleDay.opened,
+          blocked: student.type === 'teacher' ? false : !singleDay.opened,
           actionables: singleDay.actionables
         });
       }
     }
   }, {
-    key: "markAsDone",
-    value: function markAsDone(l) {
-      this.setState({
-        lessons: this.state.lessons.map(function (itm) {
-          if (itm.id == l.id) itm.done = true;
-          return itm;
-        }),
-        quizzes: this.state.quizzes.map(function (itm) {
-          if (itm.id == l.id) itm.done = true;
-          return itm;
-        }),
-        replits: this.state.replits.map(function (itm) {
-          if (itm.id == l.id) itm.done = true;
-          return itm;
-        })
-      });
+    key: "actionableSelected",
+    value: function actionableSelected(actionable, option) {
+      switch (option.slug) {
+        case "mark-done":
+          var task = _StudentStore2.default.getSingleTodo(actionable);
+          if (task) {
+            task.status = "done";
+            _StudentActions2.default.updateTask(task);
+          }
+          break;
+        case "goto":
+          this.show(actionable);
+          break;
+      }
     }
   }, {
     key: "enableDay",
@@ -60507,8 +60518,8 @@ var DayView = function (_Flux$View) {
           done: l.status === "done",
           label: typeof l.title !== 'undefined' ? l.title : l.associated_slug,
           dropdown: l.menu,
-          onRead: function onRead() {
-            return _this3.markAsDone(l);
+          onDropdownSelect: function onDropdownSelect(option) {
+            return _this3.actionableSelected(l, option);
           },
           onClick: function onClick() {
             return _this3.show(l);
@@ -60629,8 +60640,11 @@ var Forgot = function (_Flux$View) {
 
       var errors = this.validateForm();
       if (!errors) {
+        this.setState({ errorMsg: [], successMsg: null });
         _StudentActions2.default.remindUser(this.email).then(function () {
-          _this2.setState({ successMsg: "Check your email for instructions, if you don't receive th email check your spam folder" });
+          _this2.setState({
+            successMsg: "Check your email for instructions, if you don't receive th email check your spam folder"
+          });
         }).catch(function (errorMsg) {
           _this2.setState({ errorMsg: [errorMsg.msg] || [errorMsg] });
         });
@@ -61318,7 +61332,8 @@ var ReplitView = function (_Flux$View) {
 
     _this.state = {
       loading: true,
-      cohort: ''
+      cohort: '',
+      error: false
     };
     return _this;
   }
@@ -61327,7 +61342,9 @@ var ReplitView = function (_Flux$View) {
     key: 'componentWillMount',
     value: function componentWillMount() {
       var user = _StudentStore2.default.getStudent();
-      if (user.cohorts && user.cohorts.length > 0) this.setState({ cohort: user.cohorts[0] });
+      if (user.cohorts && user.cohorts.length > 0) this.setState({ cohort: user.cohorts[0] });else this.setState({
+        error: 'There was a problem retrieving your cohort'
+      });
     }
   }, {
     key: 'render',
@@ -61337,11 +61354,19 @@ var ReplitView = function (_Flux$View) {
       return _react2.default.createElement(
         _Panel2.default,
         { padding: false },
-        _react2.default.createElement(_Loading2.default, { show: this.state.loading }),
-        _react2.default.createElement('iframe', { onLoad: function onLoad() {
-            return _this2.setState({ loading: false });
-          }, className: 'replit-iframe', src: "https://breatheco.de/replit/?r=" + this.props.match.params.replit_slug + '&c=' + this.state.cohort,
-          height: '100%', width: '100%', frameBorder: '0' })
+        !this.state.error ? _react2.default.createElement(
+          'span',
+          null,
+          _react2.default.createElement(_Loading2.default, { show: this.state.loading }),
+          _react2.default.createElement('iframe', { onLoad: function onLoad() {
+              return _this2.setState({ loading: false });
+            }, className: 'replit-iframe', src: "http://assets.breatheco.de/apps/replit?r=" + this.props.match.params.replit_slug + '&c=' + this.state.cohort,
+            height: '100%', width: '100%', frameBorder: '0' })
+        ) : _react2.default.createElement(
+          'div',
+          { 'class': 'alert alert-danger' },
+          this.state.error
+        )
       );
     }
   }]);
