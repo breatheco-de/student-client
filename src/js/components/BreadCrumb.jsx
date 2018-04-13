@@ -5,7 +5,7 @@ class BreadCrumb extends React.Component{
     
     render(){
 
-        if(this.props.mobile) return (<ul className="breadcrumb" onClick={()=>this.props.onClick('home')}><li>BC</li></ul>);
+        if(this.props.mobile) return (<ul className="breadcrumb" onClick={()=>this.props.onClick(this.props.levels[0].slug)}><li>BC</li></ul>);
         
         const DOMPieces = this.props.levels.map((level,i)=>{
             return (<li key={i} onClick={()=>this.props.onClick(level.slug)}>{level.label}</li>);

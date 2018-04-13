@@ -13,6 +13,7 @@ class SplitLayout extends React.Component{
         super();
         this.state = {
             size: 200,
+            collapsed: false,
             dragging: false,
             duration: 0,
             student: null,
@@ -30,11 +31,11 @@ class SplitLayout extends React.Component{
     onSidebarToggle(state){
         if(state.collapsed){
             this.fixedWidth = 50;
-            this.setState({ size: 50 });
+            this.setState({ size: 50, collapsed: true });
         }
         else{
             this.fixedWidth = null;
-            this.setState({ size: 200 });
+            this.setState({ size: 200, collapsed: false });
         }
     }
     
@@ -88,9 +89,9 @@ class SplitLayout extends React.Component{
                     className="white-resizer"
                     minSize={50}
                     size={this.state.dragging ? undefined : this.state.size}
-                    onChange={this.handleDrag}
-                    onDragStarted={this.handleDragStart}
-                    onDragFinished={this.handleDragEnd}>
+                    onChange={this.handleDrag.bind(this)}
+                    onDragStarted={this.handleDragStart.bind(this)}
+                    onDragFinished={this.handleDragEnd.bind(this)}>
                     <div style={{ height: "100%", padding: '10px 0px 10px 10px' }}>
                         <Sidebar 
                             onSelect={this.onNavBarSelect.bind(this)} 
@@ -101,7 +102,7 @@ class SplitLayout extends React.Component{
                         {   
                             (this.state.onRootLevel) ? 
                                 (<div className="settings-item">
-                                    { (this.state.student) ? this.state.student.full_name : ''}
+                                    { (this.state.student && !this.state.collapsed) ? this.state.student.full_name : ''}
                                     <DropLink direction="up" dropdown={[
                                             {label: 'Profile', slug:'profile'},
                                             {label: 'Logout', slug:'logout'}

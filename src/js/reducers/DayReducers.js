@@ -10,6 +10,10 @@ export default {
             return {
                 title: repl.title,
                 associated_slug: repl.associated_slug || repl.slug,
+                menu: [
+                    { label: 'View it in Repl.it', slug: 'goto'},
+                    { label: 'Mark as done', slug: 'mark-done'}
+                ],
                 status: "pending",
                 type: "replit"
             };
@@ -23,6 +27,10 @@ export default {
                 title: less.title,
                 associated_slug: less.associated_slug || less.slug,
                 status: "pending",
+                menu: [
+                    { label: 'Go to lesson', slug: 'goto'},
+                    { label: 'Mark as read', slug: 'mark-done'}
+                ],
                 type: "lesson"
             };
         });
@@ -34,6 +42,10 @@ export default {
             return {
                 title: q.title,
                 associated_slug: q.associated_slug || q.slug,
+                menu: [
+                    { label: 'Take quiz', slug: 'goto'},
+                    { label: 'Mark as done', slug: 'mark-done'}
+                ],
                 status: "pending",
                 type: "quiz"
             };
@@ -46,6 +58,10 @@ export default {
             return {
                 title: a.title,
                 associated_slug: a.associated_slug || a.slug || a,
+                menu: [
+                    { label: 'Read instructions', slug: 'goto'},
+                    { label: 'Deliver assignment', slug: 'mark-done'}
+                ],
                 status: "pending",
                 type: "assignment"
             }

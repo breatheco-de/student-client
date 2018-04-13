@@ -14,7 +14,7 @@ class StudentStore extends Flux.Store{
                 history: null,
                 user: null,
                 autenticated: false,
-            }
+            };
         }
         this.state.todos = null;
     }
@@ -92,12 +92,12 @@ class StudentStore extends Flux.Store{
             todos: this.state.todos.concat(newTodos) 
         }).emit('todos');
     }
-    getSingleTodo(todo){
+    getSingleTodo(actionable){
         
         if(!this.state.todos) return false;
         
         let present = this.state.todos.find((item) => {
-            return (item.type === todo.type && item.associated_slug === todo.associated_slug);
+            return (item.type === actionable.type && item.associated_slug === actionable.associated_slug);
         });
         if(typeof present === 'undefined') return false;
         else return present;

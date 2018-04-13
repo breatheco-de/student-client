@@ -65,27 +65,25 @@ class DayView extends Flux.View {
     if(singleDay){
       this.setState({ 
         day: singleDay,
-        blocked: (student.type !== 'student') ? false : !singleDay.opened,
+        blocked: (student.type === 'teacher') ? false : !singleDay.opened,
         actionables: singleDay.actionables
       });
     }
   }
   
-  markAsDone(l){
-    this.setState({
-      lessons: this.state.lessons.map(function(itm){
-        if(itm.id == l.id) itm.done = true;
-        return itm;
-      }),
-      quizzes: this.state.quizzes.map(function(itm){
-        if(itm.id == l.id) itm.done = true;
-        return itm;
-      }),
-      replits: this.state.replits.map(function(itm){
-        if(itm.id == l.id) itm.done = true;
-        return itm;
-      }),
-    });
+  actionableSelected(actionable, option){
+    switch(option.slug){
+      case "mark-done":
+        let task = StudentStore.getSingleTodo(actionable);
+        if(task){
+          task.status = "done";
+          StudentActions.updateTask(task);
+        }
+      break;
+      case "goto":
+        this.show(actionable);
+      break;
+    }
   }
   
   enableDay(){
@@ -119,7 +117,7 @@ class DayView extends Flux.View {
                 done={(l.status === "done")} 
                 label={(typeof l.title !== 'undefined') ? l.title : l.associated_slug} 
                 dropdown={l.menu} 
-                onRead={()=>this.markAsDone(l)} 
+                onDropdownSelect={(option)=>this.actionableSelected(l,option)} 
                 onClick={() => this.show(l)}
               />;
     });

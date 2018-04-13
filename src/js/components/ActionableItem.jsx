@@ -15,12 +15,6 @@ class ActionableItem extends React.Component{
         }
     }
     
-    onDropdownSelect(option)
-    {
-        if(option.slug == "goto") this.onClick(true);
-        if(option.slug == "mark-done") this.props.onRead(option);
-    }
-    
     componentDidCatch(error, info) {
         // You can also log the error to an error reporting service
         console.log(error, info);
@@ -42,7 +36,7 @@ class ActionableItem extends React.Component{
                 {(this.props.icon) ? (<i className={this.props.icon+" menuicon"}></i>):''}
                 {this.prependMessage()}
                 <DropLink dropdown={this.props.dropdown} 
-                    onSelect={this.onDropdownSelect.bind(this)}>
+                    onSelect={(option) => this.props.onDropdownSelect(option)}>
                     {this.props.label}
                 </DropLink>
                 {   (this.props.done) ?
@@ -59,7 +53,7 @@ ActionableItem.propTypes = {
   label: PropTypes.string.isRequired,
   dropdown: PropTypes.array,
   isSelected: PropTypes.bool,
-  onRead: PropTypes.func.isRequired,
+  onDropdownSelect: PropTypes.func.isRequired,
   type: PropTypes.oneOf(options),
 }
 ActionableItem.defaultProps = {

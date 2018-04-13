@@ -39,7 +39,9 @@ class Sidebar extends React.Component{
     }
     
     checkForCollapse(pathname){
-        if(pathname.indexOf('/lesson/') != -1){
+        let courseRegex = /course\/(.*)\/(\d*)\/[l|r|a|q]\/(.*)$/;
+        const match = pathname.match(courseRegex);
+        if(match){
             this.toggle(true);
             return true;
         } 
