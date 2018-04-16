@@ -20,20 +20,13 @@ class DayView extends Flux.View {
       blockedError: null,
       visibleLesson: null,
       actionables: [],
-    }
+    };
     this.bindStore(BCStore, 'syllabus', this.syllabusUpdated.bind(this));
     this.stopDayChangeListener = null;
   }
   
-  getDropdown(){
-    return [
-      {label: 'Go to lesson', slug:'goto'},
-      {label: 'Mark as Read/Done', slug:'mark-done'}
-    ];
-  }
-  
   componentWillMount(){
-    this.syllabusUpdated()
+    this.syllabusUpdated();
   }
   
   syllabusUpdated(){

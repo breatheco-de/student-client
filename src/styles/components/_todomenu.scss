@@ -18,6 +18,21 @@
                 &.task-lesson .task-description{ color: $darkBlue; }
                 &.task-replit .task-description{ color: $darkYellow; }
                 &.task-quiz .task-description{ color: $darkGreen; }
+                .task-menu{
+                    position: absolute;
+                    right: 0;
+                    background: inherit;
+                    border: indianred;
+                    color: #BDBDBD;
+                    font-size: 14px;
+                    padding: 5px;
+                }
+            }
+            &.send-assignment{
+                padding: 20px;
+                font-size: 16px;
+                input[type=text]{ font-size: 16px;}
+                .btn-bar{margin-top: 10px;}
             }
         }
     }

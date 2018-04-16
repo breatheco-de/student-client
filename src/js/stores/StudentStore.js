@@ -33,7 +33,7 @@ class StudentStore extends Flux.Store{
             githubToken: null,
             autenticated: true,
             history: data.history,
-            todos: [],
+            todos: null,
             breathecodeToken: data.access_token,
             user: {
                 bc_id: data.id,

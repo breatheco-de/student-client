@@ -27,7 +27,8 @@ export default class Login extends Flux.View {
     if(!errors){
       StudentActions.loginUser(this.username, this.password, this.props.history)
       .catch((errorMsg) => {
-        this.setState({ errorMsg: [errorMsg.msg] || [errorMsg] });
+        if(errorMsg === '' || errorMsg == 'Failed to fetch') errorMsg = `We are having some trouble connecting with BreatheCode, try again later`;
+        this.setState({ errorMsg: (typeof errorMsg.msg !== 'undefined') ? [errorMsg.msg] : [errorMsg] });
       });
     }
     else this.setState({ errorMsg: errors });
