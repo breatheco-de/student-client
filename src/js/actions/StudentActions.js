@@ -1,6 +1,6 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import WP from 'wordpress-rest-api';
-import BC from '../utils/BreatheCodeWrapper';
+import BC from '@breathecode/api-js-wrapper';
 
 import StudentStore from '../stores/StudentStore';
 import BCStore from '../stores/BCStore';
@@ -65,6 +65,17 @@ class StudentActions extends Flux.Action{
         const todos = BCStore.getDayTodos(day);
         const student = StudentStore.getStudent();
         return BC.todos().add(student.bc_id,todos)
+                .then((data) => {
+                    this.dispatch('StudentStore.appendTodos', data.data || data);
+                })
+                .catch(()=>{
+                    this.dispatch('NotificationStore.notify', 'update_todos_error');
+                });
+    }
+    
+    addUnsyncedTodos(unsyncedTodos){
+        const student = StudentStore.getStudent();
+        return BC.todos().add(student.bc_id,unsyncedTodos)
                 .then((data) => {
                     this.dispatch('StudentStore.appendTodos', data.data || data);
                 })

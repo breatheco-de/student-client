@@ -111,8 +111,10 @@ class DayView extends Flux.View {
   render() {
     
     if(!this.state.day) return (<Panel className="dayview"><h1>Loading...</h1></Panel>);
+
+    const unsynced = this.state.actionables.filter(act => act.status === 'unsynced');
     
-    const actionable = this.state.actionables.map((l,i) => {
+    const actionable = this.state.actionables.filter(act => act.status !== 'unsynced').map((l,i) => {
       return <ActionableItem key={i} type={l.type} 
                 done={(l.status === "done")} 
                 label={(typeof l.title !== 'undefined') ? l.title : l.associated_slug} 
@@ -127,6 +129,13 @@ class DayView extends Flux.View {
         <p className="description">{this.state.day.description}</p>
         {(actionable.length > 0)?
           (<DayContent onStart={this.enableDay.bind(this)} blocked={this.state.blocked}>
+              {(unsynced.length>0) ?
+                (<div className="alert alert-warning">
+                  <span>There are {unsynced.length} new activities on this day &nbsp;</span>
+                  <button className="btn btn-warning"
+                  onClick={() => StudentActions.addUnsyncedTodos(unsynced)}><i className="fas fa-sync"></i> Sync now</button>
+                </div>) : ''
+              }
               <h3>To finish this day you have to complete the following actions:</h3>
               <List>{actionable}</List>
           </DayContent>):''

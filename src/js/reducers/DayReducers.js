@@ -19,7 +19,6 @@ export default {
             };
         });
     })();
-
     day.lessons = (function(){
         if(typeof day.lessons === 'undefined') return [];
         return day.lessons.map(function(less){
@@ -35,7 +34,6 @@ export default {
             };
         });
     })();
-
     day.quizzes = (function(){
         if(typeof day.quizzes === 'undefined') return [];
         return day.quizzes.map(function(q){
@@ -51,7 +49,6 @@ export default {
             };
         });
     })();
-    
     day.assignments = (function(){
         if(typeof day.assignments === 'undefined') return [];
         return day.assignments.map(function(a){
@@ -90,6 +87,8 @@ export default {
                 repl.status = todo.status;
                 if(todo.status==='done') day.totalDone++;
             } 
+            if(day.opened && !todo) repl.status = "unsynced";
+            
             return repl;
         });
     })();
@@ -102,6 +101,8 @@ export default {
                 less.status = todo.status;
                 if(todo.status==='done') day.totalDone++;
             } 
+            
+            if(day.opened && !todo) less.status = "unsynced";
             return less;
         });
     })();
@@ -114,6 +115,7 @@ export default {
                 quiz.status = todo.status;
                 if(todo.status==='done') day.totalDone++;
             } 
+            if(day.opened && !todo) quiz.status = "unsynced";
             return quiz;
         });
     })();
@@ -126,6 +128,7 @@ export default {
                 ass.status = todo.status;
                 if(todo.status==='done') day.totalDone++;
             } 
+            if(day.opened && !todo) ass.status = "unsynced";
             return ass;
         });
     })();
