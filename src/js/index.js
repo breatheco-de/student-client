@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import '../styles/index.scss';
 import './utils/icons';
 
-//import your own components
 import Layout from './Layout.jsx';
 
 var packg = require('../../package.json');
