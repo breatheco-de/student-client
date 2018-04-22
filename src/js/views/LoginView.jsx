@@ -49,7 +49,7 @@ export default class Login extends Flux.View {
     
     const errors = this.state.errorMsg.map((msg,i) => (<li key={i}>{msg}</li>));
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className="form-signin text-center">
           <img src={process.env.STATIC_PATH+bcLogo} />
           <h2 className="form-signin-heading mt-5">Please sign in</h2>
@@ -76,6 +76,11 @@ export default class Login extends Flux.View {
             //<button className="btn btn-lg btn-light btn-block" type="submit">or use Github <i className="fab fa-github"></i></button>
           }
         </div>
+        <footer className="footer">
+          <div className="container">
+            <span className="text-muted">Licensed by BreatheCode</span>
+          </div>
+        </footer>
       </div>
     );
   }

@@ -3,6 +3,7 @@ import Flux from "@4geeksacademy/react-flux-dash";
 import CheckBox from '../CheckBox.jsx';
 import StudentStore from "../../stores/StudentStore";
 import StudentActions from "../../actions/StudentActions";
+import NotifyActions from "../../actions/NotifyActions";
 import DropLink from "../DropLink";
 
 export default class TodoView extends Flux.View {
@@ -15,6 +16,7 @@ export default class TodoView extends Flux.View {
       beingDelivered: null
     };
     this.bindStore(StudentStore, 'todos', this.tasksUpdated.bind(this));
+    this.projectDeliveredURL = '';
   }
   
   tasksUpdated(){
@@ -35,11 +37,32 @@ export default class TodoView extends Flux.View {
     }
   }
   
+  deliverAssignment(task){
+    if(this.projectDeliveredURL !== '') 
+    {
+      task.status = "done";
+      task.github_url = this.projectDeliveredURL;
+      StudentActions.updateTask(task);
+    }
+    else{
+      NotifyActions.notify('deliver_assignment_error');
+    }
+  }
+  
   getTaskDescription(td){
     switch(td.type){
-      case "lesson": return 'Read'; break;
+      case "lesson": 
+        return 'Read'; 
+      break;
       case "replit": return 'Practice'; break;
-      case "assignment": return 'Code'; break;
+      case "assignment":
+        if(td.status=='pending') return 'Code'; 
+        else{
+          if(td.revision_status=='pending') return 'Code (pending teacher approval)';
+          else if(td.revision_status=='approved') return 'Code - (approved by teacher)';
+          else if(td.revision_status=='rejected') return 'Code - (rejected by teacher)';
+        }
+      break;
       case "quiz": return 'Answer'; break;
     }
   }
@@ -58,11 +81,18 @@ export default class TodoView extends Flux.View {
       
       if(this.state.beingDelivered && td.type == this.state.beingDelivered.type && this.state.beingDelivered.associated_slug === td.associated_slug){
         return (<li key={i} className="send-assignment">To finish the <b>{this.state.beingDelivered.title}</b>, upload the code to Github and specify the repo URL here:
-                  <input type="text" className="form-control" placeholder="https://github.com..." />
+                  <input type="text" className="form-control" placeholder="https://github.com..." 
+                    onChange={(e)=> this.projectDeliveredURL = e.target.value }
+                  />
                   <div className="btn-bar text-right">
                     <button className="btn btn-danger mr-2"
-                    onClick={()=> this.setState({ beingDelivered: null })}>cancel</button>
-                    <button className="btn btn-success">deliver my assignment</button>
+                      onClick={()=> this.setState({ beingDelivered: null })}>
+                      cancel
+                    </button>
+                    <button className="btn btn-success"
+                      onClick={()=> this.deliverAssignment(this.state.beingDelivered)}>
+                      deliver my assignment
+                    </button>
                   </div>
                 </li>);
       }
@@ -78,7 +108,9 @@ export default class TodoView extends Flux.View {
                       // </DropLink>
                     }
                       <p className="task-title">{td.title}</p>
-                      <p className="task-description">{this.getTaskDescription(td)}</p>
+                      <p className="task-description">
+                        {this.getTaskDescription(td)}
+                      </p>
                     </div> 
                   )}
                   onClick={(newvalue) => this.updateTask(td, newvalue)}

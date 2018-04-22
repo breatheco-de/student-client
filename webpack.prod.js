@@ -21,7 +21,7 @@ module.exports = merge(common, {
         //     }
         // }),
         new Dotenv({
-            path: './.prod.env'
+            path: './.env.prod'
         }),
         new HtmlWebpackPlugin({
             title: 'Student at BreatheCode Platform',

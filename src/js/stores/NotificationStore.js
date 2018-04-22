@@ -6,7 +6,8 @@ class NotificationStore extends Flux.Store{
         this.state = {
             notifications: [],
             templates: {
-                update_todos_error: { msg: "There has been an error adding your new todos", type: "error" }
+                update_todos_error: { msg: "There has been an error adding your new todos", type: "error" },
+                deliver_assignment_error: { msg: "You need to specify the Github URL", type: "error" }
             }
         };
     }

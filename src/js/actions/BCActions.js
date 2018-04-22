@@ -1,5 +1,5 @@
 import Flux from '@4geeksacademy/react-flux-dash';
-import BC from '@breathecode/api-js-wrapper';
+import BC from '../utils/api/index.js';
 
 class BCActions extends Flux.Action{
     

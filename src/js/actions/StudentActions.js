@@ -1,6 +1,6 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import WP from 'wordpress-rest-api';
-import BC from '@breathecode/api-js-wrapper';
+import BC from '../utils/api/index.js';
 
 import StudentStore from '../stores/StudentStore';
 import BCStore from '../stores/BCStore';
