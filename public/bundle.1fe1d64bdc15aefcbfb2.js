@@ -62479,6 +62479,10 @@ var _StudentStore = __webpack_require__(/*! ../stores/StudentStore */ "./src/js/
 
 var _StudentStore2 = _interopRequireDefault(_StudentStore);
 
+var _StudentActions = __webpack_require__(/*! ../actions/StudentActions */ "./src/js/actions/StudentActions.js");
+
+var _StudentActions2 = _interopRequireDefault(_StudentActions);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -62507,7 +62511,7 @@ var HomeView = function (_Flux$View) {
   }, {
     key: 'render',
     value: function render() {
-      if (this.state.user.type === 'student' && this.state.currentCohort) this.props.history.push('/course/' + this.state.currentCohort.profile_slug);
+      //if(this.state.user.type === 'student' && this.state.currentCohort) this.props.history.push('/course/'+this.state.currentCohort.profile_slug);
 
       return _react2.default.createElement(
         'div',
@@ -62520,7 +62524,14 @@ var HomeView = function (_Flux$View) {
             { className: 'alert alert-danger' },
             'This platform is for students only'
           ) : '',
-          'Welcome'
+          'We couldn\'t find your course, ',
+          _react2.default.createElement(
+            'a',
+            { href: '#', onClick: function onClick() {
+                return _StudentActions2.default.logoutUser();
+              } },
+            'please logout to refresh'
+          )
         )
       );
     }
@@ -63159,4 +63170,4 @@ module.exports = __webpack_require__(/*! ./src/js/index.js */"./src/js/index.js"
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.50a823c7fe5948f2dbb4.js.map
+//# sourceMappingURL=bundle.1fe1d64bdc15aefcbfb2.js.map

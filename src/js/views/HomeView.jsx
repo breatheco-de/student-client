@@ -2,6 +2,7 @@ import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
 import Panel from '../components/Panel.jsx';
 import StudentStore from '../stores/StudentStore';
+import StudentActions from '../actions/StudentActions';
 
 export default class HomeView extends Flux.View {
   
@@ -13,7 +14,7 @@ export default class HomeView extends Flux.View {
   }
   
   render() {
-    if(this.state.user.type === 'student' && this.state.currentCohort) this.props.history.push('/course/'+this.state.currentCohort.profile_slug);
+    //if(this.state.user.type === 'student' && this.state.currentCohort) this.props.history.push('/course/'+this.state.currentCohort.profile_slug);
     
     return (
       <div className="with-padding">
@@ -22,7 +23,7 @@ export default class HomeView extends Flux.View {
             (this.state.user.type !== 'student') ? 
               (<div className="alert alert-danger">This platform is for students only</div>) : ''
           }
-          Welcome
+          We couldn't find your course, <a href="#" onClick={() => StudentActions.logoutUser()}>please logout to refresh</a>
         </Panel>
       </div>
     );
