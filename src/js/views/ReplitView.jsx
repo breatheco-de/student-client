@@ -17,7 +17,7 @@ export default class ReplitView extends Flux.View {
   
   componentWillMount()
   {
-    const user = StudentStore.getStudent();
+    const user = StudentStore.getUser();
     if(user.cohorts && user.cohorts.length>0) this.setState({ cohort: user.cohorts[0] });
     else this.setState({
       error: 'There was a problem retrieving your cohort'

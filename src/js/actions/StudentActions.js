@@ -49,7 +49,7 @@ class StudentActions extends Flux.Action{
         });
     }
     
-    logoutUser(history){
+    logoutUser(){
         this.dispatch('StudentStore.logout');
     }
     
@@ -63,7 +63,7 @@ class StudentActions extends Flux.Action{
     
     startDay(day){
         const todos = BCStore.getDayTodos(day);
-        const student = StudentStore.getStudent();
+        const student = StudentStore.getUser();
         return BC.todos().add(student.bc_id,todos)
                 .then((data) => {
                     this.dispatch('StudentStore.appendTodos', data.data || data);
@@ -74,7 +74,7 @@ class StudentActions extends Flux.Action{
     }
     
     addUnsyncedTodos(unsyncedTodos){
-        const student = StudentStore.getStudent();
+        const student = StudentStore.getUser();
         return BC.todos().add(student.bc_id,unsyncedTodos)
                 .then((data) => {
                     this.dispatch('StudentStore.appendTodos', data.data || data);
@@ -85,11 +85,15 @@ class StudentActions extends Flux.Action{
     }
     
     updateTask(task){
-        const student = StudentStore.getStudent();
+        const student = StudentStore.getUser();
         return BC.todos().update(task)
                 .then((data) => {
                     this.dispatch('StudentStore.updateSingleTodo', data.data || data);
                 });
+    }
+    
+    chooseCohort(cohort){
+        this.dispatch('StudentStore.setCurrentCohort', cohort);
     }
     
     fetch(){

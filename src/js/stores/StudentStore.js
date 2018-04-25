@@ -1,30 +1,43 @@
 /* global localStorage */
 import Flux from '@4geeksacademy/react-flux-dash';
+import userReducers from '../reducers/UserReducers';
 
 class StudentStore extends Flux.Store{
     constructor(){
         super();
         
         this.state = this.getPersistedState();
-        if (!this.state)
-        {
+        if (!this.state){
             this.state = {
                 breathecodeToken: null,
                 githubToken: null,
                 history: null,
                 user: null,
+                currentCohort: null,
                 autenticated: false,
             };
         }
         this.state.todos = null;
     }
+    __reduce(entity){
+        return {
+            with: (reducers) => {
+                for(let key in reducers) entity = reducers[key](entity);
+                return entity;
+            }
+        };
+    }
+    
+    _reduceUser(){ 
+        if(this.state.user) this._setUser(this.state.user);
+    }
     
     setPersistedState(data){
-        localStorage.setItem('state:'+this.constructor.name, JSON.stringify(Object.assign(this.state, data)));
+        localStorage.setItem('state:StudentStore', JSON.stringify(Object.assign(this.state, data)));
         return this.setStoreState(data);
     }
     getPersistedState(data){
-        let persistedState = JSON.parse(localStorage.getItem('state:'+this.constructor.name));
+        let persistedState = JSON.parse(localStorage.getItem('state:StudentStore'));
         return persistedState;
     }
     
@@ -35,6 +48,7 @@ class StudentStore extends Flux.Store{
             history: data.history,
             todos: null,
             breathecodeToken: data.access_token,
+            currentCohort: (data.cohorts.length === 1) ? data.cohorts[0] : data.cohorts,
             user: {
                 bc_id: data.id,
                 cohorts: data.cohorts,
@@ -60,6 +74,25 @@ class StudentStore extends Flux.Store{
             user: null
         }).emit('session');
     }
+    
+    _setUser(user){
+        this.setPersistedState({
+            user: this.__reduce(user).with(userReducers)
+        }).emit('user');
+    }
+    getUser(){
+        return this.state.user;
+    }
+    
+    getCurrentCohort(){
+        return this.state.currentCohort;
+    }
+    _setCurrentCohort(cohort){
+        this.setPersistedState({
+            currentCohort: cohort
+        }).emit('current_cohort');
+    }
+    
     
     getAutentication(){
         return {
@@ -101,10 +134,6 @@ class StudentStore extends Flux.Store{
         });
         if(typeof present === 'undefined') return false;
         else return present;
-    }
-    
-    getStudent(){
-        return this.state.user;
     }
     
 }

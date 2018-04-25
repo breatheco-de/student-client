@@ -24,7 +24,7 @@ class SplitLayout extends React.Component{
     
     componentWillMount(){
         this.setState({
-           student: StudentStore.getStudent() 
+           student: StudentStore.getUser() 
         });
     }
     
@@ -79,6 +79,7 @@ class SplitLayout extends React.Component{
         switch(item.slug){
             case "logout": StudentActions.logoutUser(); break;
             case "profile": this.props.history.push('/profile'); break;
+            case "choose": this.props.history.push('/choose'); break;
         }
     }
     
@@ -105,6 +106,7 @@ class SplitLayout extends React.Component{
                                     { (this.state.student && !this.state.collapsed) ? this.state.student.full_name : ''}
                                     <DropLink direction="up" dropdown={[
                                             {label: 'Profile', slug:'profile'},
+                                            {label: 'My Courses', slug:'choose'},
                                             {label: 'Logout', slug:'logout'}
                                         ]} 
                                         onSelect={this.onSettingsSelect.bind(this)}>

@@ -9,11 +9,12 @@ import faCog from '@fortawesome/fontawesome-free-solid/faCog';
 import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 import faGithub from '@fortawesome/fontawesome-free-brands/faGithub';
+import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
 
 fontawesome.config = {
   autoReplaceSvg: 'nest'
 }
 fontawesome.library.add(
     faCheck, faGraduationCap, faPlay, faSpinner, faSearch, faGithub,
-    faCog, faSync, faEllipsisV
+    faCog, faSync, faEllipsisV, faExternalLinkAlt
 );

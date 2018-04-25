@@ -7,7 +7,8 @@ class NotificationStore extends Flux.Store{
             notifications: [],
             templates: {
                 update_todos_error: { msg: "There has been an error adding your new todos", type: "error" },
-                deliver_assignment_error: { msg: "You need to specify the Github URL", type: "error" }
+                deliver_assignment_error: { msg: "You need to specify the Github URL", type: "error" },
+                invalid_cohort: { msg: "The cohort your are trying to access is not available", type: "error" }
             }
         };
     }

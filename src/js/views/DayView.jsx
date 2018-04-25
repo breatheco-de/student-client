@@ -53,7 +53,7 @@ class DayView extends Flux.View {
   }
   
   loadDay(newDayNumber=null){
-    const student = StudentStore.getStudent();
+    const student = StudentStore.getUser();
     const singleDay = BCStore.getSingleDay(newDayNumber || this.props.match.params.day_number);
     if(singleDay){
       this.setState({ 

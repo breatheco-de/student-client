@@ -17,7 +17,7 @@ export default class ProfileView extends Flux.View {
   }
   
   componentWillMount(){
-    const student = StudentStore.getStudent();
+    const student = StudentStore.getUser();
     if(student) this.setState({ student });
   }
   

@@ -8,7 +8,9 @@ import HomeView from './views/HomeView';
 import LoginView from './views/LoginView';
 import ForgotView from './views/ForgotView';
 import ProfileView from './views/ProfileView';
+import ChooseView from './views/ChooseView';
 import StudentStore from './stores/StudentStore';
+import StudentActions from './actions/StudentActions';
 
 import NotificationStore from './stores/NotificationStore';
 import Notifier from './components/Notifier';
@@ -70,6 +72,7 @@ class Layout extends Flux.View{
                             <Route exact path='/forgot' component={ForgotView} />
                             <PrivateRoute exact path='/' loggedIn={this.state.loggedIn} component={HomeView} />
                             <PrivateRoute exact path='/home' loggedIn={this.state.loggedIn} component={HomeView} />
+                            <PrivateRoute exact path='/choose' loggedIn={this.state.loggedIn} component={ChooseView} />
                             <PrivateRoute exact path='/profile' loggedIn={this.state.loggedIn} component={ProfileView} />
                             <PrivateRoute path='/course/:course_slug' loggedIn={this.state.loggedIn} component={CourseView} />
                             <PrivateRoute render={() => (<p className="text-center mt-5">Not found</p>)} />

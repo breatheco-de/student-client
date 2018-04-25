@@ -8,6 +8,7 @@ import TodoMenu from '../components/menus/TodoMenu';
 
 import BCStore from '../stores/BCStore';
 import BCActions from '../actions/BCActions';
+import NotifyActions from '../actions/NotifyActions';
 
 import CourseIntro from '../views/CourseIntro';
 import DayView from '../views/DayView';
@@ -25,6 +26,7 @@ class CourseView extends Flux.View{
         super();
         this.state = {
             courseSlug: null,
+            currentCohort: null,
             menuItems: [
               {slug:"course", label:"Course", component: CourseMenu, size: 200 },
               {slug:"syllabus", label:"Journey", component: TimeMenu, size: 370, data: BCStore.getSyllabusDays() },
@@ -39,8 +41,11 @@ class CourseView extends Flux.View{
     componentWillMount(){
       const courseSlug = this.props.match.params.course_slug;
       const syllabus = BCStore.getSyllabus(courseSlug);
-      if(!syllabus) BCActions.fetch().syllabus(courseSlug);
-      this.setState({ courseSlug });
+      if(!syllabus || syllabus.profile != courseSlug) BCActions.fetch().syllabus(courseSlug);
+      this.setState({ 
+        courseSlug,
+        currentCohort: StudentStore.getCurrentCohort()
+      });
     }
     
     syllabusUpdated(){
@@ -58,7 +63,7 @@ class CourseView extends Flux.View{
     fetchSecondSyllabusPhase(){
       const todos = StudentStore.getTodos();
       if(!todos){
-        const student = StudentStore.getStudent();
+        const student = StudentStore.getUser();
         if(student) StudentActions.fetch().todos(student.bc_id);
       } 
       const projects = BCStore.getProjects();
@@ -74,6 +79,12 @@ class CourseView extends Flux.View{
     }
     
     render() {
+        if(!this.state.currentCohort || Array.isArray(this.state.currentCohort)) this.props.history.push('/choose');
+        else if(this.state.currentCohort.profile_slug !== this.state.courseSlug){
+          NotifyActions.notify('invalid_cohort');
+          this.props.history.push('/choose');
+        }
+        
         return (
             <SplitLayout menuItems={this.state.menuItems}
               onNavBarSelect={this.onSelect.bind(this)}
