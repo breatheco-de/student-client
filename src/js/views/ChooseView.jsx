@@ -43,6 +43,9 @@ export default class ChooseView extends Flux.View {
           <List className="courses">
             {cohorts}
           </List>
+          <div className="text-center">
+            <a className="btn btn-light" href="#" onClick={() => StudentActions.logoutUser()}>or go ahead and logout</a>
+          </div>
         </div>
       </Panel>
     );

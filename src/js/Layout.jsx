@@ -44,6 +44,7 @@ class Layout extends Flux.View{
         this.setState({ 
             loggedIn: session.autenticated, 
             redirection: needsRedirection,
+            currentCohort: StudentStore.getCurrentCohort(),
             history: session.history
         });
     }

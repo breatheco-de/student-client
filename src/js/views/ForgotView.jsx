@@ -26,7 +26,7 @@ export default class Forgot extends Flux.View {
       StudentActions.remindUser(this.email)
       .then(() => {
         this.setState({ 
-          successMsg: `Check your email for instructions, if you don't receive th email check your spam folder`
+          successMsg: `Check your email for instructions, if you don't receive the email in 5 min please check your spam folder`
         });
       })
       .catch((errorMsg) => {
