@@ -14,7 +14,7 @@ export default class HomeView extends Flux.View {
   }
   
   render() {
-    //if(this.state.user.type === 'student' && this.state.currentCohort) this.props.history.push('/course/'+this.state.currentCohort.profile_slug);
+    if(this.state.user.type === 'student' && this.state.currentCohort) this.props.history.push('/course/'+this.state.currentCohort.profile_slug);
     
     return (
       <div className="with-padding">
