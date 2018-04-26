@@ -61,7 +61,7 @@ class StudentStore extends Flux.Store{
                 total_points: data.total_points,
                 wp_id: data.wp_id,
                 created_at: data.created_at,
-                email: data.username,
+                email: data.email || data.username,
                 avatar: data.avatar_url,
                 full_name: data.full_name,
                 type: data.type || 'student'

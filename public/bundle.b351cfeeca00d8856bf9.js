@@ -61888,7 +61888,7 @@ function extend() {
 /*! exports provided: name, version, description, main, scripts, author, license, devDependencies, babel, dependencies, default */
 /***/ (function(module) {
 
-module.exports = {"name":"workspace","version":"1.0.4","description":"","main":"index.js","scripts":{"c9":"webpack-dev-server --mode development --open --host $IP --port $PORT --config webpack.dev.js","dev":"webpack --mode development --config webpack.dev.js","start":"http-server -a $IP","build":"webpack --mode development --config webpack.prod.js"},"author":"","license":"ISC","devDependencies":{"@breathecode/breathecode-cli":"0.0.1","babel-cli":"^6.26.0","babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.0","babel-preset-react":"^6.24.1","css-loader":"^0.28.7","dotenv-webpack":"^1.5.5","file-loader":"^1.1.5","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","markdown-loader":"^2.0.2","node-sass":"^4.8.3","react-svg-loader":"^2.1.0","sass-loader":"^6.0.6","style-loader":"^0.19.0","webpack":"^4.6.0","webpack-cli":"^2.0.9","webpack-dev-server":"^3.1.3","webpack-merge":"^4.1.2"},"babel":{"presets":["env","react"]},"dependencies":{"@4geeksacademy/react-flux-dash":"^1.1.9","@breathecode/api-js-wrapper":"^1.0.0","@fortawesome/fontawesome":"^1.1.4","@fortawesome/fontawesome-free-brands":"^5.0.9","@fortawesome/fontawesome-free-regular":"^5.0.8","@fortawesome/fontawesome-free-solid":"^5.0.8","bootstrap":"^4.0.0-beta.2","events":"^1.1.1","flux":"^3.1.3","jquery":"^3.2.1","moment":"^2.19.4","popper.js":"^1.12.9","prop-types":"^15.6.1","query-string":"^5.0.1","raven-js":"^3.24.2","react":"^16.0.0","react-ace":"^5.9.0","react-dom":"^16.0.0","react-flux-dash":"^1.1.6","react-marked":"^0.3.1","react-mousetrap":"^0.2.0","react-polyfills":"0.0.1","react-router":"^4.2.0","react-router-dom":"^4.2.2","react-split-pane":"^0.1.77","react-transition-group":"^1.2.1","reactstrap":"^5.0.0-beta.3","validator":"^9.4.1","wordpress-rest-api":"^0.8.0"}};
+module.exports = {"name":"workspace","version":"1.0.5","description":"","main":"index.js","scripts":{"c9":"webpack-dev-server --mode development --open --host $IP --port $PORT --config webpack.dev.js","dev":"webpack --mode development --config webpack.dev.js","start":"http-server -a $IP","build":"webpack --mode development --config webpack.prod.js"},"author":"","license":"ISC","devDependencies":{"@breathecode/breathecode-cli":"0.0.1","babel-cli":"^6.26.0","babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.0","babel-preset-react":"^6.24.1","css-loader":"^0.28.7","dotenv-webpack":"^1.5.5","file-loader":"^1.1.5","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","markdown-loader":"^2.0.2","node-sass":"^4.8.3","react-svg-loader":"^2.1.0","sass-loader":"^6.0.6","style-loader":"^0.19.0","webpack":"^4.6.0","webpack-cli":"^2.0.9","webpack-dev-server":"^3.1.3","webpack-merge":"^4.1.2"},"babel":{"presets":["env","react"]},"dependencies":{"@4geeksacademy/react-flux-dash":"^1.1.9","@breathecode/api-js-wrapper":"^1.0.0","@fortawesome/fontawesome":"^1.1.4","@fortawesome/fontawesome-free-brands":"^5.0.9","@fortawesome/fontawesome-free-regular":"^5.0.8","@fortawesome/fontawesome-free-solid":"^5.0.8","bootstrap":"^4.0.0-beta.2","events":"^1.1.1","flux":"^3.1.3","jquery":"^3.2.1","moment":"^2.19.4","popper.js":"^1.12.9","prop-types":"^15.6.1","query-string":"^5.0.1","raven-js":"^3.24.2","react":"^16.0.0","react-ace":"^5.9.0","react-dom":"^16.0.0","react-flux-dash":"^1.1.6","react-marked":"^0.3.1","react-mousetrap":"^0.2.0","react-polyfills":"0.0.1","react-router":"^4.2.0","react-router-dom":"^4.2.2","react-split-pane":"^0.1.77","react-transition-group":"^1.2.1","reactstrap":"^5.0.0-beta.3","validator":"^9.4.1","wordpress-rest-api":"^0.8.0"}};
 
 /***/ }),
 
@@ -61930,6 +61930,10 @@ var _reactFluxDash2 = _interopRequireDefault(_reactFluxDash);
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
 var _index = __webpack_require__(/*! ./libraries/react-router-dash/index */ "./src/js/libraries/react-router-dash/index.js");
+
+var _ravenJs = __webpack_require__(/*! raven-js */ "./node_modules/raven-js/src/singleton.js");
+
+var _ravenJs2 = _interopRequireDefault(_ravenJs);
 
 var _CourseView = __webpack_require__(/*! ./views/CourseView */ "./src/js/views/CourseView.jsx");
 
@@ -61977,7 +61981,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //for error monitoring
 
 var Layout = function (_Flux$View) {
     _inherits(Layout, _Flux$View);
@@ -62005,7 +62009,14 @@ var Layout = function (_Flux$View) {
         key: 'sessionChange',
         value: function sessionChange() {
             var session = _StudentStore2.default.getAutentication();
-            if (!session.autenticated && session.redirect) window.location = '/login';else this.setState({ loggedIn: true });
+            if (!session.autenticated && session.redirect) window.location = '/login';else {
+                var user = _StudentStore2.default.getUser();
+                if (user) {
+                    _ravenJs2.default.setUserContext({ email: user.email, id: user.bc_id });
+                    _ravenJs2.default.setExtraContext({ cohort: user.cohorts });
+                }
+                this.setState({ loggedIn: true });
+            }
         }
     }, {
         key: 'notificationsUpdated',
@@ -62283,7 +62294,6 @@ var StudentActions = function (_Flux$Action) {
             var _this4 = this;
 
             return _index2.default.credentials().autenticate(username, password).then(function (data) {
-                data.history = history;
                 _this4.dispatch('StudentStore.login', data);
             });
         }
@@ -64450,7 +64460,11 @@ _ravenJs2.default.config('https://88709bb84c9f42bfbb8fd6d750369e46@sentry.io/119
 
 
 var packg = __webpack_require__(/*! ../../package.json */ "./package.json");
-console.log("BreatheCode Platform", packg.version);
+_ravenJs2.default.setTagsContext({
+  environment: "production",
+  version: packg.version
+});
+console.log("BreatheCode Platform", packg.version, "production");
 
 _reactDom2.default.render(_react2.default.createElement(_Layout2.default, null), document.getElementById('app'));
 
@@ -65067,7 +65081,7 @@ var StudentStore = function (_Flux$Store) {
                     total_points: data.total_points,
                     wp_id: data.wp_id,
                     created_at: data.created_at,
-                    email: data.username,
+                    email: data.email || data.username,
                     avatar: data.avatar_url,
                     full_name: data.full_name,
                     type: data.type || 'student'
@@ -67037,6 +67051,10 @@ var _StudentStore = __webpack_require__(/*! ../stores/StudentStore */ "./src/js/
 
 var _StudentStore2 = _interopRequireDefault(_StudentStore);
 
+var _ravenJs = __webpack_require__(/*! raven-js */ "./node_modules/raven-js/src/singleton.js");
+
+var _ravenJs2 = _interopRequireDefault(_ravenJs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67068,6 +67086,16 @@ var ReplitView = function (_Flux$View) {
       this.setState({ cohort: cohort });
     }
   }, {
+    key: 'getReplitURL',
+    value: function getReplitURL() {
+      var replit_slug = this.props.match.params.replit_slug;
+      var cohort_slug = this.state.cohort.slug;
+      var url = "https://assets.breatheco.de/apps/replit?r=" + replit_slug + '&c=' + cohort_slug;
+      if (typeof replit_slug === 'undefined' || typeof cohort_slug === 'undefined' || "string" === 'undefined') _ravenJs2.default.captureException(new Error('Invalid Replit URL ' + url));
+
+      return url;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -67081,7 +67109,7 @@ var ReplitView = function (_Flux$View) {
           _react2.default.createElement(_Loading2.default, { show: this.state.loading }),
           _react2.default.createElement('iframe', { onLoad: function onLoad() {
               return _this2.setState({ loading: false });
-            }, className: 'replit-iframe', src: "https://assets.breatheco.de/apps/replit?r=" + this.props.match.params.replit_slug + '&c=' + this.state.cohort.slug,
+            }, className: 'replit-iframe', src: this.getReplitURL(),
             height: '100%', width: '100%', frameBorder: '0' })
         ) : _react2.default.createElement(
           'div',
@@ -67137,4 +67165,4 @@ module.exports = __webpack_require__(/*! ./src/js/index.js */"./src/js/index.js"
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.6786ef35531b92317938.js.map
+//# sourceMappingURL=bundle.b351cfeeca00d8856bf9.js.map

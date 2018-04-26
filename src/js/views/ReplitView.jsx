@@ -4,6 +4,8 @@ import Panel from '../components/Panel';
 import Loading from '../components/Loading';
 import StudentStore from '../stores/StudentStore';
 
+import Raven from 'raven-js';
+
 export default class ReplitView extends Flux.View {
   
   constructor(){
@@ -21,13 +23,23 @@ export default class ReplitView extends Flux.View {
     this.setState({ cohort });
   }
   
+  getReplitURL(){
+    const replit_slug = this.props.match.params.replit_slug;
+    const cohort_slug = this.state.cohort.slug;
+    const url = process.env.REPLIT_URL+replit_slug+'&c='+cohort_slug;
+    if(typeof replit_slug === 'undefined' || typeof cohort_slug === 'undefined' || typeof process.env.REPLIT_URL === 'undefined')
+      Raven.captureException(new Error(`Invalid Replit URL ${url}`));
+      
+    return url;
+  }
+  
   render() {
     return (
       <Panel padding={false}>
         {
           (!this.state.error) ? 
             (<span><Loading show={this.state.loading} />
-              <iframe onLoad={()=>this.setState({loading: false})} className="replit-iframe" src={process.env.REPLIT_URL+this.props.match.params.replit_slug+'&c='+this.state.cohort.slug} 
+              <iframe onLoad={()=>this.setState({loading: false})} className="replit-iframe" src={this.getReplitURL()} 
                 height="100%" width="100%" frameBorder="0" /></span>)
             : (<div class="alert alert-danger">
                 {this.state.error}

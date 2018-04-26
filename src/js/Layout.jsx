@@ -2,6 +2,7 @@ import React from 'react';
 import Flux from '@4geeksacademy/react-flux-dash';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {PrivateRoute} from './libraries/react-router-dash/index';
+import Raven from 'raven-js';//for error monitoring
 
 import CourseView from './views/CourseView';
 import HomeView from './views/HomeView';
@@ -34,7 +35,14 @@ class Layout extends Flux.View{
     sessionChange(){
         const session = StudentStore.getAutentication();
         if(!session.autenticated && session.redirect) window.location = '/login';
-        else this.setState({ loggedIn: true });
+        else{
+            const user = StudentStore.getUser();
+            if(user){
+                Raven.setUserContext({ email: user.email, id: user.bc_id });
+                Raven.setExtraContext({ cohort: user.cohorts });
+            }
+            this.setState({ loggedIn: true });
+        } 
     }
     
     notificationsUpdated(){

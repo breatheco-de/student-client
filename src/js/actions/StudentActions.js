@@ -44,7 +44,6 @@ class StudentActions extends Flux.Action{
      
         return BC.credentials().autenticate(username, password)
         .then((data) => {
-            data.history = history;
             this.dispatch('StudentStore.login', data);
         });
     }

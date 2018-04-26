@@ -12,7 +12,11 @@ import Layout from './Layout.jsx';
 Raven.config('https://88709bb84c9f42bfbb8fd6d750369e46@sentry.io/1196496').install()
 
 var packg = require('../../package.json');
-console.log("BreatheCode Platform",packg.version);
+Raven.setTagsContext({ 
+  environment: process.env.ENVIRONMENT,
+  version: packg.version
+});
+console.log("BreatheCode Platform",packg.version, process.env.ENVIRONMENT);
 
 ReactDOM.render(
   <Layout />,
