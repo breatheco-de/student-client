@@ -21,9 +21,7 @@ class Layout extends Flux.View{
         super();
         this.state = {
             loggedIn: StudentStore.getAutentication(),
-            history: null,
             errors: null,
-            redirection: null
         }
         this.bindStore(StudentStore, 'session', this.sessionChange.bind(this));
         this.bindStore(NotificationStore, 'notifications', this.notificationsUpdated.bind(this));
@@ -35,23 +33,8 @@ class Layout extends Flux.View{
     
     sessionChange(){
         const session = StudentStore.getAutentication();
-        let needsRedirection = false;
-        if(session.history !== null)
-        {
-            if(typeof session.history.push !== 'undefined' && (session.autenticated && !this.state.loggedIn))
-                needsRedirection = true;
-        }
-        this.setState({ 
-            loggedIn: session.autenticated, 
-            redirection: needsRedirection,
-            currentCohort: StudentStore.getCurrentCohort(),
-            history: session.history
-        });
-    }
-    
-    redirect(path){
-        this.setState({ history: null });
-        this.state.history.push(path);
+        if(!session.autenticated && session.redirect) window.location = '/login';
+        else this.setState({ loggedIn: true });
     }
     
     notificationsUpdated(){
@@ -61,8 +44,6 @@ class Layout extends Flux.View{
     }
     
     render() {
-        if(this.state.redirection && this.state.history) this.redirect('/home');
-
         return (
             <div className="layout">
                 <BrowserRouter>
@@ -72,7 +53,6 @@ class Layout extends Flux.View{
                             <Route exact path='/login' component={LoginView} />
                             <Route exact path='/forgot' component={ForgotView} />
                             <PrivateRoute exact path='/' loggedIn={this.state.loggedIn} component={HomeView} />
-                            <PrivateRoute exact path='/home' loggedIn={this.state.loggedIn} component={HomeView} />
                             <PrivateRoute exact path='/choose' loggedIn={this.state.loggedIn} component={ChooseView} />
                             <PrivateRoute exact path='/profile' loggedIn={this.state.loggedIn} component={ProfileView} />
                             <PrivateRoute path='/course/:course_slug' loggedIn={this.state.loggedIn} component={CourseView} />

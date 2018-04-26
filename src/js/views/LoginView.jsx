@@ -15,11 +15,24 @@ export default class Login extends Flux.View {
     }
     this.username = '';
     this.password = '';
+    
+    this.bindStore(StudentStore, 'session', this.sessionChange.bind(this));
   }
   
   componentWillMount(){
+    this.sessionChange();
+  }
+  
+  sessionChange(){
     const session = StudentStore.getAutentication();
-    if(session.autenticated) this.props.history.push('/home');
+    if(session.autenticated){
+      let user = StudentStore.getUser();
+      let currentCohort = StudentStore.getCurrentCohort();
+      if(user.type === 'student'){
+          if(Array.isArray(currentCohort)) window.location = '/choose';
+          else window.location = '/course/'+currentCohort.profile_slug;
+      }
+    }
   }
 
   login(e){

@@ -11,12 +11,13 @@ class StudentStore extends Flux.Store{
             this.state = {
                 breathecodeToken: null,
                 githubToken: null,
-                history: null,
+                redirect: null,
                 user: null,
                 currentCohort: null,
                 autenticated: false,
             };
         }
+        this.state.redirect = null;
         this.state.todos = null;
     }
     __reduce(entity){
@@ -45,7 +46,7 @@ class StudentStore extends Flux.Store{
         this.setPersistedState({
             githubToken: null,
             autenticated: true,
-            history: data.history,
+            redirect: true,
             todos: null,
             breathecodeToken: data.access_token,
             currentCohort: (data.cohorts.length === 1) ? data.cohorts[0] : data.cohorts,
@@ -70,6 +71,7 @@ class StudentStore extends Flux.Store{
     _logout(data){
         this.setPersistedState({ 
             autenticated: false,
+            redirect: true,
             breathecodeToken: null,
             user: null
         }).emit('session');
@@ -97,7 +99,7 @@ class StudentStore extends Flux.Store{
     getAutentication(){
         return {
             autenticated: this.state.autenticated,
-            history: this.state.history
+            redirect: this.state.redirect
         };
     }
     
