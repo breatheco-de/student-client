@@ -17,11 +17,8 @@ export default class ReplitView extends Flux.View {
   
   componentWillMount()
   {
-    const user = StudentStore.getUser();
-    if(user.cohorts && user.cohorts.length>0) this.setState({ cohort: user.cohorts[0] });
-    else this.setState({
-      error: 'There was a problem retrieving your cohort'
-    })
+    const cohort = StudentStore.getCurrentCohort();
+    this.setState({ cohort });
   }
   
   render() {
@@ -30,7 +27,7 @@ export default class ReplitView extends Flux.View {
         {
           (!this.state.error) ? 
             (<span><Loading show={this.state.loading} />
-              <iframe onLoad={()=>this.setState({loading: false})} className="replit-iframe" src={process.env.REPLIT_URL+this.props.match.params.replit_slug+'&c='+this.state.cohort} 
+              <iframe onLoad={()=>this.setState({loading: false})} className="replit-iframe" src={process.env.REPLIT_URL+this.props.match.params.replit_slug+'&c='+this.state.cohort.slug} 
                 height="100%" width="100%" frameBorder="0" /></span>)
             : (<div class="alert alert-danger">
                 {this.state.error}
