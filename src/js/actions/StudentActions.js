@@ -63,7 +63,7 @@ class StudentActions extends Flux.Action{
     startDay(day){
         const todos = BCStore.getDayTodos(day);
         const student = StudentStore.getUser();
-        return BC.todos().add(student.bc_id,todos)
+        return BC.todo().add(student.bc_id,todos)
                 .then((data) => {
                     this.dispatch('StudentStore.appendTodos', data.data || data);
                 })
@@ -74,7 +74,7 @@ class StudentActions extends Flux.Action{
     
     addUnsyncedTodos(unsyncedTodos){
         const student = StudentStore.getUser();
-        return BC.todos().add(student.bc_id,unsyncedTodos)
+        return BC.todo().add(student.bc_id,unsyncedTodos)
                 .then((data) => {
                     this.dispatch('StudentStore.appendTodos', data.data || data);
                 })
@@ -85,7 +85,7 @@ class StudentActions extends Flux.Action{
     
     updateTask(task){
         const student = StudentStore.getUser();
-        return BC.todos().update(task)
+        return BC.todo().update(task)
                 .then((data) => {
                     this.dispatch('StudentStore.updateSingleTodo', data.data || data);
                 });
@@ -98,7 +98,7 @@ class StudentActions extends Flux.Action{
     fetch(){
         return {
             todos: (studentId) =>{
-                BC.todos().getByStudent(studentId)
+                BC.todo().getByStudent(studentId)
                 .then((data) => {
                     if(typeof data.code === 'undefined' || data.code==200)
                         this.dispatch('StudentStore.setTodos', data.data || data);

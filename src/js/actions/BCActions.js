@@ -21,7 +21,7 @@ class BCActions extends Flux.Action{
                 });
             },
             projects: (syllabus_slug) =>{
-                BC.projects().all(syllabus_slug)
+                BC.project().all(syllabus_slug)
                 .then((data) => {
                     console.log(data);
                     this.dispatch('BCStore.setProjects', data);
