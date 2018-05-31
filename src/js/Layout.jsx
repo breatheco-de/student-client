@@ -14,6 +14,7 @@ import StudentStore from './stores/StudentStore';
 import StudentActions from './actions/StudentActions';
 
 import NotificationStore from './stores/NotificationStore';
+import NotifyActions from './actions/NotifyActions';
 import Notifier from './components/Notifier';
 
 class Layout extends Flux.View{
@@ -49,6 +50,18 @@ class Layout extends Flux.View{
         this.setState({
            notifications: NotificationStore.getAllNotifications()
         });
+    }
+    
+    deliverAssignment(task){
+        if(this.projectDeliveredURL !== '') 
+        {
+            task.status = "done";
+            task.github_url = this.projectDeliveredURL;
+            StudentActions.updateTask(task);
+        }
+        else{
+            NotifyActions.notify('deliver_assignment_error');
+        }
     }
     
     render() {

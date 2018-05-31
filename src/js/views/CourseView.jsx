@@ -5,6 +5,7 @@ import SplitLayout from '../components/SplitLayout';
 import CourseMenu from '../components/menus/CourseMenu';
 import TimeMenu from '../components/menus/TimeLineMenu';
 import TodoMenu from '../components/menus/TodoMenu';
+//import Modal from '../components/Modal';
 
 import BCStore from '../stores/BCStore';
 import BCActions from '../actions/BCActions';
@@ -93,6 +94,13 @@ class CourseView extends Flux.View{
               }
             >
                     <div>
+                    {
+                        // <Modal show={true} confirmLabel="Send Assignment" cancelLabel="Cancel"
+                        //   onConfirm={}
+                        // >
+                        //   Please specify the github url
+                        // </Modal>
+                    }
                         <Switch>
                             <Route exact path={this.props.match.path} component={CourseIntro} />
                             <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />

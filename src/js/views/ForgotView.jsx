@@ -1,6 +1,7 @@
 import React from "react";
 import Flux from "@4geeksacademy/react-flux-dash";
 import Validator from 'validator';
+import {Link} from "react-router-dom";
 import bcLogo from '../../img/bc-icon.png';
 import StudentActions from '../actions/StudentActions';
 
@@ -10,8 +11,9 @@ export default class Forgot extends Flux.View {
     super();
     this.state = {
       errorMsg: [],
+      pending: false,
       successMsg: null
-    }
+    };
     this.email = '';
   }
   
@@ -22,15 +24,16 @@ export default class Forgot extends Flux.View {
   formSubmit(e){
     const errors = this.validateForm();
     if(!errors){
-      this.setState({ errorMsg: [], successMsg: null });
+      this.setState({ errorMsg: [], successMsg: null, pending: true });
       StudentActions.remindUser(this.email)
       .then(() => {
         this.setState({ 
-          successMsg: `Check your email for instructions, if you don't receive the email in 5 min please check your spam folder`
+          successMsg: `Check your email for instructions, if you don't receive the email in 5 min please check your spam folder`,
+          pending: false
         });
       })
       .catch((errorMsg) => {
-        this.setState({ errorMsg: [errorMsg.msg] || [errorMsg] });
+        this.setState({ errorMsg: [errorMsg.msg] || [errorMsg], pending: false });
       });
     }
     else this.setState({ errorMsg: errors });
@@ -69,7 +72,13 @@ export default class Forgot extends Flux.View {
             <input type="email" id="inputEmail" className="form-control mb-3 mt-3" placeholder="Your account email" required autoFocus 
               onChange={(e) => this.email = e.target.value}
             />
-            <button className="btn btn-lg btn-primary btn-block" type="submit">Confirm email</button>
+            {
+              (!this.state.pending) ?
+                <button className="btn btn-lg btn-primary btn-block" type="submit">Confirm email</button>
+              :
+                <button className="btn btn-lg btn-secondary btn-block" type="button" disabled={this.state.pending}>Loading...</button>
+            }
+            <Link to="/login" className="p-2">or back to login</Link>
           </form>
           {
             //<button className="btn btn-lg btn-light btn-block" type="submit">or use Github <i className="fab fa-github"></i></button>

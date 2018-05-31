@@ -80,19 +80,19 @@ export default class TodoView extends Flux.View {
     const todoElms = (!this.state.todos) ? [] : this.state.todos.filter((td) => (!this.state.includeDone) ? (td.status === 'pending') : true).map((td,i)=>{
       
       if(this.state.beingDelivered && td.type == this.state.beingDelivered.type && this.state.beingDelivered.associated_slug === td.associated_slug){
-        return (<li key={i} className="send-assignment">To finish the <b>{this.state.beingDelivered.title}</b>, upload the code to Github and specify the repo URL here:
-                  <input type="text" className="form-control" placeholder="https://github.com..." 
-                    onChange={(e)=> this.projectDeliveredURL = e.target.value }
-                  />
+        return (<li key={i} className="send-assignment">
+                  Coding assignments cannot be delivered yet
                   <div className="btn-bar text-right">
                     <button className="btn btn-danger mr-2"
                       onClick={()=> this.setState({ beingDelivered: null })}>
-                      cancel
+                      Ok
                     </button>
-                    <button className="btn btn-success"
-                      onClick={()=> this.deliverAssignment(this.state.beingDelivered)}>
-                      deliver my assignment
-                    </button>
+                    {
+                      // <button className="btn btn-success"
+                      //   onClick={()=> this.deliverAssignment(this.state.beingDelivered)}>
+                      //   deliver my assignment
+                      // </button>
+                    }
                   </div>
                 </li>);
       }

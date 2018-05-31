@@ -11,8 +11,9 @@ export default class Login extends Flux.View {
   constructor(){
     super();
     this.state = {
-      errorMsg: []
-    }
+      errorMsg: [],
+      pending: false
+    };
     this.username = '';
     this.password = '';
     
@@ -37,11 +38,16 @@ export default class Login extends Flux.View {
 
   login(e){
     const errors = this.validateForm();
+    this.setState({ errorMsg: [], pending: true });
+    
     if(!errors){
       StudentActions.loginUser(this.username, this.password, this.props.history)
       .catch((errorMsg) => {
         if(errorMsg === '' || errorMsg == 'Failed to fetch') errorMsg = `We are having some trouble connecting with BreatheCode, try again later`;
-        this.setState({ errorMsg: (typeof errorMsg.msg !== 'undefined') ? [errorMsg.msg] : [errorMsg] });
+        this.setState({ 
+          errorMsg: (typeof errorMsg.msg !== 'undefined') ? [errorMsg.msg] : [errorMsg],
+          pending: false
+        });
       });
     }
     else this.setState({ errorMsg: errors });
@@ -80,7 +86,12 @@ export default class Login extends Flux.View {
             <input type="password" id="inputPassword" className="form-control" placeholder="Password" required
               onChange={(e) => this.password = e.target.value}
             />
-            <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            {
+              (!this.state.pending) ?
+                <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              :
+                <button className="btn btn-lg btn-secondary btn-block" type="button" disabled={this.state.pending}>Loading...</button>
+            }
             <div className="checkbox">
                 <Link to="/forgot">Forgot Password</Link>
             </div>
