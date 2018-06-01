@@ -77,7 +77,8 @@ class BCStore extends Flux.Store{
                 title: r.title,
                 status: 'pending',
                 type: 'replit',
-                associated_slug: r.associated_slug
+                associated_slug: r.associated_slug,
+                vtutorial_slug: r.vtutorial_slug
             };
         }))
         .concat(day.assignments.map((a,i) => {

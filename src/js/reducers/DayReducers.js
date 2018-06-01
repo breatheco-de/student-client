@@ -7,13 +7,19 @@ export default {
     day.replits = (function(){
         if(typeof day.replits === 'undefined') return [];
         return day.replits.map(function(repl){
+            
+            let menu = [
+                { label: 'View it in Repl.it', slug: 'goto'}
+            ];
+            if(typeof repl.vtutorial_slug !== 'undefined' && repl.vtutorial_slug != '') 
+                menu.push({ label: 'Watch video tutorial', slug: 'vtutorial', vtutorial_slug: repl.vtutorial_slug });
+            menu.push({ label: 'Mark as done', slug: 'mark-done'});
+            
             return {
+                menu,
                 title: repl.title,
                 associated_slug: repl.associated_slug || repl.slug,
-                menu: [
-                    { label: 'View it in Repl.it', slug: 'goto'},
-                    { label: 'Mark as done', slug: 'mark-done'}
-                ],
+                vtutorial_slug: repl.vtutorial_slug,
                 status: "pending",
                 type: "replit"
             };

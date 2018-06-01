@@ -74,7 +74,10 @@ class DayView extends Flux.View {
         }
       break;
       case "goto":
-        this.show(actionable);
+        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug);
+      break;
+      case "vtutorial":
+        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
       break;
     }
   }
@@ -82,23 +85,6 @@ class DayView extends Flux.View {
   enableDay(){
     console.log("Enable Day");
     StudentActions.startDay(this.state.day);
-  }
-  
-  show(actionable){
-    switch(actionable.type){
-      case "lesson":
-        this.props.history.push(this.props.match.url+'/l/'+actionable.associated_slug);
-      break;
-      case "replit":
-        this.props.history.push(this.props.match.url+'/r/'+actionable.associated_slug);
-      break;
-      case "quiz":
-        this.props.history.push(this.props.match.url+'/q/'+actionable.associated_slug);
-      break;
-      case "assignment":
-        this.props.history.push(this.props.match.url+'/a/'+actionable.associated_slug);
-      break;
-    }
   }
   
   render() {

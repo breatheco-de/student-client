@@ -16,6 +16,7 @@ import DayView from '../views/DayView';
 import LessonView from '../views/LessonView';
 import QuizView from '../views/QuizView';
 import ReplitView from '../views/ReplitView';
+import VTurorialView from '../views/VTurorialView';
 import AssignmentView from '../views/AssignmentView';
 
 import StudentActions from '../actions/StudentActions';
@@ -107,6 +108,7 @@ class CourseView extends Flux.View{
                             <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
                             <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />
                             <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug'} component={ReplitView} />
+                            <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug/vtutorial/:vtutorial_slug'} component={VTurorialView} />
                             <Route exact path={this.props.match.path+'/:day_number/a/:assignment_slug'} component={AssignmentView} />
                         </Switch>
                     </div>
