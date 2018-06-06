@@ -1,4 +1,6 @@
 import React from 'react';
+import validator from 'validator';
+import {Notify} from '../utils/react-components/index';
 
 export default class DeliverAssignment extends React.Component{
     
@@ -10,7 +12,10 @@ export default class DeliverAssignment extends React.Component{
     }
     
     onSend(){
-        if(typeof this.props.onConfirm == 'function') this.props.onConfirm(this.state.github_url);
+        if(validator.isURL(this.state.github_url)){
+            if(typeof this.props.onConfirm == 'function') this.props.onConfirm(this.state.github_url);
+        }
+        else Notify.error('Please specify a Github URL');
     }
     
     onCancel(){
@@ -22,7 +27,7 @@ export default class DeliverAssignment extends React.Component{
             <div>
                 <h5>Please specify your repository github url:</h5>
                 <form class="form-inline justify-content-center" onSubmit={(e)=>e.preventDefault()}>
-                    <input type="text" style={{width: '400px'}} 
+                    <input type="url" style={{width: '400px'}} 
                         className="form-control mr-3"
                         placeholder="https://github.com/..."
                         onChange={(e) => this.setState({ github_url: e.target.value })} />

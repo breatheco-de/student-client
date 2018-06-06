@@ -57,6 +57,7 @@ class StudentActions extends Flux.Action{
         const student = StudentStore.getUser();
         return BC.todo().add(student.bc_id,unsyncedTodos)
                 .then((data) => {
+                    Notify.success('The day was updated successfully, you can review your new todo\'s');
                     this.dispatch('StudentStore.appendTodos', data.data || data);
                 })
                 .catch(()=>{
@@ -67,6 +68,7 @@ class StudentActions extends Flux.Action{
     updateTask(task){
         return BC.todo().update(task)
             .then((data) => {
+                Notify.success('The task has been updated successfully');
                 this.dispatch('StudentStore.updateSingleTodo', data.data || data);
             })
             .catch((error) => {
@@ -89,7 +91,11 @@ class StudentActions extends Flux.Action{
                     if(answer){
                         return BC.todo().update(task)
                             .then((data) => {
+                                Notify.success('Your assignment has been delivered successfully');
                                 this.dispatch('StudentStore.updateSingleTodo', data.data || data);
+                            })
+                            .catch((error) => {
+                                Notify.error('There was an error delivering your assignment');
                             });
                     }
                 });

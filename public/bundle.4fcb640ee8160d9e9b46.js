@@ -64037,6 +64037,7 @@ var StudentActions = function (_Flux$Action) {
 
             var student = _StudentStore2.default.getUser();
             return _index2.default.todo().add(student.bc_id, unsyncedTodos).then(function (data) {
+                _index3.Notify.success('The day was updated successfully, you can review your new todo\'s');
                 _this5.dispatch('StudentStore.appendTodos', data.data || data);
             }).catch(function () {
                 _index3.NotifyActions.error('There was an error updating the day todo\'s');
@@ -64048,6 +64049,7 @@ var StudentActions = function (_Flux$Action) {
             var _this6 = this;
 
             return _index2.default.todo().update(task).then(function (data) {
+                _index3.Notify.success('The task has been updated successfully');
                 _this6.dispatch('StudentStore.updateSingleTodo', data.data || data);
             }).catch(function (error) {
                 _index3.Notify.error('There was an error delivering the task');
@@ -64072,7 +64074,10 @@ var StudentActions = function (_Flux$Action) {
                         _index3.Notify.clean();
                         if (answer) {
                             return _index2.default.todo().update(task).then(function (data) {
+                                _index3.Notify.success('Your assignment has been delivered successfully');
                                 _this7.dispatch('StudentStore.updateSingleTodo', data.data || data);
+                            }).catch(function (error) {
+                                _index3.Notify.error('There was an error delivering your assignment');
                             });
                         }
                     });
@@ -64221,6 +64226,12 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _validator = __webpack_require__(/*! validator */ "./node_modules/validator/index.js");
+
+var _validator2 = _interopRequireDefault(_validator);
+
+var _index = __webpack_require__(/*! ../utils/react-components/index */ "./src/js/utils/react-components/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64246,7 +64257,9 @@ var DeliverAssignment = function (_React$Component) {
     _createClass(DeliverAssignment, [{
         key: 'onSend',
         value: function onSend() {
-            if (typeof this.props.onConfirm == 'function') this.props.onConfirm(this.state.github_url);
+            if (_validator2.default.isURL(this.state.github_url)) {
+                if (typeof this.props.onConfirm == 'function') this.props.onConfirm(this.state.github_url);
+            } else _index.Notify.error('Please specify a Github URL');
         }
     }, {
         key: 'onCancel',
@@ -64271,7 +64284,7 @@ var DeliverAssignment = function (_React$Component) {
                     { 'class': 'form-inline justify-content-center', onSubmit: function onSubmit(e) {
                             return e.preventDefault();
                         } },
-                    _react2.default.createElement('input', { type: 'text', style: { width: '400px' },
+                    _react2.default.createElement('input', { type: 'url', style: { width: '400px' },
                         className: 'form-control mr-3',
                         placeholder: 'https://github.com/...',
                         onChange: function onChange(e) {
@@ -64938,7 +64951,7 @@ var TodoView = function (_Flux$View) {
           return _react2.default.createElement(
             "li",
             { key: i, className: "send-assignment" },
-            "Coding assignments cannot be delivered yet",
+            "Assignments need to uploaded into github before delivering them, click \"deliver\" when you are ready to specify your repository url.",
             _react2.default.createElement(
               "div",
               { className: "btn-bar text-right" },
@@ -69559,4 +69572,4 @@ module.exports = __webpack_require__(/*! ./src/js/index.js */"./src/js/index.js"
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.2a9a5bdfd670ae906c66.js.map
+//# sourceMappingURL=bundle.4fcb640ee8160d9e9b46.js.map
