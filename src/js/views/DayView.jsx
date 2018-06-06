@@ -1,11 +1,10 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
 import {withRouter} from "react-router-dom";
-import Panel from '../components/Panel.jsx';
-import ProgressKPI from '../components/ProgressKPI.jsx';
 import DayContent from '../components/DayContent.jsx';
-import List from '../components/List.jsx';
-import ActionableItem from '../components/ActionableItem.jsx';
+
+import {ActionableItem, List, ProgressKPI, Panel} from '../utils/react-components/index';
+
 import BCStore from '../stores/BCStore';
 import StudentActions from '../actions/StudentActions';
 import StudentStore from '../stores/StudentStore';
@@ -68,9 +67,12 @@ class DayView extends Flux.View {
     switch(option.slug){
       case "mark-done":
         let task = StudentStore.getSingleTodo(actionable);
-        if(task){
+        if(task.type != 'assignment'){
           task.status = "done";
           StudentActions.updateTask(task);
+        }
+        else{
+          StudentActions.deliverAssignment(task);
         }
       break;
       case "goto":

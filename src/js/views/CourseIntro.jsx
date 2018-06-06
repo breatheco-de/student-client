@@ -1,6 +1,6 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import Panel from '../components/Panel.jsx';
+import {Panel} from '../utils/react-components/index';
 
 export default class CourseIntro extends Flux.View {
   getMarkdownText() {

@@ -3,8 +3,9 @@ import WP from 'wordpress-rest-api';
 import BC from '../utils/api/index.js';
 
 import StudentStore from '../stores/StudentStore';
+import DeliverAssignment from '../components/DeliverAssignment';
 import BCStore from '../stores/BCStore';
-import NotificationStore from '../stores/NotificationStore';
+import { NotifyActions, Session, Notify } from '../utils/react-components/index';
 
 class StudentActions extends Flux.Action{
     
@@ -40,26 +41,6 @@ class StudentActions extends Flux.Action{
         });;
     }
     
-    loginUser(username, password, history){
-     
-        return BC.credentials().autenticate(username, password)
-        .then((data) => {
-            this.dispatch('StudentStore.login', data);
-        });
-    }
-    
-    logoutUser(){
-        this.dispatch('StudentStore.logout');
-    }
-    
-    remindUser(email){
-     
-        return BC.credentials().remind(email)
-        .then((data) => {
-            return data;
-        });
-    }
-    
     startDay(day){
         const todos = BCStore.getDayTodos(day);
         const student = StudentStore.getUser();
@@ -68,7 +49,7 @@ class StudentActions extends Flux.Action{
                     this.dispatch('StudentStore.appendTodos', data.data || data);
                 })
                 .catch(()=>{
-                    this.dispatch('NotificationStore.notify', 'update_todos_error');
+                    NotifyActions.error('There was an error creating the day todo\'s');
                 });
     }
     
@@ -79,20 +60,43 @@ class StudentActions extends Flux.Action{
                     this.dispatch('StudentStore.appendTodos', data.data || data);
                 })
                 .catch(()=>{
-                    this.dispatch('NotificationStore.notify', 'update_todos_error');
+                    NotifyActions.error('There was an error updating the day todo\'s');
                 });
     }
     
     updateTask(task){
-        const student = StudentStore.getUser();
         return BC.todo().update(task)
-                .then((data) => {
-                    this.dispatch('StudentStore.updateSingleTodo', data.data || data);
-                });
+            .then((data) => {
+                this.dispatch('StudentStore.updateSingleTodo', data.data || data);
+            })
+            .catch((error) => {
+                Notify.error('There was an error delivering the task');
+            });
     }
     
     chooseCohort(cohort){
-        this.dispatch('StudentStore.setCurrentCohort', cohort);
+        const session = Session.getSession();
+        Flux.dispatchEvent("session", Object.assign(session, { currentCohort: cohort }));
+    }
+    
+    deliverAssignment(task){
+        Notify.info(DeliverAssignment, (githubURL) => {
+            if(githubURL){
+                task.github_url = githubURL;
+                task.status = 'done';
+                Notify.info("Are you sure you want to submit?", (answer) => {
+                    Notify.clean();
+                    if(answer){
+                        return BC.todo().update(task)
+                            .then((data) => {
+                                this.dispatch('StudentStore.updateSingleTodo', data.data || data);
+                            });
+                    }
+                });
+            }else{
+                Notify.clean();
+            } 
+        }, false);
     }
     
     fetch(){

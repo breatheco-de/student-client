@@ -2,9 +2,8 @@ import React from 'react';
 import SplitPane from 'react-split-pane';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Sidebar from './Sidebar';
-import DropLink from '../components/DropLink';
-import StudentActions from '../actions/StudentActions';
+import {DropLink, Sidebar} from '../utils/react-components/index';
+import {Session, login, logout} from '../utils/react-components/index';
 import StudentStore from '../stores/StudentStore';
 
 class SplitLayout extends React.Component{
@@ -77,7 +76,7 @@ class SplitLayout extends React.Component{
     
     onSettingsSelect(item){
         switch(item.slug){
-            case "logout": StudentActions.logoutUser(); break;
+            case "logout": logout(); break;
             case "profile": this.props.history.push('/profile'); break;
             case "choose": this.props.history.push('/choose'); break;
         }

@@ -1,8 +1,7 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
 import {Link} from "react-router-dom";
-import Panel from '../components/Panel.jsx';
-import Loading from '../components/Loading.jsx';
+import {Panel, Loading} from '../utils/react-components/index';
 export default class VTurorialView extends Flux.View {
   
   constructor(){

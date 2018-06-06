@@ -9,7 +9,8 @@ import TodoMenu from '../components/menus/TodoMenu';
 
 import BCStore from '../stores/BCStore';
 import BCActions from '../actions/BCActions';
-import NotifyActions from '../actions/NotifyActions';
+
+import { NotifyActions } from 'react-router-dom';
 
 import CourseIntro from '../views/CourseIntro';
 import DayView from '../views/DayView';
@@ -103,13 +104,17 @@ class CourseView extends Flux.View{
                         // </Modal>
                     }
                         <Switch>
-                            <Route exact path={this.props.match.path} component={CourseIntro} />
+                            <Route exact path={this.props.match.path+'/r/:replit_slug'} component={ReplitView} />
+                            <Route exact path={this.props.match.path+'/q/:quiz_slug'} component={QuizView} />
+                            <Route exact path={this.props.match.path+'/a/:assignment_slug'} component={AssignmentView} />
+                            <Route exact path={this.props.match.path+'/l/:lesson_slug'} component={LessonView} />
                             <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />
                             <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
                             <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />
                             <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug'} component={ReplitView} />
                             <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug/vtutorial/:vtutorial_slug'} component={VTurorialView} />
                             <Route exact path={this.props.match.path+'/:day_number/a/:assignment_slug'} component={AssignmentView} />
+                            <Route exact path={this.props.match.path} component={CourseIntro} />
                         </Switch>
                     </div>
             </SplitLayout>

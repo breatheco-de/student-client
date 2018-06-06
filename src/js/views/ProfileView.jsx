@@ -1,9 +1,7 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import Panel from '../components/Panel.jsx';
 import StudentStore from '../stores/StudentStore';
-
-import BreadCrumb from '../components/BreadCrumb';
+import {Panel, BreadCrumb} from '../utils/react-components/index';
 
 export default class ProfileView extends Flux.View {
   

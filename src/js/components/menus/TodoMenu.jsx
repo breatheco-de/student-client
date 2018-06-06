@@ -1,12 +1,12 @@
 import React from "react";
 import Flux from "@4geeksacademy/react-flux-dash";
-import CheckBox from '../CheckBox.jsx';
+import {withRouter} from 'react-router-dom';
 import StudentStore from "../../stores/StudentStore";
 import StudentActions from "../../actions/StudentActions";
-import NotifyActions from "../../actions/NotifyActions";
-import DropLink from "../DropLink";
+import {DropLink, CheckBox, NotifyActions } from '../../utils/react-components/index';
 
-export default class TodoView extends Flux.View {
+
+class TodoView extends Flux.View {
   
   constructor(){
     super();
@@ -67,12 +67,23 @@ export default class TodoView extends Flux.View {
     }
   }
   
+  onDropdownSelect(actionable, option){
+    switch(option.slug){
+      case "goto":
+        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug);
+      break;
+      case "vtutorial":
+        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
+      break;
+    }
+  }
+  
   getTaskMenu(td){
     switch(td.type){
-      case "lesson": return [{lable: 'Read the lesson', slug:'goto'}]; break;
-      case "replit": return [{lable: 'Practice on Repl.it', slug:'goto'}]; break;
-      case "quiz": return [{lable: 'Take the quiz', slug:'goto'}]; break;
-      case "assignment": return [{lable: 'Read the instructions', slug:'goto'}]; break;
+      case "lesson": return [{label: 'Read the lesson', slug:'goto'}]; break;
+      case "replit": return [{label: 'Practice on Repl.it', slug:'goto'}]; break;
+      case "quiz": return [{label: 'Take the quiz', slug:'goto'}]; break;
+      case "assignment": return [{label: 'Read the instructions', slug:'goto'}]; break;
     }
   }
   
@@ -81,18 +92,16 @@ export default class TodoView extends Flux.View {
       
       if(this.state.beingDelivered && td.type == this.state.beingDelivered.type && this.state.beingDelivered.associated_slug === td.associated_slug){
         return (<li key={i} className="send-assignment">
-                  Coding assignments cannot be delivered yet
+                  Assignments need to uploaded into github before delivering them, click "deliver" when you are ready to specify your repository url.
                   <div className="btn-bar text-right">
+                    <button className="btn btn-success mr-2"
+                      onClick={()=> StudentActions.deliverAssignment(td)}>
+                      Deliver
+                    </button>
                     <button className="btn btn-danger mr-2"
                       onClick={()=> this.setState({ beingDelivered: null })}>
-                      Ok
+                      Cancel
                     </button>
-                    {
-                      // <button className="btn btn-success"
-                      //   onClick={()=> this.deliverAssignment(this.state.beingDelivered)}>
-                      //   deliver my assignment
-                      // </button>
-                    }
                   </div>
                 </li>);
       }
@@ -101,12 +110,11 @@ export default class TodoView extends Flux.View {
       return (<li key={i}>
                 <CheckBox checked={(td.status==='done')} render={() => (
                     <div className={"task task-"+td.type}>
-                    {
-                      // <DropLink className="task-menu" dropdown={this.getTaskMenu(td)} 
-                      //     onSelect={(option) => this.props.onDropdownSelect(option)}>
-                      //     <i className="fas fa-ellipsis-v"></i>
-                      // </DropLink>
-                    }
+                      <DropLink className="task-menu" dropdown={this.getTaskMenu(td)} 
+                          onSelect={(option) => this.onDropdownSelect(td, option)}
+                          direction="left"
+                      >
+                      </DropLink>
                       <p className="task-title">{td.title}</p>
                       <p className="task-description">
                         {this.getTaskDescription(td)}
@@ -132,3 +140,5 @@ export default class TodoView extends Flux.View {
     );
   }
 }
+
+export default withRouter(TodoView);

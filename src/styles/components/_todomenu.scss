@@ -26,6 +26,13 @@
                     color: #BDBDBD;
                     font-size: 14px;
                     padding: 5px;
+                    .dropdown-toggle{
+                        font-size: 13px;
+                    }
+                    .dropdown-menu{
+                        top: 35px;
+                        left: -120px;
+                    }
                 }
             }
             &.send-assignment{

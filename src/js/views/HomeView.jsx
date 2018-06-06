@@ -1,6 +1,6 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import Panel from '../components/Panel.jsx';
+import {Panel, Session, logout} from '../utils/react-components/index';
 import StudentStore from '../stores/StudentStore';
 import StudentActions from '../actions/StudentActions';
 
@@ -16,13 +16,14 @@ export default class HomeView extends Flux.View {
   }
   
   componentDidMount(){
-    const session = StudentStore.getAutentication();
+    const session = Session.getSession();
     if(session.autenticated){
       let currentCohort = StudentStore.getCurrentCohort();
-      if(Array.isArray(currentCohort)) this.props.history.push('/choose');
-      else this.props.history.push('/course/'+currentCohort.profile_slug);
+      if(currentCohort){
+        if(Array.isArray(currentCohort)) this.props.history.push('/choose');
+        else this.props.history.push('/course/'+currentCohort.profile_slug);
+      }
     }
-    else this.props.history.push('/login');
     // let user = StudentStore.getUser();
     //if(user.type === 'student' && currentCohort) this.props.history.push('/course/'+currentCohort.profile_slug);
     //else this.setState({ user, currentCohort });
@@ -37,7 +38,7 @@ export default class HomeView extends Flux.View {
             (this.state.user && this.state.user.type !== 'student') ? 
               (<div className="alert alert-danger">This platform is for students only</div>) : ''
           }
-          We couldn't find your course, <a href="#" onClick={() => StudentActions.logoutUser()}>please logout to refresh</a>
+          We couldn't find your course, <a href="#" onClick={() => logout()}>please logout to refresh</a>
         </Panel>
       </div>
     );

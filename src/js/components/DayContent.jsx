@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from './Button';
+import {Button} from '../utils/react-components/index';
 class DayContent extends React.Component{
     
     constructor(){
         super();
         this.state = {
-        }
+        };
     }
     
     onStart(){

@@ -1,9 +1,8 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import Panel from '../components/Panel.jsx';
+import { List, Panel, Session, logout} from '../utils/react-components/index';
 import StudentStore from '../stores/StudentStore';
 import StudentActions from '../actions/StudentActions';
-import List from '../components/List.jsx';
 
 export default class ChooseView extends Flux.View {
   
@@ -12,17 +11,20 @@ export default class ChooseView extends Flux.View {
     this.state = {
       student: StudentStore.getUser()
     };
-    
-    this.bindStore(StudentStore, 'current_cohort', () => {
-      const currentCohort = StudentStore.getCurrentCohort();
+  }
+  
+  componentDidMount(){
+    this.setState({
+      student: StudentStore.getUser()
+    });
+    this.sessionSubscription = Session.subscribe("session", (session) => {
+      const currentCohort = session.currentCohort;
       if(typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort)) this.props.history.push('/course/'+currentCohort.profile_slug);
     });
   }
   
-  componentWillMount(){
-    this.setState({
-      student: StudentStore.getUser()
-    });
+  componentWillUnmount(){
+    this.sessionSubscription.unsubscribe();
   }
   
   render() {
@@ -44,7 +46,7 @@ export default class ChooseView extends Flux.View {
             {cohorts}
           </List>
           <div className="text-center">
-            <a className="btn btn-light" href="#" onClick={() => StudentActions.logoutUser()}>or go ahead and logout</a>
+            <a className="btn btn-light" href="#" onClick={() => logout()}>or go ahead and logout</a>
           </div>
         </div>
       </Panel>

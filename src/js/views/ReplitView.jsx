@@ -1,9 +1,8 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
-import Panel from '../components/Panel';
-import Loading from '../components/Loading';
-import StudentStore from '../stores/StudentStore';
+import {Panel, Loading} from '../utils/react-components/index';
 
+import StudentStore from '../stores/StudentStore';
 import Raven from 'raven-js';
 
 export default class ReplitView extends Flux.View {
@@ -14,7 +13,7 @@ export default class ReplitView extends Flux.View {
       loading: true,
       cohort: '',
       error: false
-    }
+    };
   }
   
   componentWillMount()
