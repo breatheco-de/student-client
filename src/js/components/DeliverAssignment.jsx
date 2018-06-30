@@ -26,7 +26,7 @@ export default class DeliverAssignment extends React.Component{
         return(
             <div>
                 <h5>Please specify your repository github url:</h5>
-                <form class="form-inline justify-content-center" onSubmit={(e)=>e.preventDefault()}>
+                <form className="form-inline justify-content-center" onSubmit={(e)=>e.preventDefault()}>
                     <input type="url" style={{width: '400px'}} 
                         className="form-control mr-3"
                         placeholder="https://github.com/..."
