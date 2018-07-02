@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
-import {MenuItem} from '../../utils/react-components/index';
+import {MenuItem} from '../../utils/react-components/src/index';
 
 class CourseMenu extends React.Component{
     

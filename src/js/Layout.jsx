@@ -1,8 +1,8 @@
 import React from 'react';
 import Flux from '@4geeksacademy/react-flux-dash';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import {PrivateRoute, Notifier, Notify} from './utils/react-components/index';
-import {LoginView, ForgotView, Session} from './utils/react-components/index';
+import {PrivateRoute, Notifier, Notify} from './utils/react-components/src/index';
+import {LoginView, ForgotView, Session} from './utils/react-components/src/index';
 import Raven from 'raven-js';//for error monitoring
 
 import CourseView from './views/CourseView';

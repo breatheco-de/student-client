@@ -1,6 +1,6 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
-import {Panel, Loading} from '../utils/react-components/index';
+import {Panel, Loading} from '../utils/react-components/src/index';
 
 export default class LessonView extends Flux.View {
   

@@ -2,7 +2,7 @@ import React from "react";
 import WPStore from "../stores/WPStore";
 import Flux from '@4geeksacademy/react-flux-dash';
 import AssetCard from '../components/AssetCard';
-import {ListView} from '../libraries/react-bootstrap-dash/ListView';
+import {ListView} from '../utils/react-components/src/index';
 
 export default class AssetsView extends Flux.View {
   

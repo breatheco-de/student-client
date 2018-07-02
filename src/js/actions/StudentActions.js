@@ -1,11 +1,11 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import WP from 'wordpress-rest-api';
-import BC from '../utils/api/index.js';
+import BC from '@breathecode/api-js-wrapper';
 
 import StudentStore from '../stores/StudentStore';
 import DeliverAssignment from '../components/DeliverAssignment';
 import BCStore from '../stores/BCStore';
-import { NotifyActions, Session, Notify } from '../utils/react-components/index';
+import { NotifyActions, Session, Notify } from '../utils/react-components/src/index';
 
 class StudentActions extends Flux.Action{
     

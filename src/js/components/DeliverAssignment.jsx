@@ -1,6 +1,6 @@
 import React from 'react';
 import validator from 'validator';
-import {Notify} from '../utils/react-components/index';
+import {Notify} from '../utils/react-components/src/index';
 
 export default class DeliverAssignment extends React.Component{
     

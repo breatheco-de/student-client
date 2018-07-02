@@ -1,7 +1,7 @@
 /* global localStorage */
 import Flux from '@4geeksacademy/react-flux-dash';
 import userReducers from '../reducers/UserReducers';
-import {Session} from '../utils/react-components/index'
+import {Session} from '../utils/react-components/src/index';
 
 class StudentStore extends Flux.Store{
     constructor(){

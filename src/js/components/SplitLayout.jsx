@@ -2,8 +2,8 @@ import React from 'react';
 import SplitPane from 'react-split-pane';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {DropLink, Sidebar} from '../utils/react-components/index';
-import {Session, login, logout} from '../utils/react-components/index';
+import {DropLink, Sidebar} from '../utils/react-components/src/index';
+import {Session, login, logout} from '../utils/react-components/src/index';
 import StudentStore from '../stores/StudentStore';
 
 class SplitLayout extends React.Component{

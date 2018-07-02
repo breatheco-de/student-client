@@ -3,7 +3,7 @@ import React from "react";
 import {withRouter} from "react-router-dom";
 import DayContent from '../components/DayContent.jsx';
 
-import {ActionableItem, List, ProgressKPI, Panel} from '../utils/react-components/index';
+import {ActionableItem, List, ProgressKPI, Panel} from '../utils/react-components/src/index';
 
 import BCStore from '../stores/BCStore';
 import StudentActions from '../actions/StudentActions';

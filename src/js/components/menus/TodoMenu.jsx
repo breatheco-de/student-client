@@ -3,7 +3,7 @@ import Flux from "@4geeksacademy/react-flux-dash";
 import {withRouter} from 'react-router-dom';
 import StudentStore from "../../stores/StudentStore";
 import StudentActions from "../../actions/StudentActions";
-import {DropLink, CheckBox, NotifyActions } from '../../utils/react-components/index';
+import {DropLink, CheckBox, NotifyActions } from '../../utils/react-components/src/index';
 
 
 class TodoView extends Flux.View {

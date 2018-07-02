@@ -9,9 +9,10 @@ class BCStore extends Flux.Store{
             syllabus: null,
             projects: null,
             days: []
-        }
+        };
         StudentStore.on('todos', this._reduceSyllabus.bind(this));
     }
+    
     __reduce(entity){
         return {
             with: (reducers) => {

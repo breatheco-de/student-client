@@ -1,6 +1,6 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import { List, Panel, Session, logout} from '../utils/react-components/index';
+import { List, Panel, Session, logout} from '../utils/react-components/src/index';
 import StudentStore from '../stores/StudentStore';
 import StudentActions from '../actions/StudentActions';
 
