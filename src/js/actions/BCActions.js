@@ -1,5 +1,5 @@
 import Flux from '@4geeksacademy/react-flux-dash';
-import BC from '@breathecode/api-js-wrapper';
+import BC from '../utils/api.js';
 
 class BCActions extends Flux.Action{
     
@@ -12,7 +12,6 @@ class BCActions extends Flux.Action{
             syllabus: (slug) =>{
                 BC.syllabus().get(slug)
                 .then((data) => {
-                    console.log(data);
                     this.dispatch('BCStore.setSyllabus', data);
                 })
                 .catch((data) => {
@@ -23,7 +22,6 @@ class BCActions extends Flux.Action{
             projects: (syllabus_slug) =>{
                 BC.project().all(syllabus_slug)
                 .then((data) => {
-                    console.log(data);
                     this.dispatch('BCStore.setProjects', data);
                 })
                 .catch((data) => {

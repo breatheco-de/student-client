@@ -2,21 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class TimeLineDay extends React.Component{
-    
+    constructor(){
+      super();
+      this.state = {
+        top: ''
+      }
+    }
     toggleSelected(){
       this.props.onClick(this.props.dayNumber);
     }
     
     render(){
-        
+        const timeWrapperStyles = {
+          top: this.state.top
+        };
         return(
         	<li className={(this.props.isSelected) ? 'selected':''} onClick={() => this.toggleSelected()}>
-        		<div className="direction-r">
+        		<div className={"direction-r "} onMouseOver={(e) => {
+        		  const coord = e.target.getBoundingClientRect();
+        		  this.setState({
+        		    top: coord.top + 10
+        		  });
+        		}}>
         			<div className="flag-wrapper">
         			    <span className="flag-point"></span>
         				<span className="flag">{this.props.label}</span>
         				{ (this.props.technologies.length > 0) ? 
-          				(<span className="time-wrapper">
+          				(<span className="time-wrapper" style={timeWrapperStyles}>
           				    <span className="time">{this.props.technologies.join(', ')}</span>
           				</span>)
           				:''

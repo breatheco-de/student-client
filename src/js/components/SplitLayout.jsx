@@ -3,72 +3,51 @@ import SplitPane from 'react-split-pane';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {DropLink, Sidebar} from '../utils/react-components/src/index';
-import {Session, login, logout} from '../utils/react-components/src/index';
-import StudentStore from '../stores/StudentStore';
+import {logout} from '../utils/react-components/src/index';
+import {Session} from 'bc-react-session';
+import {getCurrentPath} from '../utils/menu.js';
 
 class SplitLayout extends React.Component{
     
     constructor() {
         super();
         this.state = {
-            size: 200,
+            currentSize: 200,
+            maxSize: 200,
+            minSize: 50,
+            fixed: false,
             collapsed: false,
             dragging: false,
             duration: 0,
             student: null,
+            breakPoint: 70,
             onRootLevel: true
         };
-        this.fixedWidth = false;
     }
     
-    componentWillMount(){
-        this.setState({
-           student: StudentStore.getUser() 
+    componentDidMount(){
+        const session = Session.store.getSession();
+        
+        const currentPath = getCurrentPath();
+        const collapsed = (currentPath.type) ? true : false;
+        this.setState({ 
+            student: session.user, 
+            collapsed: collapsed, 
+            currentSize: (collapsed) ? this.state.minSize : this.state.maxSize 
         });
-    }
-    
-    onSidebarToggle(state){
-        if(state.collapsed){
-            this.fixedWidth = 50;
-            this.setState({ size: 50, collapsed: true });
-        }
-        else{
-            this.fixedWidth = null;
-            this.setState({ size: 200, collapsed: false });
-        }
-    }
-    
-    handleKeyShorcut(){
-        console.log('on the child!');
-    }
-
-    handleDragStart() {
-        if(!this.fixedWidth) this.setState({ dragging: true });
-        else this.setState({ size: this.fixedWidth });
-    }
-
-    handleDragEnd() {
-        if(!this.fixedWidth){
-            this.setState({ dragging: false });
-            setTimeout(() => {
-                this.setState({ size: undefined });
-            }, 0);
-        }
-        else this.setState({ size: this.fixedWidth });
-    }
-
-    handleDrag(width) {
-        if(!this.fixedWidth)
-        {
-            if (width > 400) this.setState({ size: 400 });
-            else if (width < 100) this.setState({ size: 100 });
-            else this.setState({ size: undefined });
-        }
-        else this.setState({ size: this.fixedWidth });
+       this.props.history.listen((e)=> {
+            const currentPath = getCurrentPath();
+            const collapsed = (currentPath.type) ? true : false;
+            this.setState({ 
+                collapsed: collapsed, 
+                currentSize: (collapsed) ? this.state.minSize : this.state.maxSize 
+            });
+           
+       }); 
     }
     
     onNavBarSelect(option){
-        if(typeof(option.size) !== 'undefined') this.setState({ size: option.size });
+        if(typeof(option.size) !== 'undefined' && !this.state.collapsed) this.setState({ currentSize: option.size });
         if(option.slug == this.props.baseLevel.slug) this.setState({ onRootLevel: true });
         else this.setState({ onRootLevel: false });
         if(this.props.onNavBarSelect) this.props.onNavBarSelect(option);
@@ -87,21 +66,20 @@ class SplitLayout extends React.Component{
             <div className="layout">
                 <SplitPane split="vertical"
                     className="white-resizer"
-                    minSize={50}
-                    size={this.state.dragging ? undefined : this.state.size}
-                    onChange={this.handleDrag.bind(this)}
-                    onDragStarted={this.handleDragStart.bind(this)}
-                    onDragFinished={this.handleDragEnd.bind(this)}>
+                    minSize={this.state.minSize}
+                    size={this.state.currentSize}
+                >
                     <div style={{ height: "100%", padding: '10px 0px 10px 10px' }}>
                         <Sidebar 
-                            onSelect={this.onNavBarSelect.bind(this)} 
-                            onToggle={this.onSidebarToggle.bind(this)} 
+                            breadcrumb={this.props.breadcrumb}
+                            onSelect={(opt) => this.onNavBarSelect(opt)} 
+                            selectedOption={this.props.selectedOption}
                             menuItems={this.props.menuItems}
-                            baseLevel={this.props.baseLevel}
+                            collapsed={this.state.collapsed}
                         />
                         {   
                             (this.state.onRootLevel) ? 
-                                (<div className="settings-item">
+                                (<div className={"settings-item"+((this.state.collapsed)?' collapsed':'')}>
                                     { (this.state.student && !this.state.collapsed) ? this.state.student.full_name : ''}
                                     <DropLink direction="up" dropdown={[
                                             {label: 'Profile', slug:'profile'},
@@ -128,9 +106,11 @@ SplitLayout.propTypes = {
     // the initial with of the sizebar
     //sidebar menu items
     menuItems: PropTypes.array.isRequired,
+    selectedOption: PropTypes.object,
     onNavBarSelect: PropTypes.func
-}
+};
 SplitLayout.defaultProps = {
-    onNavBarSelect: null
+    onNavBarSelect: null,
+    selectedOption: null
 };
 export default withRouter(SplitLayout);

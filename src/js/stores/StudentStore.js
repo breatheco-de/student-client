@@ -1,28 +1,13 @@
 /* global localStorage */
 import Flux from '@4geeksacademy/react-flux-dash';
 import userReducers from '../reducers/UserReducers';
-import {Session} from '../utils/react-components/src/index';
+import {Session} from 'bc-react-session';
 
 class StudentStore extends Flux.Store{
     constructor(){
         super();
         
-        this.sessionSubscription = Session.subscribe("session", this.sessionChange.bind(this));
         this.state.todos = null;
-    }
-    
-    sessionChange(session){
-        this.state.session = session;
-    }
-    
-    getUser(){
-        const session = Session.getSession();
-        return session.user;
-    }
-    
-    getCurrentCohort(){
-        const session = Session.getSession();
-        return session.currentCohort;
     }
     
     _setTodos(todos){

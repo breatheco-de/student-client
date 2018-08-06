@@ -1,0 +1,45 @@
+.search-menu{
+    position: relative;
+    height: calc(100vh - 70px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    .actionable{
+        position: relative;
+        .task-menu{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            .dropdown-menu{
+                left: -130px;
+                top: 32px;
+            }
+        }
+    }
+    .search-input{
+        position: relative;
+        i, svg{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+        textarea, select, input, input:hover { outline: none; }
+        input{
+            border: none;
+            padding-left: 40px;
+        }
+    }
+    .actionable-title{margin: 0}
+    .actionable-details{
+        margin: 0;
+        font-size: 0.7em;
+        color: $dark-grey;
+        .day{ color: $really-dark-grey; font-weight: 900;}
+        .type{ text-transform: capitalize; 
+            &.assignment{color: $darkRed;}
+            &.quiz{color: $darkGreen;}
+            &.lesson{color: $darkBlue;}
+            &.replit{color: $dark-grey;}
+        }
+    }
+}

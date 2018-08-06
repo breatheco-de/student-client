@@ -1,7 +1,8 @@
 import React from 'react';
 import TimeLineDay from '../TimeLineDay.jsx';
+import {withRouter} from 'react-router-dom';
 
-export default class TimeLineMenu extends React.Component{
+class TimeLineMenu extends React.Component{
     
     constructor(){
         super();
@@ -10,6 +11,15 @@ export default class TimeLineMenu extends React.Component{
             side: "left",
             selected: null,
             course: "web-development",
+        };
+        this.timeline = null;
+    }
+    
+    componentDidMount(){
+        //setInterval(() => this.timeline.scrollTo(0,this.timeline.scrollTop + 5), 100);
+        const dayNumber = this.props.match.params.day_number;
+        if(typeof dayNumber != 'undefined'){
+            this.setState({ selected: dayNumber });
         }
     }
     
@@ -31,13 +41,20 @@ export default class TimeLineMenu extends React.Component{
                         this.props.onClick(day);
             }} />
         });
+        const collapsedClass = (this.props.collapsed) ? 'collapsed':'';
+        
         return (
-            <div className="timeline">
+            <div className={"timeline "+collapsedClass}>
                 <span className={"line "+aditionalLineClasses()}></span>
-                <ul style={timelineStyles}>
+                <ul style={timelineStyles} 
+                    onWheel = {(e) => {
+                        this.timeline.scrollTo(0,this.timeline.scrollTop + e.deltaY);
+                    }} 
+                    ref={(elm) => this.timeline = elm}>
                 	{days}
                 </ul>
             </div>
         );
     }
 }
+export default withRouter(TimeLineMenu);

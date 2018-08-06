@@ -26,7 +26,7 @@ export function mouseTrap(Base, keymap=null) {
     }
     
     handleKeyShorcut(key){
-        console.log(key);
+        console.log("Key pressed",key);
         const example = this.getWrappedInstance();
         this.refs.child.handleKeyShorcut(key);
     }

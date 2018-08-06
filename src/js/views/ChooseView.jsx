@@ -1,37 +1,38 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import { List, Panel, Session, logout} from '../utils/react-components/src/index';
-import StudentStore from '../stores/StudentStore';
-import StudentActions from '../actions/StudentActions';
+import { List, Panel, logout} from '../utils/react-components/src/index';
+import {Session} from 'bc-react-session';
 
 export default class ChooseView extends Flux.View {
   
   constructor(){
     super();
     this.state = {
-      student: StudentStore.getUser()
+      student: {
+        cohorts: []
+      }
     };
   }
   
   componentDidMount(){
-    this.setState({
-      student: StudentStore.getUser()
-    });
-    this.sessionSubscription = Session.subscribe("session", (session) => {
-      const currentCohort = session.currentCohort;
-      if(typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort)) this.props.history.push('/course/'+currentCohort.profile_slug);
+    const session = Session.store.getSession();
+    this.setState({ student: session.user });
+    const unsubscribe = Session.onChange((session) => {
+      if(typeof unsubscribe == 'function') unsubscribe();
+      const currentCohort = (session.user) ? session.user.currentCohort : null;
+      if(currentCohort && typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort)) 
+        this.props.history.push('/course/'+currentCohort.profile_slug);
     });
   }
-  
-  componentWillUnmount(){
-    this.sessionSubscription.unsubscribe();
-  }
-  
+
   render() {
     const cohorts = this.state.student.cohorts.map((cohort,i) => (
       <li key={i}>
         <button className="btn btn-light ml-3"
-          onClick={() => StudentActions.chooseCohort(cohort)}>
+          onClick={() => {
+            Session.actions.setUser({currentCohort: cohort});
+            
+          }}>
           <i className="fas fa-external-link-alt"></i> launch this course
         </button>
         <span className="cohort-name">{cohort.profile_slug}</span>

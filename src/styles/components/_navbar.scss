@@ -15,9 +15,11 @@
             }
             .menuicon{
                 padding: 3px;
+                margin-left: -7px;
                 margin-right: 5px;
+                width: 100%;
             }
-            &.mobile{
+            &.collapsed{
                 text-align: center;
                 span{ display:none;}
                 &:hover{

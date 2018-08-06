@@ -1,19 +1,19 @@
 const webpack = require('webpack');
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
     './src/js/index.js', 
   ],
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'public'),
-    publicPath: '/'
+    publicPath: path.resolve(__dirname, '/')
   },
   module: {
     rules: [
-        { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader" },
+        { test: /\.(jsx|js)?$/, exclude: /node_modules/, loader: "babel-loader" },
         { test: /\.md$/, use: [
               {
                   loader: "html-loader"
@@ -27,7 +27,7 @@ module.exports = {
           ]
         },
         {
-          test: /\.scss$/, use: [{
+          test: /\.(scss|css)$/, use: [{
               loader: "style-loader" // creates style nodes from JS strings
           }, {
               loader: "css-loader" // translates CSS into CommonJS
@@ -44,14 +44,26 @@ module.exports = {
         { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, use: ['file-loader'] } //for fonts
     ]
   },
+  optimization: {
+      splitChunks: {
+          cacheGroups: {
+              vendor: {
+                  test: /node_modules/, // you may add "vendor.js" here if you want to
+                  name: "vendor",
+                  chunks: "initial",
+                  enforce: true
+              }
+          }
+      }
+  },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      // In case you imported plugins individually, you must also require them here:
-      Util: "exports-loader?Util!bootstrap/js/dist/util",
-      Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
+    new HtmlWebpackPlugin({
+        title: 'Student at BreatheCode Platform',
+        favicon: 'favicon.png',
+        template: 'template.html'
     })
   ]
 };

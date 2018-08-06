@@ -197,18 +197,37 @@
   
   /* ================ Timeline Media Queries ================ */
   
-  @media screen and (max-width: 660px) {
-    .timeline ul {
+  &.collapsed {
+    padding: 0;
+    overflow: inherit;
+    font-size: 0.8em;
+    .line{left: 6px;}
+    ul {
       width: 100%;
-      padding: 4em 0 1em 0;
+      margin-left: 7px;
+      padding: 0;
+      overflow: hidden;
       li {
-        padding: 2em 0;
+        padding: 10px 0px;
+        margin-left: 6px;
       }
     }
     .direction-l, .direction-r {
       float: none;
       width: 100%;
-      text-align: center;
+      text-align: left;
+      .time-wrapper {
+        display: none;
+        min-width: 140px;
+        position: fixed;
+        text-align: left;
+        z-index: 99999999;
+      }
+      &:hover{
+        .time-wrapper{
+          display: inline-block;
+        }
+      }
     }
     .flag-wrapper {
       text-align: center;
@@ -216,20 +235,13 @@
     .flag {
       background: rgb(255, 255, 255);
       z-index: 15;
+      margin: 0;
+      &:hover{
+        background: $yellow-100;
+      }
     }
     .direction-l .flag-point, .direction-r .flag-point {
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      content: ' ';
-      display: block;
-      width: 12px;
-      height: 12px;
-      margin-left: -9px;
-      background: #fff;
-      border-radius: 10px;
-      border: 4px solid rgb(255, 80, 80);
-      z-index: 10;
+      left: -9px;
     }
     .direction-l .flag:after, .direction-r .flag:after {
       content: "";
@@ -244,36 +256,11 @@
       border-width: 8px;
       pointer-events: none;
     }
-    .time-wrapper {
-      display: block;
-      position: relative;
-      margin: 4px 0 0 0;
-      z-index: 14;
-    }
     .direction-l .time-wrapper, .direction-r .time-wrapper {
       float: none;
     }
     .desc {
-      position: relative;
-      margin: 1em 0 0 0;
-      padding: 1em;
-      background: rgb(245, 245, 245);
-      -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-      -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-      box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-      z-index: 15;
-    }
-    .direction-l .desc, .direction-r .desc {
-      position: relative;
-      margin: 1em 1em 0 1em;
-      padding: 1em;
-      z-index: 15;
-    }
-  }
-  
-  @media screen and (min-width: 400px) and (max-width: 660px) {
-    .direction-l .desc, .direction-r .desc {
-      margin: 1em 4em 0 4em;
+      display: none;
     }
   }
 }

@@ -19,24 +19,29 @@ import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner';
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 import faGithub from '@fortawesome/fontawesome-free-brands/faGithub';
 import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
+import faArrowRight from '@fortawesome/fontawesome-free-solid/faArrowRight';
+import faArrowLeft from '@fortawesome/fontawesome-free-solid/faArrowLeft';
+import faAngleDoubleDown from '@fortawesome/fontawesome-free-solid/faAngleDoubleDown';
+import faAngleDoubleUp from '@fortawesome/fontawesome-free-solid/faAngleDoubleUp';
 
 /**
  * 3) Tell font-awesome that you want to replace your icons with SVGs (recomended for performance)
 */
 fontawesome.config = {
   autoReplaceSvg: 'nest'
-}
+};
 
 /**
  * 4) Add the icons into the font-awesome library
 */
 fontawesome.library.add(
     faCheck, faGraduationCap, faPlay, faSpinner, faSearch, faGithub,
-    faCog, faSync, faEllipsisV, faExternalLinkAlt
+    faCog, faSync, faEllipsisV, faExternalLinkAlt, faArrowRight, faArrowLeft,
+    faAngleDoubleDown, faAngleDoubleUp
 );
 
 
 /**
  * 5) Now, you can place the icon tag anywhere you want to icon to show, for example:
- *    <i class="fas fa-check"></i>
+ *    <i className="fas fa-check"></i>
 */

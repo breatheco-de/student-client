@@ -1,7 +1,7 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import StudentStore from '../stores/StudentStore';
 import {Panel, BreadCrumb} from '../utils/react-components/src/index';
+import {Session} from 'bc-react-session';
 
 export default class ProfileView extends Flux.View {
   
@@ -15,8 +15,8 @@ export default class ProfileView extends Flux.View {
   }
   
   componentWillMount(){
-    const student = StudentStore.getUser();
-    if(student) this.setState({ student });
+    const session = Session.store.getSession();
+    if(session.user) this.setState({ student: session.user });
   }
   
   render() {

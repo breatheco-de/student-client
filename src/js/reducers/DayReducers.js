@@ -2,7 +2,7 @@ import StudentStore from '../stores/StudentStore';
 import BCStore from '../stores/BCStore';
 
 export default {
-    getDay(day){
+    getDay(day, index){
 
     day.replits = (function(){
         if(typeof day.replits === 'undefined') return [];
@@ -21,6 +21,10 @@ export default {
                 associated_slug: repl.associated_slug || repl.slug,
                 vtutorial_slug: repl.vtutorial_slug,
                 status: "pending",
+                day: {
+                    label: day.label,
+                    number: index
+                },
                 type: "replit"
             };
         });
@@ -36,6 +40,10 @@ export default {
                     { label: 'Go to lesson', slug: 'goto'},
                     { label: 'Mark as read', slug: 'mark-done'}
                 ],
+                day: {
+                    label: day.label,
+                    number: index
+                },
                 type: "lesson"
             };
         });
@@ -51,6 +59,10 @@ export default {
                     { label: 'Mark as done', slug: 'mark-done'}
                 ],
                 status: "pending",
+                day: {
+                    label: day.label,
+                    number: index
+                },
                 type: "quiz"
             };
         });
@@ -66,8 +78,12 @@ export default {
                     { label: 'Deliver assignment', slug: 'mark-done'}
                 ],
                 status: "pending",
+                day: {
+                    label: day.label,
+                    number: index
+                },
                 type: "assignment"
-            }
+            };
         });
     })();
     

@@ -1,9 +1,9 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
-import {Panel, Loading} from '../utils/react-components/src/index';
-
-import StudentStore from '../stores/StudentStore';
+import {Panel, Loading} from '../../utils/react-components/src/index';
+import StudentStore from '../../stores/StudentStore';
 import Raven from 'raven-js';
+import {Session} from 'bc-react-session';
 
 export default class ReplitView extends Flux.View {
   
@@ -18,8 +18,8 @@ export default class ReplitView extends Flux.View {
   
   componentWillMount()
   {
-    const cohort = StudentStore.getCurrentCohort();
-    this.setState({ cohort });
+    const session = Session.store.getSession();
+    this.setState({ cohort: session.user.currentCohort });
   }
   
   getReplitURL(){
@@ -28,7 +28,7 @@ export default class ReplitView extends Flux.View {
     const url = process.env.REPLIT_URL+replit_slug+'&c='+cohort_slug;
     if(typeof replit_slug === 'undefined' || typeof cohort_slug === 'undefined' || typeof process.env.REPLIT_URL === 'undefined')
       Raven.captureException(new Error(`Invalid Replit URL ${url}`));
-      
+
     return url;
   }
   
@@ -38,9 +38,11 @@ export default class ReplitView extends Flux.View {
         {
           (!this.state.error) ? 
             (<span><Loading show={this.state.loading} />
-              <iframe onLoad={()=>this.setState({loading: false})} className="replit-iframe" src={this.getReplitURL()} 
+              <iframe onLoad={(e)=> {
+                this.setState({loading: false});
+              }} className="replit-iframe" src={this.getReplitURL()} 
                 height="100%" width="100%" frameBorder="0" /></span>)
-            : (<div class="alert alert-danger">
+            : (<div className="alert alert-danger">
                 {this.state.error}
               </div>)
         }

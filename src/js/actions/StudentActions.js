@@ -1,11 +1,11 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import WP from 'wordpress-rest-api';
-import BC from '@breathecode/api-js-wrapper';
+import BC from '../utils/api.js';
 
 import StudentStore from '../stores/StudentStore';
 import DeliverAssignment from '../components/DeliverAssignment';
 import BCStore from '../stores/BCStore';
-import { NotifyActions, Session, Notify } from '../utils/react-components/src/index';
+import { NotifyActions, Notify, logout } from '../utils/react-components/src/index';
 
 class StudentActions extends Flux.Action{
     
@@ -74,11 +74,6 @@ class StudentActions extends Flux.Action{
             .catch((error) => {
                 Notify.error('There was an error delivering the task');
             });
-    }
-    
-    chooseCohort(cohort){
-        const session = Session.getSession();
-        Flux.dispatchEvent("session", Object.assign(session, { currentCohort: cohort }));
     }
     
     deliverAssignment(task){

@@ -1,7 +1,6 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
 import Panel from '../components/Panel.jsx';
-import WPStore from "../stores/WPStore";
 
 export default class WelcomeView extends Flux.View {
   getMarkdownText() {

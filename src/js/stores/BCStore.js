@@ -16,7 +16,11 @@ class BCStore extends Flux.Store{
     __reduce(entity){
         return {
             with: (reducers) => {
-                for(let key in reducers) entity = reducers[key](entity);
+                let index = 0;
+                for(let key in reducers){
+                    entity = reducers[key](entity, index);
+                    index++;
+                } 
                 return entity;
             }
         };
