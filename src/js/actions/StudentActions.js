@@ -2,10 +2,10 @@ import Flux from '@4geeksacademy/react-flux-dash';
 import WP from 'wordpress-rest-api';
 import BC from '../utils/api.js';
 
-import StudentStore from '../stores/StudentStore';
 import DeliverAssignment from '../components/DeliverAssignment';
 import BCStore from '../stores/BCStore';
-import { NotifyActions, Notify, logout } from '../utils/react-components/src/index';
+import { NotifyActions, Notify } from '../utils/react-components/src/index';
+import {Session} from 'bc-react-session';
 
 class StudentActions extends Flux.Action{
     
@@ -43,8 +43,8 @@ class StudentActions extends Flux.Action{
     
     startDay(day){
         const todos = BCStore.getDayTodos(day);
-        const student = StudentStore.getUser();
-        return BC.todo().add(student.bc_id,todos)
+        const session = Session.store.getSession();
+        return BC.todo().add(session.user.bc_id,todos)
                 .then((data) => {
                     this.dispatch('StudentStore.appendTodos', data.data || data);
                 })
@@ -54,8 +54,8 @@ class StudentActions extends Flux.Action{
     }
     
     addUnsyncedTodos(unsyncedTodos){
-        const student = StudentStore.getUser();
-        return BC.todo().add(student.bc_id,unsyncedTodos)
+        const session = Session.store.getSession();
+        return BC.todo().add(session.user.bc_id,unsyncedTodos)
                 .then((data) => {
                     Notify.success('The day was updated successfully, you can review your new todo\'s');
                     this.dispatch('StudentStore.appendTodos', data.data || data);

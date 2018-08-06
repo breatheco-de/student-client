@@ -498,10 +498,6 @@ var _api = __webpack_require__(/*! ../utils/api.js */ "./src/js/utils/api.js");
 
 var _api2 = _interopRequireDefault(_api);
 
-var _StudentStore = __webpack_require__(/*! ../stores/StudentStore */ "./src/js/stores/StudentStore.js");
-
-var _StudentStore2 = _interopRequireDefault(_StudentStore);
-
 var _DeliverAssignment = __webpack_require__(/*! ../components/DeliverAssignment */ "./src/js/components/DeliverAssignment.jsx");
 
 var _DeliverAssignment2 = _interopRequireDefault(_DeliverAssignment);
@@ -511,6 +507,8 @@ var _BCStore = __webpack_require__(/*! ../stores/BCStore */ "./src/js/stores/BCS
 var _BCStore2 = _interopRequireDefault(_BCStore);
 
 var _index = __webpack_require__(/*! ../utils/react-components/src/index */ "./src/js/utils/react-components/src/index.js");
+
+var _bcReactSession = __webpack_require__(/*! bc-react-session */ "./node_modules/bc-react-session/dist/session.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -572,8 +570,8 @@ var StudentActions = function (_Flux$Action) {
             var _this4 = this;
 
             var todos = _BCStore2.default.getDayTodos(day);
-            var student = _StudentStore2.default.getUser();
-            return _api2.default.todo().add(student.bc_id, todos).then(function (data) {
+            var session = _bcReactSession.Session.store.getSession();
+            return _api2.default.todo().add(session.user.bc_id, todos).then(function (data) {
                 _this4.dispatch('StudentStore.appendTodos', data.data || data);
             }).catch(function () {
                 _index.NotifyActions.error('There was an error creating the day todo\'s');
@@ -584,8 +582,8 @@ var StudentActions = function (_Flux$Action) {
         value: function addUnsyncedTodos(unsyncedTodos) {
             var _this5 = this;
 
-            var student = _StudentStore2.default.getUser();
-            return _api2.default.todo().add(student.bc_id, unsyncedTodos).then(function (data) {
+            var session = _bcReactSession.Session.store.getSession();
+            return _api2.default.todo().add(session.user.bc_id, unsyncedTodos).then(function (data) {
                 _index.Notify.success('The day was updated successfully, you can review your new todo\'s');
                 _this5.dispatch('StudentStore.appendTodos', data.data || data);
             }).catch(function () {
@@ -1950,35 +1948,6 @@ exports.default = {
 
 /***/ }),
 
-/***/ "./src/js/reducers/UserReducers.js":
-/*!*****************************************!*\
-  !*** ./src/js/reducers/UserReducers.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _StudentStore = __webpack_require__(/*! ../stores/StudentStore */ "./src/js/stores/StudentStore.js");
-
-var _StudentStore2 = _interopRequireDefault(_StudentStore);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-    getUser: function getUser(user) {
-
-        return user;
-    }
-};
-
-/***/ }),
-
 /***/ "./src/js/stores/BCStore.js":
 /*!**********************************!*\
   !*** ./src/js/stores/BCStore.js ***!
@@ -2225,12 +2194,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _reactFluxDash = __webpack_require__(/*! @4geeksacademy/react-flux-dash */ "./node_modules/@4geeksacademy/react-flux-dash/dist/react-flux-dash.js");
 
 var _reactFluxDash2 = _interopRequireDefault(_reactFluxDash);
-
-var _UserReducers = __webpack_require__(/*! ../reducers/UserReducers */ "./src/js/reducers/UserReducers.js");
-
-var _UserReducers2 = _interopRequireDefault(_UserReducers);
-
-var _bcReactSession = __webpack_require__(/*! bc-react-session */ "./node_modules/bc-react-session/dist/session.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
