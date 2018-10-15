@@ -30,7 +30,7 @@ export const login = (username, password, history) =>{
             created_at: data.created_at,
             full_name: data.full_name,
             type: data.type || 'student',
-            currentCohort: (data.cohorts.length === 1) ? data.cohorts[0] : data.cohorts
+            currentCohort: (!Array.isArray(data.cohorts)) ? null : (data.cohorts.length === 1) ? data.cohorts[0] : data.cohorts
         };
         Session.start({ payload: user, expiration: (3600*24) });
         history.push('/');

@@ -1,8 +1,9 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import {Panel, logout} from '../components/react-components/src/index';
+import {Panel} from '../components/react-components/src/index';
 import StudentStore from '../stores/StudentStore';
 import {Session} from 'bc-react-session';
+import {logout} from '../actions/auth';
 
 export default class HomeView extends Flux.View {
   

@@ -1,4 +1,3 @@
-
 /* global fetch, localStorage, window */
 class Wrapper{
     
@@ -24,7 +23,6 @@ class Wrapper{
     req(method, path, args){
         
         const token = this.options.getToken((path.indexOf('//assets') == -1) ? 'api':'assets');
-        console.log("Token:",token);
         let opts = { 
             method, 
             headers: {'Content-Type': 'application/json'}
