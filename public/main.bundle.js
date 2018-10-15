@@ -5916,7 +5916,7 @@ var CourseView = function (_Flux$View) {
 
             var state = {
                 courseSlug: courseSlug,
-                currentCohort: session.user.currentCohort
+                currentCohort: session.payload.currentCohort
             };
             if (this.state.context.path.day) state.currentOption = _menu.menuModes.course[0].items[0];
             this.setState(state);

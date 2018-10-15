@@ -43,7 +43,7 @@ class CourseView extends Flux.View{
       
       let state = { 
         courseSlug,
-        currentCohort: session.user.currentCohort
+        currentCohort: session.payload.currentCohort
       };
       if(this.state.context.path.day) state.currentOption = menuModes.course[0].items[0];
       this.setState(state);
