@@ -400,7 +400,7 @@ exports.push([module.i, "/*!\n * Bootstrap v4.1.3 (https://getbootstrap.com/)\n 
 /*! exports provided: name, version, description, main, scripts, author, license, devDependencies, babel, dependencies, default */
 /***/ (function(module) {
 
-module.exports = {"name":"workspace","version":"1.1.2","description":"","main":"index.js","scripts":{"c9":"webpack-dev-server --open --host $IP --port $PORT --config webpack.dev.js","dev":"webpack --config webpack.dev.js","start":"http-server -a $IP","build":"webpack --config webpack.prod.js"},"author":"","license":"ISC","devDependencies":{"babel-cli":"^6.26.0","babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.0","babel-preset-react":"^6.24.1","css-loader":"^0.28.7","dotenv-webpack":"^1.5.5","file-loader":"^1.1.5","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","markdown-loader":"^2.0.2","node-sass":"^4.8.3","react-svg-loader":"^2.1.0","sass-loader":"^6.0.6","style-loader":"^0.19.0","webpack":"^4.16.4","webpack-cli":"^2.1.5","webpack-dev-server":"^3.1.5","webpack-merge":"^4.1.4"},"babel":{"presets":["env","react"]},"dependencies":{"@4geeksacademy/react-flux-dash":"^3.0.2","@breathecode/api-js-wrapper":"^1.0.6","@fortawesome/fontawesome":"^1.1.4","@fortawesome/fontawesome-free-brands":"^5.0.9","@fortawesome/fontawesome-free-regular":"^5.0.8","@fortawesome/fontawesome-free-solid":"^5.0.8","bc-react-notifier":"^1.1.0","bc-react-session":"^1.5.1","bootstrap":"^4.1.3","events":"^1.1.1","flux":"^3.1.3","moment":"^2.19.4","prop-types":"^15.6.1","query-string":"^5.0.1","raven-js":"^3.24.2","react":"^16.4.2","react-ace":"^5.9.0","react-dom":"^16.4.2","react-flux-dash":"^1.1.6","react-marked":"^0.3.1","react-mousetrap":"^0.2.0","react-polyfills":"0.0.1","react-router":"^4.3.1","react-router-dom":"^4.3.1","react-split-pane":"^0.1.77","react-transition-group":"^1.2.1","validator":"^9.4.1","wordpress-rest-api":"^0.8.0"}};
+module.exports = {"name":"workspace","version":"1.1.3","description":"","main":"index.js","scripts":{"c9":"webpack-dev-server --open --host $IP --port $PORT --config webpack.dev.js","dev":"webpack --config webpack.dev.js","start":"http-server -a $IP","build":"webpack --config webpack.prod.js"},"author":"","license":"ISC","devDependencies":{"babel-cli":"^6.26.0","babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.0","babel-preset-react":"^6.24.1","css-loader":"^0.28.7","dotenv-webpack":"^1.5.5","file-loader":"^1.1.5","html-loader":"^0.5.5","html-webpack-plugin":"^3.2.0","markdown-loader":"^2.0.2","node-sass":"^4.8.3","react-svg-loader":"^2.1.0","sass-loader":"^6.0.6","style-loader":"^0.19.0","webpack":"^4.16.4","webpack-cli":"^2.1.5","webpack-dev-server":"^3.1.5","webpack-merge":"^4.1.4"},"babel":{"presets":["env","react"]},"dependencies":{"@4geeksacademy/react-flux-dash":"^3.0.2","@breathecode/api-js-wrapper":"^1.0.6","@fortawesome/fontawesome":"^1.1.4","@fortawesome/fontawesome-free-brands":"^5.0.9","@fortawesome/fontawesome-free-regular":"^5.0.8","@fortawesome/fontawesome-free-solid":"^5.0.8","bc-react-notifier":"^1.1.0","bc-react-session":"^1.5.1","bootstrap":"^4.1.3","events":"^1.1.1","flux":"^3.1.3","moment":"^2.19.4","prop-types":"^15.6.1","query-string":"^5.0.1","raven-js":"^3.24.2","react":"^16.4.2","react-ace":"^5.9.0","react-dom":"^16.4.2","react-flux-dash":"^1.1.6","react-marked":"^0.3.1","react-mousetrap":"^0.2.0","react-polyfills":"0.0.1","react-router":"^4.3.1","react-router-dom":"^4.3.1","react-split-pane":"^0.1.77","react-transition-group":"^1.2.1","validator":"^9.4.1","wordpress-rest-api":"^0.8.0"}};
 
 /***/ }),
 
@@ -5910,13 +5910,13 @@ var CourseView = function (_Flux$View) {
         value: function componentDidMount() {
             var courseSlug = this.props.match.params.course_slug;
             var syllabus = _BCStore2.default.getSyllabus(courseSlug);
-            var session = _bcReactSession.Session.get();
-            if (!session.payload.currentCohort || Array.isArray(session.payload.currentCohort)) this.props.history.push('/choose');
+            var _session = _bcReactSession.Session.get();
+            if (!_session.payload.currentCohort || Array.isArray(_session.payload.currentCohort)) this.props.history.push('/choose');
             if (!syllabus || syllabus.profile != courseSlug) _BCActions2.default.fetch().syllabus(courseSlug);
 
             var state = {
                 courseSlug: courseSlug,
-                currentCohort: session.payload.currentCohort
+                currentCohort: _session.payload.currentCohort
             };
             if (this.state.context.path.day) state.currentOption = _menu.menuModes.course[0].items[0];
             this.setState(state);

@@ -37,13 +37,13 @@ class CourseView extends Flux.View{
     componentDidMount(){
       const courseSlug = this.props.match.params.course_slug;
       const syllabus = BCStore.getSyllabus(courseSlug);
-      const session = Session.get();
-      if(!session.payload.currentCohort || Array.isArray(session.payload.currentCohort)) this.props.history.push('/choose');
+      const _session = Session.get();
+      if(!_session.payload.currentCohort || Array.isArray(_session.payload.currentCohort)) this.props.history.push('/choose');
       if(!syllabus || syllabus.profile != courseSlug) BCActions.fetch().syllabus(courseSlug);
       
       let state = { 
         courseSlug,
-        currentCohort: session.payload.currentCohort
+        currentCohort: _session.payload.currentCohort
       };
       if(this.state.context.path.day) state.currentOption = menuModes.course[0].items[0];
       this.setState(state);
