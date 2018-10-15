@@ -3,7 +3,7 @@ import React from "react";
 import {withRouter} from "react-router-dom";
 import DayContent from '../components/DayContent.jsx';
 
-import {ActionableItem, List, ProgressKPI, Panel} from '../utils/react-components/src/index';
+import {ActionableItem, List, ProgressKPI, Panel} from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
 import BCStore from '../stores/BCStore';
 import StudentActions from '../actions/StudentActions';
@@ -52,7 +52,7 @@ class DayView extends Flux.View {
   }
   
   loadDay(newDayNumber=null){
-    const student = Session.store.getSession().user;
+    const student = Session.get().payload;
     const singleDay = BCStore.getSingleDay(newDayNumber || this.props.match.params.day_number);
     if(singleDay){
       this.setState({ 

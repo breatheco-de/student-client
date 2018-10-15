@@ -1,15 +1,15 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import {Panel, logout} from '../utils/react-components/src/index';
+import {Panel, logout} from '../components/react-components/src/index';
 import StudentStore from '../stores/StudentStore';
 import {Session} from 'bc-react-session';
 
 export default class HomeView extends Flux.View {
   
   componentDidMount(){
-    const session = Session.store.getSession();
-    if(session.autenticated){
-      let currentCohort = session.user.currentCohort;
+    const session = Session.get();
+    if(session.active){
+      let currentCohort = session.payload.currentCohort;
       if(currentCohort){
         if(Array.isArray(currentCohort)) this.props.history.push('/choose');
         else this.props.history.push('/course/'+currentCohort.profile_slug);

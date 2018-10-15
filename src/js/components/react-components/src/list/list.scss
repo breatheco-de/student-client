@@ -1,0 +1,13 @@
+@import '../theme/colors';
+.bclist{
+    display: inline-block;
+    text-align: left;
+    .actionable-item{
+        position: relative;
+        svg{
+            margin-left: 5px;
+            opacity: 0.5;
+        }
+        .done{ color: $green;}
+    }
+}

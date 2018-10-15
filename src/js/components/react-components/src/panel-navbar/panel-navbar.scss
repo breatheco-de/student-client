@@ -1,0 +1,35 @@
+@import '../theme/colors';
+.panel-navbar{
+    background: white;
+    text-align: center;
+    position: relative;
+}
+.panel-navbar .btn-container{
+    width: 200px;
+}
+.panel-navbar .day-label{
+    font-size: 12px;
+    margin: 0;
+    margin-top: -7px;
+}
+.panel-navbar .btn{
+    width: 200px;
+    border-radius: 0;
+}
+.panel-navbar .btn-collapse{
+    font-size: 12px;
+    position: absolute;
+    border-radius: 100%;
+    width: 20px; height: 20px;
+    bottom: -8px;
+    background: white;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none; 
+    transform: translateX(-10px);
+}
+.panel-navbar .btn-collapse:hover{
+    outline: none; 
+    background-color: #BDBDBD;
+}

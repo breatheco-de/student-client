@@ -1,0 +1,10 @@
+@import '../theme/colors';
+.bcbutton{
+    border: 1px solid $light-grey;
+    color: $dark-grey;
+    background: white;
+    padding: 20px;
+    .btnicon{
+        margin-right: 10px;
+    }
+}

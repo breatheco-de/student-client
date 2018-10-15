@@ -1,6 +1,6 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import {Panel, BreadCrumb} from '../utils/react-components/src/index';
+import {Panel, BreadCrumb} from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
 
 export default class ProfileView extends Flux.View {
@@ -11,12 +11,12 @@ export default class ProfileView extends Flux.View {
       student: {
         full_name: 'Profile'
       }
-    }
+    };
   }
   
   componentWillMount(){
-    const session = Session.store.getSession();
-    if(session.user) this.setState({ student: session.user });
+    const session = Session.get();
+    if(session.payload) this.setState({ student: session.payload });
   }
   
   render() {

@@ -1,0 +1,12 @@
+@import '../theme/colors';
+.bcdroplink{
+    &.dropdown{
+        display: inline;
+        .btn.dropdown-toggle{
+            font-size: 22px;
+        }
+        .dropdown-menu a{
+            cursor: pointer;
+        }
+    }
+}

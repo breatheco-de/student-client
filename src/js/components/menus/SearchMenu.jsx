@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom';
 import {loadAssets} from '../../actions/ContentActions';
 import ContentStore from "../../stores/ContentStore";
 import BCStore from "../../stores/BCStore";
-import {DropLink } from '../../utils/react-components/src/index';
+import {DropLink } from '../../components/react-components/src/index';
 
 class SearchMenu extends Flux.DashView {
   

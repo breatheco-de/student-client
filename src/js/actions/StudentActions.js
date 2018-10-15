@@ -4,8 +4,8 @@ import BC from '../utils/api.js';
 
 import DeliverAssignment from '../components/DeliverAssignment';
 import BCStore from '../stores/BCStore';
-import { NotifyActions, Notify } from '../utils/react-components/src/index';
-import {Session} from 'bc-react-session';
+import { Notify } from 'bc-react-notifier';
+import { Session } from 'bc-react-session';
 
 class StudentActions extends Flux.Action{
     
@@ -43,25 +43,25 @@ class StudentActions extends Flux.Action{
     
     startDay(day){
         const todos = BCStore.getDayTodos(day);
-        const session = Session.store.getSession();
-        return BC.todo().add(session.user.bc_id,todos)
+        const session = Session.get();
+        return BC.todo().add(session.payload.bc_id,todos)
                 .then((data) => {
                     this.dispatch('StudentStore.appendTodos', data.data || data);
                 })
                 .catch(()=>{
-                    NotifyActions.error('There was an error creating the day todo\'s');
+                    Notify.error('There was an error creating the day todo\'s');
                 });
     }
     
     addUnsyncedTodos(unsyncedTodos){
-        const session = Session.store.getSession();
-        return BC.todo().add(session.user.bc_id,unsyncedTodos)
+        const session = Session.get();
+        return BC.todo().add(session.payload.bc_id,unsyncedTodos)
                 .then((data) => {
                     Notify.success('The day was updated successfully, you can review your new todo\'s');
                     this.dispatch('StudentStore.appendTodos', data.data || data);
                 })
                 .catch(()=>{
-                    NotifyActions.error('There was an error updating the day todo\'s');
+                    Notify.error('There was an error updating the day todo\'s');
                 });
     }
     

@@ -1,0 +1,24 @@
+@import '../theme/colors';
+.breadcrumb{
+    padding: 0;
+    background: inherit;
+    li{
+        list-style: none;
+        width: inherit;
+        cursor: pointer;
+        display: inline;
+        padding:0;
+        .logo{
+            max-width: 32px;
+        }
+        &:hover{
+            color: $orange;
+        }
+        &:not(:first-child){
+            &:before{
+                content: ":";
+                color: $orange;
+            }
+        }
+    }
+}

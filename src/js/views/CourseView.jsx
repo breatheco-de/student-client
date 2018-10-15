@@ -37,8 +37,8 @@ class CourseView extends Flux.View{
     componentDidMount(){
       const courseSlug = this.props.match.params.course_slug;
       const syllabus = BCStore.getSyllabus(courseSlug);
-      const session = Session.store.getSession();
-      if(!session.user.currentCohort || Array.isArray(session.user.currentCohort)) this.props.history.push('/choose');
+      const session = Session.get();
+      if(!session.payload.currentCohort || Array.isArray(session.payload.currentCohort)) this.props.history.push('/choose');
       if(!syllabus || syllabus.profile != courseSlug) BCActions.fetch().syllabus(courseSlug);
       
       let state = { 
@@ -68,7 +68,7 @@ class CourseView extends Flux.View{
     fetchSecondSyllabusPhase(){
       const todos = StudentStore.getTodos();
       if(!todos){
-        const student = Session.store.getSession().user;
+        const student = Session.get().payload;
         if(student) StudentActions.fetch().todos(student.bc_id);
       } 
       const projects = BCStore.getProjects();

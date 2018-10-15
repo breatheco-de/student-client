@@ -1,0 +1,16 @@
+@import '../theme/colors';
+.checkbox{
+    padding: 5px;
+    cursor: pointer;
+    span{
+        float: left;        
+    }
+    &:hover{
+        background: $light-grey;
+    }
+    label {
+        cursor: pointer;
+        margin-bottom: 0px;
+    }
+    svg{margin-right: 10px;}
+}

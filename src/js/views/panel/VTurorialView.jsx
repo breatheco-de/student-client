@@ -1,7 +1,7 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
 import {Link} from "react-router-dom";
-import {Panel, Loading} from '../../utils/react-components/src/index';
+import {Panel, Loading} from '../../components/react-components/src/index';
 import {Session} from 'bc-react-session';
 
 export default class VTurorialView extends Flux.View {
@@ -11,7 +11,7 @@ export default class VTurorialView extends Flux.View {
     this.state = {
       loading: true,
       alertMsg: null,
-      token: Session.store.getSession().access_token || ''
+      token: Session.get().payload.access_token || ''
     };
   }
   

@@ -1,6 +1,6 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import { List, Panel, logout} from '../utils/react-components/src/index';
+import { List, Panel, logout} from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
 
 export default class ChooseView extends Flux.View {
@@ -15,11 +15,12 @@ export default class ChooseView extends Flux.View {
   }
   
   componentDidMount(){
-    const session = Session.store.getSession();
-    this.setState({ student: session.user });
+    let session = Session.get();
+    this.setState({ student: session.payload });
     const unsubscribe = Session.onChange((session) => {
       if(typeof unsubscribe == 'function') unsubscribe();
-      const currentCohort = (session.user) ? session.user.currentCohort : null;
+      
+      const currentCohort = (session.payload) ? session.payload.currentCohort : null;
       if(currentCohort && typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort)) 
         this.props.history.push('/course/'+currentCohort.profile_slug);
     });
@@ -30,8 +31,7 @@ export default class ChooseView extends Flux.View {
       <li key={i}>
         <button className="btn btn-light ml-3"
           onClick={() => {
-            Session.actions.setUser({currentCohort: cohort});
-            
+            Session.setPayload({currentCohort: cohort});
           }}>
           <i className="fas fa-external-link-alt"></i> launch this course
         </button>

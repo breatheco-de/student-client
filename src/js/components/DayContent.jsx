@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button} from '../utils/react-components/src/index';
+import {Button} from '../components/react-components/src/index';
 class DayContent extends React.Component{
     
     constructor(){

@@ -1,0 +1,33 @@
+@import '../theme/colors';
+.settings-item{
+    position: absolute;
+    padding-left: 10px;
+    bottom: 10px;
+    right: 0;
+    z-index: 10;
+    width: 100%;
+    &.collapsed{
+        right: -1px;
+        .dropdown-toggle:after{
+            display: none;
+        }
+    }
+    .dropdown{
+        float: right;
+        margin-top: -3px;
+        .up{
+            transform: translateY(calc(-100% - 40px));
+        }
+    }
+}
+.bc-sidebar{
+    &.collapsed{
+        overflow: inherit;
+        .dropdown-toggle:after{
+            display: none;
+        }
+    }
+    .nav-link{
+        padding: 0;
+    }
+}

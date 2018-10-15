@@ -1,0 +1,37 @@
+@import '../theme/colors';
+.panel{
+    border-radius: 2px;
+    overflow: auto;
+    padding: 10px;
+    margin-left: 5px;
+    height: 100vh;
+    position: relative;
+    .panel-toolbar{
+        display: inline-block;
+        margin: auto;
+        .bcbutton{ font-size: 20px; }
+    }
+    &.deph-1 {
+        @include deph1;
+    }
+    &.deph-1:hover {
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    }
+    
+    &.deph-2 {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+    
+    &.deph-3 {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    }
+    
+    &.deph-4 {
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    }
+    
+    &.deph-5 {
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    }
+}
+

@@ -2,8 +2,8 @@ import React from 'react';
 import SplitPane from 'react-split-pane';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {DropLink, Sidebar} from '../utils/react-components/src/index';
-import {logout} from '../utils/react-components/src/index';
+import {DropLink, Sidebar} from '../components/react-components/src/index';
+import {logout} from '../actions/auth';
 import {Session} from 'bc-react-session';
 import {getCurrentPath} from '../utils/menu.js';
 
@@ -26,12 +26,12 @@ class SplitLayout extends React.Component{
     }
     
     componentDidMount(){
-        const session = Session.store.getSession();
+        const session = Session.get();
         
         const currentPath = getCurrentPath();
         const collapsed = (currentPath.type) ? true : false;
         this.setState({ 
-            student: session.user, 
+            student: session.payload, 
             collapsed: collapsed, 
             currentSize: (collapsed) ? this.state.minSize : this.state.maxSize 
         });
@@ -55,7 +55,7 @@ class SplitLayout extends React.Component{
     
     onSettingsSelect(item){
         switch(item.slug){
-            case "logout": logout(); break;
+            case "logout": logout(this.props.history); break;
             case "profile": this.props.history.push('/profile'); break;
             case "choose": this.props.history.push('/choose'); break;
         }
