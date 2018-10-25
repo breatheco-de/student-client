@@ -1,16 +1,9 @@
-const webpack = require('webpack');
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
     './src/js/index.js', 
   ],
-  output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'public'),
-    publicPath: path.resolve(__dirname, '/')
-  },
   module: {
     rules: [
         { test: /\.(jsx|js)?$/, exclude: /node_modules/, loader: "babel-loader" },
