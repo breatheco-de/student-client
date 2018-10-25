@@ -1,7 +1,5 @@
 import React from "react";
-import {Link, withRouter} from "react-router-dom";
 import Validator from 'validator';
-import bcLogo from '../../img/bc-icon.png';
 
 class Login extends React.Component {
 
@@ -20,9 +18,9 @@ class Login extends React.Component {
     
     if(!errors){
       this.setState({ errorMsg: [], pending: true });
-      this.props.onSubmit(this.username, this.password, this.props.history)
-      .catch((errorMsg) => {
-        this.setState({ errorMsg: [errorMsg.message] || [errorMsg], pending: false });
+      this.props.onSubmit(this.username, this.password)
+      .catch((err) => {
+        this.setState({ errorMsg: [err.msg || err.message || err], pending: false });
       });
     }
     else this.setState({ errorMsg: errors, pending: false });
@@ -45,8 +43,8 @@ class Login extends React.Component {
     return (
       <div className="container">
         <div className="form-signin text-center">
-          <img src={process.env.STATIC_PATH+bcLogo} />
-          <small className="text-center d-block">[{process.env.APP_NAME}]</small>
+          <img src={this.props.logoURL} />
+          <small className="text-center d-block">[{this.props.appName}]</small>
           <h2 className="form-signin-heading mt-5">Please sign in</h2>
           <form action="#" onSubmit={(e) => this.login(e)}>
           { 
@@ -69,7 +67,7 @@ class Login extends React.Component {
                 <button className="btn btn-lg btn-secondary btn-block" type="button" disabled={this.state.pending}>Loading...</button>
             }
             <div className="checkbox">
-                <Link to="/forgot">Forgot Password</Link>
+                <a href="#" onClick={() => this.props.onForgot()}>Forgot Password</a>
             </div>
           </form>
           {
@@ -80,4 +78,4 @@ class Login extends React.Component {
     );
   }
 }
-export default withRouter(Login);
+export default Login;

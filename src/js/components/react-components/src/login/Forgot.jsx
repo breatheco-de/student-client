@@ -1,7 +1,5 @@
 import React from "react";
-import {Link, withRouter} from "react-router-dom";
 import Validator from 'validator';
-import bcLogo from '../../img/bc-icon.png';
 
 class Forgot extends React.Component {
 
@@ -11,7 +9,7 @@ class Forgot extends React.Component {
       errorMsg: [],
       successMsg: null,
       pending: false
-    }
+    };
     this.email = '';
   }
 
@@ -49,7 +47,7 @@ class Forgot extends React.Component {
     return (
       <div className="container">
         <div className="form-signin text-center">
-          <img src={process.env.STATIC_PATH+bcLogo} />
+          <img src={this.props.logoURL} />
           <h2 className="form-signin-heading">What's your account email?</h2>
           <form action="#" onSubmit={(e) => this.formSubmit(e)}>
           { 
@@ -72,7 +70,7 @@ class Forgot extends React.Component {
               :
                 <button className="btn btn-lg btn-secondary btn-block" type="button" disabled={this.state.pending}>Loading...</button>
             }
-            <Link className="text-center" to="/login">or back to login</Link>
+            <a href="#" onClick={() => this.props.onBackToLogin()}>Forgot Password</a>
           </form>
           {
             //<button className="btn btn-lg btn-light btn-block" type="submit">or use Github <i className="fab fa-github"></i></button>
@@ -82,4 +80,4 @@ class Forgot extends React.Component {
     );
   }
 }
-export default withRouter(Forgot);
+export default Forgot;

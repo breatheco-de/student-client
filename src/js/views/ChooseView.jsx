@@ -1,7 +1,8 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
-import { List, Panel, logout} from '../components/react-components/src/index';
+import { List, Panel } from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
+import { logout } from '../actions/auth';
 
 export default class ChooseView extends Flux.View {
   

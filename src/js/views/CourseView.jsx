@@ -3,6 +3,8 @@ import Flux from '@4geeksacademy/react-flux-dash';
 import { Route, Switch } from 'react-router-dom';
 import SplitLayout from '../components/SplitLayout';
 
+import { Wizard } from '../components/wizard/Wizard.jsx';
+
 import BCStore from '../stores/BCStore';
 import BCActions from '../actions/BCActions';
 
@@ -25,7 +27,9 @@ class CourseView extends Flux.View{
         super();
         this.state = {
             courseSlug: null,
+            runTutorial: false,
             currentCohort: null,
+            currentTutorialStep: 'first',
             menuItems: menuModes.course,
             currentMenuOption: menuModes.course[0],
             context: this.getCurrentContext()
@@ -43,6 +47,7 @@ class CourseView extends Flux.View{
       
       let state = { 
         courseSlug,
+        runTutorial: _session.show_tutorial || true,
         currentCohort: _session.payload.currentCohort
       };
       if(this.state.context.path.day) state.currentOption = menuModes.course[0].items[0];
@@ -98,6 +103,10 @@ class CourseView extends Flux.View{
               onNavBarSelect={this.onSelect.bind(this)}
               baseLevel="course"
             >
+              <Wizard 
+                initialStepGroup="first"
+                run={this.state.runTutorial}
+              />
                     <div>
                         <Switch>
                             <Route exact path={this.props.match.path+'/r/:replit_slug'} component={ReplitView} />

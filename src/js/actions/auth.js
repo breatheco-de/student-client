@@ -5,7 +5,9 @@ import BC from '../utils/api.js';
 BC.setOptions({
     getToken: (type='api')=> {
         const session = Session.get();
-        return 'Bearer '+session.payload.access_token;
+        
+        const token = (typeof session.payload != 'undefined') ? session.payload.access_token : '';
+        return 'Bearer '+token;
     },
     onLogout: () => logout()
 });
@@ -25,6 +27,7 @@ export const login = (username, password, history) =>{
             financial_status: data.financial_status,
             avatar: data.avatar_url,
             phone: data.phone,
+            show_tutorial: data.show_tutorial || true,
             github: data.github,
             email: data.email || data.username,
             created_at: data.created_at,

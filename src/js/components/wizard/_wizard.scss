@@ -1,0 +1,70 @@
+$primaryColor: #f04;
+$beaconSize: 30px;
+$zIndex: 2;
+
+.beacon{
+    display: inline-block;
+    height: $beaconSize;
+    position: relative;
+    width: $beaconSize;
+    z-index: $zIndex;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    color: '#555';
+    top: -5px;
+    left: -5px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 8;
+    .beaconInner{
+      animation: joyride-beacon-inner 1.2s infinite ease-in-out;
+      background-color: transparent;
+      color: white;
+      border-radius: 50%;
+      display: block;
+      height: 50%;
+      left: 50%;
+      opacity: 0.7;
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 50%;
+    }
+    .beaconOuter{
+        animation: joyride-beacon-outer 1.2s infinite ease-in-out;
+        background-color: $primaryColor;
+        border: 2px solid $primaryColor;
+        border-radius: 50%;
+        box-sizing: border-box;
+        display: block;
+        height: 100%;
+        opacity: 0.9;
+        position: absolute;
+        transform-origin: center;
+        width: 100%;
+    }
+}
+
+@keyframes joyride-beacon-inner {
+  20% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.7;
+  }
+}
+@keyframes joyride-beacon-outer {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    opacity: 0.7;
+    transform: scale(0.75);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
