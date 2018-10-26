@@ -120,7 +120,7 @@ export const tutorialSteps = {
         {
             target: '.timeline li:first-child',
             content: <div>
-                <h5>The course is divided into several days you must complete your tasks in chronological order</h5>
+                <h5>The course is divided into several days, each day has a list of TODO's you must complete in chronological order.</h5>
                 <h4>Click <code>Day 1</code> on this timeline to begin.</h4>
             </div>,
             placement: 'right',
