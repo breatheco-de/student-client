@@ -10,7 +10,7 @@ class DayContent extends React.Component{
     }
     
     onStart(){
-        console.log('a');
+        window.location.hash = "started";
         this.props.onStart();
     }
     

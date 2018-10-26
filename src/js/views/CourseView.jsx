@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import SplitLayout from '../components/SplitLayout';
 
 import { Wizard } from '../components/wizard/Wizard.jsx';
-
+import TimeMenu from '../components/menus/TimeLineMenu';
 import BCStore from '../stores/BCStore';
 import BCActions from '../actions/BCActions';
 
@@ -25,14 +25,14 @@ class CourseView extends Flux.View{
     
     constructor() {
         super();
+        const context = this.getCurrentContext();
         this.state = {
             courseSlug: null,
             runTutorial: false,
             currentCohort: null,
-            currentTutorialStep: 'first',
-            menuItems: menuModes.course,
-            currentMenuOption: menuModes.course[0],
-            context: this.getCurrentContext()
+            menuItems: (menuModes[context.path.menu]) ? menuModes[context.path.menu] : menuModes.course,
+            currentMenuOption: (menuModes[context.path.menu]) ? menuModes[context.path.menu][0] : menuModes.course[0],
+            context
         };
         //this.sessionUpdated();
         this.bindStore(BCStore, 'syllabus', this.syllabusUpdated.bind(this));
@@ -45,9 +45,17 @@ class CourseView extends Flux.View{
       if(!_session.payload.currentCohort || Array.isArray(_session.payload.currentCohort)) this.props.history.push('/choose');
       if(!syllabus || syllabus.profile != courseSlug) BCActions.fetch().syllabus(courseSlug);
       
+      let currentMenuOption = this.state.currentMenuOption;
+      if(this.state.context.path.menu == 'syllabus') currentMenuOption = { 
+        slug: this.state.context.path.menu, 
+        data: BCStore.getSyllabusDays(),
+        component: TimeMenu
+      };
+      
       let state = { 
         courseSlug,
-        runTutorial: _session.show_tutorial || true,
+        currentMenuOption,
+        runTutorial: (typeof _session.payload.show_tutorial != undefined) ? _session.payload.show_tutorial : true,
         currentCohort: _session.payload.currentCohort
       };
       if(this.state.context.path.day) state.currentOption = menuModes.course[0].items[0];
@@ -58,16 +66,24 @@ class CourseView extends Flux.View{
     getCurrentContext(){
         const path = getCurrentPath();
         let breadcrumb = [{ label: "BreatheCode", path: '/home' }];
-        if(path.course) breadcrumb.push({ label: 'Course', path: `/course/${path.course}` });
-        if(path.day) breadcrumb.push({ label: 'Day', path: `/course/${path.course}/${path.day}` });
-        if(path.type) breadcrumb.push({ label: path.type, path: `/course/${path.course}/${path.day}/${path.type}/${path.view}` });
+        //if(path.course) breadcrumb.push({ label: 'Course', path: `/course/${path.course}` });
+        //if(path.day) breadcrumb.push({ label: 'Day', path: `/course/${path.course}/${path.day}` });
+        //if(path.type) breadcrumb.push({ label: path.type, path: `/course/${path.course}/${path.day}/${path.type}/${path.view}` });
     
         return { path, breadcrumb };
     }
     
     syllabusUpdated(){
         this.fetchSecondSyllabusPhase();
-        this.setState({ menuItems: menuModes.course });
+        
+        let currentMenuOption = this.state.currentMenuOption;
+        if(this.state.context.path.menu == 'syllabus') currentMenuOption = { 
+          slug: this.state.context.path.menu, 
+          data: BCStore.getSyllabusDays(),
+          component: TimeMenu
+        };
+        
+        this.setState({ menuItems: menuModes.course, currentMenuOption });
     }
     
     fetchSecondSyllabusPhase(){
@@ -86,11 +102,15 @@ class CourseView extends Flux.View{
         if(typeof option.slug != 'undefined' && this.state.menuItems.find((item => item.slug = option.slug))){
           if(option.slug == 'syllabus') option.data = BCStore.getSyllabusDays();
           this.setState({
-            currentMenuOption: option
+            currentMenuOption: option,
+            context: this.getCurrentContext()
           });
         }
         else if(typeof option.dayNumber != 'undefined'){
           this.props.history.push(this.props.match.url+'/'+option.dayNumber);
+          this.setState({
+            context: this.getCurrentContext(this.props.match.url+'/'+option.dayNumber)
+          });
         }
     }
     
@@ -104,24 +124,24 @@ class CourseView extends Flux.View{
               baseLevel="course"
             >
               <Wizard 
-                initialStepGroup="first"
                 run={this.state.runTutorial}
+                context={this.state.context}
               />
-                    <div>
-                        <Switch>
-                            <Route exact path={this.props.match.path+'/r/:replit_slug'} component={ReplitView} />
-                            <Route exact path={this.props.match.path+'/q/:quiz_slug'} component={QuizView} />
-                            <Route exact path={this.props.match.path+'/a/:assignment_slug'} component={AssignmentView} />
-                            <Route exact path={this.props.match.path+'/l/:lesson_slug'} component={LessonView} />
-                            <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />
-                            <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
-                            <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />
-                            <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug'} component={ReplitView} />
-                            <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug/vtutorial/:vtutorial_slug'} component={VTurorialView} />
-                            <Route exact path={this.props.match.path+'/:day_number/a/:assignment_slug'} component={AssignmentView} />
-                            <Route exact path={this.props.match.path} component={CourseIntro} />
-                        </Switch>
-                    </div>
+              <div>
+                  <Switch>
+                      <Route exact path={this.props.match.path+'/r/:replit_slug'} component={ReplitView} />
+                      <Route exact path={this.props.match.path+'/q/:quiz_slug'} component={QuizView} />
+                      <Route exact path={this.props.match.path+'/a/:assignment_slug'} component={AssignmentView} />
+                      <Route exact path={this.props.match.path+'/l/:lesson_slug'} component={LessonView} />
+                      <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />
+                      <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
+                      <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />
+                      <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug'} component={ReplitView} />
+                      <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug/vtutorial/:vtutorial_slug'} component={VTurorialView} />
+                      <Route exact path={this.props.match.path+'/:day_number/a/:assignment_slug'} component={AssignmentView} />
+                      <Route exact path={this.props.match.path} component={CourseIntro} />
+                  </Switch>
+              </div>
             </SplitLayout>
         );
     }

@@ -36,17 +36,21 @@ export const menuModes = {
     syllabus: null
 };
 
-export const getCurrentPath = () => {
-    const pathname = window.location.pathname;
+export const getCurrentPath = (pathname=null, hash=null) => {
+    if(!pathname) pathname = window.location.pathname;
+    if(!hash) hash = window.location.hash;
     let fullRegex = /course\/(.+)\/(\d+)\/([l|r|a|q])\/(.+)$/;
     const fullMatch = pathname.match(fullRegex);
     let dayRegex = /course\/(.+)\/(\d+)(.*)$/;
     const dayMatch = pathname.match(dayRegex);
+    let menuRegex = /menu=(.+)$/;
+    const menuMatch = hash.match(menuRegex);
     
+    const menu = (!menuMatch) ? null:menuMatch[1];
     const course = (!dayMatch) ? null:dayMatch[1];
     const day = (!dayMatch) ? null:dayMatch[2];
     const type = (!fullMatch) ? null:fullMatch[3];//l|r|a|q
     const view = (!fullMatch) ? null:fullMatch[4];//l|r|a|q
     
-    return { day, type, course, view };
+    return { day, type, course, view, pathname, hash, menu };
 };

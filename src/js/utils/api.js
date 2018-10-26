@@ -175,7 +175,7 @@ class Wrapper{
     }
     event(){
         let url = this.options.assetsPath;
-        this.options.token
+        //this.options.token
         return {
             all: () => {
                 return this.get(url+'/event/all');

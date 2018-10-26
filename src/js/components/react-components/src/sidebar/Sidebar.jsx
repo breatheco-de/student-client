@@ -36,7 +36,10 @@ const Sidebar = (props) => {
             {(MenuComponent) ?
                 <MenuComponent 
                     collapsed={props.collapsed} 
-                    onClick={(option) => props.onSelect(option)}  
+                    onClick={(option) => {
+                        window.location.hash = "menu="+option.slug;
+                        props.onSelect(option);
+                    }}  
                     items={(props.selectedOption) ? props.selectedOption.items : null} 
                     data={(props.selectedOption) ? props.selectedOption.data : null} 
                 />:''

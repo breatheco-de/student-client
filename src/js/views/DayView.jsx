@@ -37,7 +37,7 @@ class DayView extends Flux.View {
         if(match)
         {
           let newDayNumber = match[2]; // id = 'Ahg6qcgoay4'
-          if(parseInt(newDayNumber) !== this.state.day.dayNumber)
+          if(parseInt(newDayNumber, 10) !== this.state.day.dayNumber)
             this.loadDay(newDayNumber);
         }
       });
@@ -55,6 +55,7 @@ class DayView extends Flux.View {
     const student = Session.get().payload;
     const singleDay = BCStore.getSingleDay(newDayNumber || this.props.match.params.day_number);
     if(singleDay){
+      if(singleDay.opened) window.location.hash = "started";
       this.setState({ 
         day: singleDay,
         blocked: (student.type === 'teacher') ? false : !singleDay.opened,

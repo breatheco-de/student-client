@@ -31,7 +31,7 @@ class SplitLayout extends React.Component{
         const currentPath = getCurrentPath();
         const collapsed = (currentPath.type) ? true : false;
         this.setState({ 
-            student: session.payload, 
+            student: session.payload,
             collapsed: collapsed, 
             currentSize: (collapsed) ? this.state.minSize : this.state.maxSize 
         });
@@ -57,6 +57,14 @@ class SplitLayout extends React.Component{
         switch(item.slug){
             case "logout": logout(this.props.history); break;
             case "profile": this.props.history.push('/profile'); break;
+            case "start_tutorial": 
+                Session.setPayload({ show_tutorial: true });
+                this.props.history.push('/'); 
+            break;
+            case "hide_tutorial": 
+                Session.setPayload({ show_tutorial: false });
+                this.setState({ student: Object.assign(this.state.student, { show_tutorial: false }) });
+            break;
             case "choose": this.props.history.push('/choose'); break;
         }
     }
@@ -84,6 +92,7 @@ class SplitLayout extends React.Component{
                                     <DropLink direction="up" dropdown={[
                                             {label: 'Profile', slug:'profile'},
                                             {label: 'My Courses', slug:'choose'},
+                                            (this.state.student && this.state.student.show_tutorial) ? {label: 'Hide Tutorial', slug:'hide_tutorial'} : {label: 'Start Tutorial', slug:'start_tutorial'},
                                             {label: 'Logout', slug:'logout'}
                                         ]} 
                                         onSelect={this.onSettingsSelect.bind(this)}>
