@@ -50,7 +50,7 @@ export class Wizard extends React.Component{
                     overlayColor: 'rgba(79, 26, 0, 0.4)'
                 }
             }}
-            steps={tutorialSteps[this.state.currentStepGroup]}
+            steps={getSteps(this.state.currentStepGroup)}
             callback={({ action, step, type }) => {
                 if(type == 'tour:end' && typeof step != 'undefined' && typeof step.nextSteps == 'string')  this.setState({ nextStepGroup: step.nextSteps });
                 else if(type == 'tour:end' && typeof step != 'undefined' && step.lastStep == true) this.cancelTour();
@@ -65,11 +65,22 @@ Wizard.propTypes = {
 };
 Wizard.defaultProps = {
     run: true,
-    initialStepGroup: '/course/web-development'
+    initialStepGroup: null
+};
+
+const getSteps = (url) => {
+    if(!url) return [];
+    
+    for(let pattern in tutorialSteps){
+        const regex = new RegExp(pattern);
+        const match = url.match(regex);
+        if(match) return tutorialSteps[pattern];
+    }
+    return [];
 };
 
 export const tutorialSteps = {
-    "/course/web-development": [
+    "\/course\/[^#\/]+$": [
         {
             content: <div>
                 <h2>Welcome to 4Geeks!</h2>
@@ -97,7 +108,7 @@ export const tutorialSteps = {
             locale: { last: 'Next phase' }
         }
     ],
-    "/course/web-development#second": [
+    "\/course\/(.*)#second$": [
         {
             target: '.main-menu li:first-child',
             content: <div><h3>Click on My Journey to start your course.</h3></div>,
@@ -105,7 +116,7 @@ export const tutorialSteps = {
             locale: { last: 'Next phase' }
         }
     ],
-    "/course/web-development#menu=syllabus": [
+    "\/course\/(.*)#menu=syllabus$": [
         {
             target: '.timeline li:first-child',
             content: <div>
@@ -118,7 +129,7 @@ export const tutorialSteps = {
             locale: { last: 'Next phase' }
         }
     ],
-    "/course/web-development#menu=syllabus&second": [
+    "\/course\/(.*)#menu=syllabus&second$": [
         {
             target: '.timeline li:first-child',
             content: <div><h3>Click <code>Day 1</code> to begin the first day</h3></div>,
@@ -126,7 +137,7 @@ export const tutorialSteps = {
             locale: { last: 'Next phase' }
         }
     ],
-    "/course/web-development/1": [
+    "\/course\/(.*)/1$": [
         {
             target: '.dayview .description',
             content: <h5>Each day starts with a small description that gives you a little bit of context.</h5>,
@@ -145,7 +156,7 @@ export const tutorialSteps = {
             locale: { last: 'Next phase' }
         }
     ],
-    "/course/web-development/1#second": [
+    "\/course\/(.*)\/1#second$": [
         {
             target: '.dayview .bcbutton',
             content: <div><h3>Click on <code>Start Day</code> to begin the first day</h3></div>,
@@ -153,7 +164,7 @@ export const tutorialSteps = {
             locale: { last: 'Next phase' }
         }
     ],
-    "/course/web-development/1#started": [
+    "\/course\/(.*)\/1#started$": [
         {
             target: '.dayview div.text-center',
             content: <div>
