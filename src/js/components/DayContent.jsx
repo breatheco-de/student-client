@@ -10,7 +10,6 @@ class DayContent extends React.Component{
     }
     
     onStart(){
-        window.location.hash = "started";
         this.props.onStart();
     }
     
@@ -26,7 +25,7 @@ class DayContent extends React.Component{
             </div>
         );
         
-        return(<div className="text-center">{this.props.children}</div>)
+        return(<div className="text-center"><span className="todos">{this.props.children}</span></div>)
     }
 }
 DayContent.propTypes = {

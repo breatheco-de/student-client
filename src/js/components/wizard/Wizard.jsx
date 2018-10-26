@@ -80,6 +80,105 @@ const getSteps = (url) => {
 };
 
 export const tutorialSteps = {
+    "\/course\/(.*)#menu=syllabus&second$": [
+        {
+            target: '.timeline li:first-child',
+            content: <div><h3>Click <code>Day 1</code> to begin the first day</h3></div>,
+            placement: 'right',
+            locale: { last: 'Next phase' }
+        }
+    ],
+    "\/course\/(.*)#menu=syllabus$": [
+        {
+            target: '.timeline li:first-child',
+            content: <div>
+                <h5>The course is divided into several days, each day has a list of TODO's you must complete in chronological order.</h5>
+                <h4>Click <code>Day 1</code> on this timeline to begin.</h4>
+            </div>,
+            placement: 'right',
+            disableBeacon: true,
+            nextSteps: '/course/web-development#menu=syllabus&second' ,
+            locale: { last: 'Next phase' }
+        }
+    ],
+    "\/course\/(.*)#second$": [
+        {
+            target: '.main-menu li:first-child',
+            content: <div><h3>Click on My Journey to start your course.</h3></div>,
+            placement: 'right',
+            locale: { last: 'Next phase' }
+        }
+    ],
+    "\/course\/(.*)\/1#second$": [
+        {
+            target: '.dayview .bcbutton',
+            content: <div><h3>Click on <code>Start Day</code> to begin the first day</h3></div>,
+            placement: 'left',
+            locale: { last: 'Next phase' }
+        }
+    ],
+    "\/course\/(.*)\/1#started$": [
+        {
+            target: '.dayview .bclist',
+            content: <div>
+                When a day is enabled, it will show a list with all the TODO's that you have to complete separated in 4 different categories:
+                <ul className="text-left">
+                    <li><code>Read</code>: Small conceptual reads necesary to understand the exercises.</li>
+                    <li><code>Practice</code>: Small micro-targeted exercises with the purpose of addressing particular skills.</li>
+                    <li><code>Code</code>: Real life projects to practice your skills.</li>
+                    <li><code>Answer</code>: Autograded quizzes ideal for self-assesment</li>
+                </ul>
+            </div>,
+            placement: 'left',
+            styles:{
+                options:{
+                    width: 350
+                }
+            },
+            disableBeacon: true
+        },
+        {
+            target: '.dayview .actionable-item',
+            content: <div>Click on each TODO, and you will see a drop-down with the actions related to the activity: Mark as read, watch a video, mark as done, etc.</div>,
+            placement: 'left',
+            disableBeacon: true
+        },
+        {
+            target: '.dayview .bcprogress',
+            content: <div>As you complete the TODO's the day's progress will show at the top.</div>,
+            placement: 'left',
+            disableBeacon: true
+        },
+        {
+            target: 'body',
+            content: <div>
+                <h1>You are ready to start learning!</h1>
+                <p>Start completing your TODO's and write us an email if you have any questions!</p>
+            </div>,
+            placement: 'center',
+            lastStep: true,
+            disableBeacon: true
+        }
+    ],
+    "\/course\/(.*)/1$": [
+        {
+            target: '.dayview .description',
+            content: <h5>Each day starts with a small description that gives you a little bit of context.</h5>,
+            placement: 'left',
+            disableBeacon: true
+        },
+        {
+            target: '.dayview .bcbutton',
+            content: <div>
+                <h5>Days are blocked by default, clicking on <code>Start Day</code> will add the activities into your TODO's and enable all the day's content.</h5>
+                <h3>Click on <code>Start Day</code> to begin the first day</h3>
+            </div>,
+            placement: 'left',
+            disableBeacon: true,
+            nextSteps: '/course/web-development/1#second' ,
+            locale: { last: 'Next phase' }
+        }
+    ],
     "\/course\/[^#\/]+$": [
         {
             content: <div>
@@ -108,103 +207,4 @@ export const tutorialSteps = {
             locale: { last: 'Next phase' }
         }
     ],
-    "\/course\/(.*)#second$": [
-        {
-            target: '.main-menu li:first-child',
-            content: <div><h3>Click on My Journey to start your course.</h3></div>,
-            placement: 'right',
-            locale: { last: 'Next phase' }
-        }
-    ],
-    "\/course\/(.*)#menu=syllabus$": [
-        {
-            target: '.timeline li:first-child',
-            content: <div>
-                <h5>The course is divided into several days, each day has a list of TODO's you must complete in chronological order.</h5>
-                <h4>Click <code>Day 1</code> on this timeline to begin.</h4>
-            </div>,
-            placement: 'right',
-            disableBeacon: true,
-            nextSteps: '/course/web-development#menu=syllabus&second' ,
-            locale: { last: 'Next phase' }
-        }
-    ],
-    "\/course\/(.*)#menu=syllabus&second$": [
-        {
-            target: '.timeline li:first-child',
-            content: <div><h3>Click <code>Day 1</code> to begin the first day</h3></div>,
-            placement: 'right',
-            locale: { last: 'Next phase' }
-        }
-    ],
-    "\/course\/(.*)/1$": [
-        {
-            target: '.dayview .description',
-            content: <h5>Each day starts with a small description that gives you a little bit of context.</h5>,
-            placement: 'left',
-            disableBeacon: true
-        },
-        {
-            target: '.dayview .bcbutton',
-            content: <div>
-                <h5>Days are blocked by default, clicking on <code>Start Day</code> will add the activities into your TODO's and enable all the day's content.</h5>
-                <h3>Click on <code>Start Day</code> to begin the first day</h3>
-            </div>,
-            placement: 'left',
-            disableBeacon: true,
-            nextSteps: '/course/web-development/1#second' ,
-            locale: { last: 'Next phase' }
-        }
-    ],
-    "\/course\/(.*)\/1#second$": [
-        {
-            target: '.dayview .bcbutton',
-            content: <div><h3>Click on <code>Start Day</code> to begin the first day</h3></div>,
-            placement: 'left',
-            locale: { last: 'Next phase' }
-        }
-    ],
-    "\/course\/(.*)\/1#started$": [
-        {
-            target: '.dayview div.text-center',
-            content: <div>
-                When a day is enabled, it will show a list with all the TODO's that you have to complete separated in 4 different categories:
-                <ul className="text-left">
-                    <li><code>Read</code>: Small conceptual reads necesary to understand the exercises.</li>
-                    <li><code>Practice</code>: Small micro-targeted exercises with the purpose of addressing particular skills.</li>
-                    <li><code>Code</code>: Real life projects to practice your skills.</li>
-                    <li><code>Answer</code>: Autograded quizzes ideal for self-assesment</li>
-                </ul>
-            </div>,
-            placement: 'top',
-            styles:{
-                options:{
-                    width: 500
-                }
-            },
-            disableBeacon: true
-        },
-        {
-            target: '.dayview .actionable-item',
-            content: <div>Click on each TODO, and you will see a drop-down with the actions related to the activity: Mark as read, watch a video, mark as done, etc.</div>,
-            placement: 'left',
-            disableBeacon: true
-        },
-        {
-            target: '.dayview .bcprogress',
-            content: <div>As you complete the TODO's the day's progress will show at the top.</div>,
-            placement: 'left',
-            disableBeacon: true
-        },
-        {
-            target: 'body',
-            content: <div>
-                <h1>You are ready to start learning!</h1>
-                <p>Start completing your TODO's and write us an email if you have any questions!</p>
-            </div>,
-            placement: 'center',
-            lastStep: true,
-            disableBeacon: true
-        }
-    ]
 };

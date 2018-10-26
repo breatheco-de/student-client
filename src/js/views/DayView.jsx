@@ -55,7 +55,7 @@ class DayView extends Flux.View {
     const student = Session.get().payload;
     const singleDay = BCStore.getSingleDay(newDayNumber || this.props.match.params.day_number);
     if(singleDay){
-      if(singleDay.opened) window.location.hash = "started";
+      if(singleDay.opened && singleDay.actionables) setTimeout(() => window.location.hash = "started", 500);
       this.setState({ 
         day: singleDay,
         blocked: (student.type === 'teacher') ? false : !singleDay.opened,
