@@ -33,8 +33,9 @@ export class Wizard extends React.Component{
             show_tutorial: false
         });
         BC.student().update('me', { show_tutorial: false })
+            .then(() => window.location.reload())
             .catch(err => {
-                throw Error("Unable to disable tutorial on the database");
+                Notify.error("Unable to disable tutorial on the database");
             });
     }
     render() {

@@ -3,13 +3,12 @@ import Flux from '@4geeksacademy/react-flux-dash';
 import { PrivateRoute } from 'bc-react-session';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {Notifier} from 'bc-react-notifier';
-
-import {LoginView, ForgotView} from './views/auth';
+import { LoadBar } from './components/react-components/src/index';
+import { LoginView, ForgotView } from './views/auth';
 import CourseView from './views/CourseView';
 import HomeView from './views/HomeView';
 import ProfileView from './views/ProfileView';
 import ChooseView from './views/ChooseView';
-
 class Layout extends Flux.View{
     
     constructor(){
@@ -24,6 +23,7 @@ class Layout extends Flux.View{
             <div className="layout">
                 <BrowserRouter>
                     <div>
+                        <LoadBar />
                         <Notifier />
                         <Switch>
                             <Route exact path='/login' component={LoginView} />

@@ -1,0 +1,72 @@
+$loadbar-height: 5px;
+.load-bar {
+	width: 100wh;
+	position: relative;
+	height: $loadbar-height;
+	color: #fff;
+	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+	background-size: 400% 400%;
+	-webkit-animation: Gradient 2s ease infinite;
+	-moz-animation: Gradient 2s ease infinite;
+	animation: Gradient 2s ease infinite;
+}
+.load-bar:before{
+	content: ' ';
+	position: absolute;
+	border-right: 1px solid white;
+	box-shadow: 0 0 10px #9ecaed;
+	top: 0; left: 0;
+	background: rgba(255,255,255,0.3);
+	height: $loadbar-height;
+	width: 50%;
+	animation: loadline 3s ease infinite;
+}
+@-webkit-keyframes loadline {
+	0% {
+		width: 0%
+	}
+	25% {
+		width: 25%
+	}
+	50% {
+		width: 50%
+	}
+	100% {
+		width: 100%
+	}
+}
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}

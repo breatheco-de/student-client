@@ -1,6 +1,7 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import {Session} from 'bc-react-session';
 import BC from '../utils/api.js';
+import { setLoading } from '../components/react-components/src/load-bar/LoadBar.jsx';
 
 BC.setOptions({
     getToken: (type='api')=> {
@@ -9,6 +10,7 @@ BC.setOptions({
         const token = (typeof session.payload != 'undefined') ? session.payload.access_token : '';
         return 'Bearer '+token;
     },
+    onLoading: setLoading,
     onLogout: () => logout()
 });
 

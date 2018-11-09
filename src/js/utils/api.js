@@ -9,11 +9,30 @@ class Wrapper{
             getToken: (type='api') => {
                 return null;
             },
+            onLoading: null,
             onLogout: null
         };
+        this.isPending = false;
         this.pending = {
             get: {}, post: {}, put: {}, delete: {}
         };
+    }
+    calculatePending(){
+        for(let method in this.pending)
+            for(let path in this.pending[method])
+                if(typeof this.pending[method] != 'undefined' && this.pending[method][path] === true){
+                    if(!this.isPending){
+                        this.isPending = true;
+                        if(typeof this.options.onLoading == 'function') this.options.onLoading(this.isPending);
+                    }
+                    return true;
+                } 
+        
+        if(this.isPending){
+            this.isPending = false;
+            if(typeof this.options.onLoading == 'function') this.options.onLoading(this.isPending);
+        }
+        return false;
     }
     _logError(error){ if(this.options._debug) console.error(error); }
     setOptions(options){ 
@@ -42,9 +61,15 @@ class Wrapper{
                 reject({ pending: true, msg: `Request ${method}: ${path} was ignored because a previous one was already pending` });
             else this.pending[method][path] = true;
             
+            //recalculate to check if it there is pending requests
+            this.calculatePending();
+            
             this.fetch( path, opts)
                 .then((resp) => {
                     this.pending[method][path] = false;
+                    //recalculate to check if it there is pending requests
+                    this.calculatePending();
+                    
                     if(resp.status == 200) return resp.json();
                     else{
                         this._logError(resp);
