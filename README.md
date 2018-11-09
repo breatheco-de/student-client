@@ -8,7 +8,9 @@
 
 This is the application use to deliver the courses.
 
-![BreatheCode Student Platform Preview](https://github.com/breatheco-de/desktop-client/blob/master/preview.gif?raw=true)
+<p align="center">
+  <img width="400" src="https://github.com/breatheco-de/desktop-client/blob/master/preview.gif?raw=true">
+</p>
 
 ## Instalation
 
