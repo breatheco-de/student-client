@@ -1,6 +1,16 @@
-# BreatheCo.de Desktop Client
+<p align="center">
+  <img src="https://assets.breatheco.de/apis/img/images.php?blob&random&cat=icon&tags=breathecode,128">
+</p>
 
-This is the application use to deliver the courses.
+<p>
+    <h2 align="center"> BreatheCode's Student Web Client </h2>
+</p>
+
+This is the application used to deliver the courses on the BreatheCode's platform: [student.breatheco.de](https://student.breatheco.de)
+
+<p align="center">
+  <img width="400" src="https://github.com/breatheco-de/desktop-client/blob/master/preview.gif?raw=true">
+</p>
 
 ## Instalation
 
