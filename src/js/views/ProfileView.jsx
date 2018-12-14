@@ -14,7 +14,7 @@ export default class ProfileView extends Flux.View {
     };
   }
   
-  componentWillMount(){
+  componentDidMount(){
     const session = Session.get();
     if(session.payload) this.setState({ student: session.payload });
   }
@@ -49,6 +49,9 @@ export default class ProfileView extends Flux.View {
           (<div className="row text-center">
             <div className="col-12 col-md-6 mx-auto">
               <i className="fab fa-github"></i> {this.state.student.github}
+            </div>
+            <div className="col-12">
+              <img src={process.env.ASSETS_URL+"/apis/github/student/"+this.state.student.bc_id+"/contributions"} />
             </div>
           </div>)
           : ''
