@@ -1,8 +1,8 @@
 import React from "react";
 import Flux from "@4geeksacademy/react-flux-dash";
 import {withRouter} from 'react-router-dom';
-import StudentStore from "../../stores/StudentStore";
-import StudentActions from "../../actions/StudentActions";
+import OldStore from "../../stores/OldStore";
+import OldActions from "../../actions/OldActions";
 import {DropLink, CheckBox, NotifyActions } from '../../components/react-components/src/index';
 
 
@@ -11,17 +11,17 @@ class TodoView extends Flux.View {
   constructor(){
     super();
     this.state = {
-      todos: StudentStore.getTodos(),
+      todos: OldStore.getTodos(),
       includeDone: false,
       beingDelivered: null
     };
-    this.bindStore(StudentStore, 'todos', this.tasksUpdated.bind(this));
+    this.bindStore(OldStore, 'todos', this.tasksUpdated.bind(this));
     this.projectDeliveredURL = '';
   }
   
   tasksUpdated(){
     this.setState({
-      todos: StudentStore.getTodos()
+      todos: OldStore.getTodos()
     });
   }
   
@@ -29,7 +29,7 @@ class TodoView extends Flux.View {
     if(task.type !== 'assignment')
     {
       task.status = (newValue) ? "done":"pending";
-      StudentActions.updateTask(task);
+      OldActions.updateTask(task);
     }
     else
     {
@@ -42,7 +42,7 @@ class TodoView extends Flux.View {
     {
       task.status = "done";
       task.github_url = this.projectDeliveredURL;
-      StudentActions.updateTask(task);
+      OldActions.updateTask(task);
     }
     else{
       NotifyActions.notify('deliver_assignment_error');
@@ -95,7 +95,7 @@ class TodoView extends Flux.View {
                   Assignments need to uploaded into github before delivering them, click "deliver" when you are ready to specify your repository url.
                   <div className="btn-bar text-right">
                     <button className="btn btn-success mr-2"
-                      onClick={()=> StudentActions.deliverAssignment(td)}>
+                      onClick={()=> OldActions.deliverAssignment(td)}>
                       Deliver
                     </button>
                     <button className="btn btn-danger mr-2"

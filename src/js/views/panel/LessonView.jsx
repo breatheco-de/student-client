@@ -1,7 +1,7 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
 import {Panel, Loading, PanelNavbar} from '../../components/react-components/src/index';
-import BCStore from '../../stores/BCStore.js';
+import OldStore from '../../stores/OldStore.js';
 import {Session} from 'bc-react-session';
 import {getCurrentPath} from '../../utils/menu';
 
@@ -19,14 +19,14 @@ export default class LessonView extends Flux.View {
   componentDidMount(){
     const dayNumber = this.props.match.params.day_number;
     this.loadDay(dayNumber);
-    this.bindStore(BCStore, 'syllabus', () => {
+    this.bindStore(OldStore, 'syllabus', () => {
       const dayNumber = this.props.match.params.day_number;
       this.loadDay(dayNumber);
     });
   }
   
   loadDay(newDay=null){
-    const day = BCStore.getSingleDay(newDay || this.props.match.params.day_number);
+    const day = OldStore.getSingleDay(newDay || this.props.match.params.day_number);
     if(day){
       const currentSlug = getCurrentPath().view;
       let previousAction, nextAction, currentAction = null;

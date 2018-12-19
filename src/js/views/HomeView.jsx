@@ -1,7 +1,7 @@
 import React from "react";
 import Flux from '@4geeksacademy/react-flux-dash';
 import {Panel} from '../components/react-components/src/index';
-import StudentStore from '../stores/StudentStore';
+import OldStore from '../stores/OldStore';
 import {Session} from 'bc-react-session';
 import {logout} from '../actions/auth';
 
@@ -16,7 +16,7 @@ export default class HomeView extends Flux.View {
         else this.props.history.push('/course/'+currentCohort.profile_slug);
       }
     }
-    // let user = StudentStore.getUser();
+    // let user = OldStore.getUser();
     //if(user.type === 'student' && currentCohort) this.props.history.push('/course/'+currentCohort.profile_slug);
     //else this.setState({ user, currentCohort });
   }

@@ -1,4 +1,4 @@
-import StudentStore from '../stores/StudentStore';
+import OldStore from '../stores/OldStore';
 
 export default {
     getUser(user){

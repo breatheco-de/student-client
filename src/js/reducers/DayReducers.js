@@ -1,5 +1,4 @@
-import StudentStore from '../stores/StudentStore';
-import BCStore from '../stores/BCStore';
+import OldStore from '../stores/OldStore';
 
 export default {
     getDay(day, index){
@@ -98,12 +97,12 @@ export default {
     day.opened = false;
     day.totalDone = 0;
     
-    const todos = StudentStore.getTodos();
+    const todos = OldStore.getTodos();
     if(!todos) return day;
 
     day.replits = (function(){
         return day.replits.map(function(repl){
-            const todo = StudentStore.getSingleTodo(repl);
+            const todo = OldStore.getSingleTodo(repl);
             if(todo){
                 day.opened = true;
                 repl.status = todo.status;
@@ -117,7 +116,7 @@ export default {
 
     day.lessons = (function(){
         return day.lessons.map(function(less){
-            const todo = StudentStore.getSingleTodo(less);
+            const todo = OldStore.getSingleTodo(less);
             if(todo){
                 day.opened = true;
                 less.status = todo.status;
@@ -131,7 +130,7 @@ export default {
 
     day.quizzes = (function(){
         return day.quizzes.map(function(quiz){
-            const todo = StudentStore.getSingleTodo(quiz);
+            const todo = OldStore.getSingleTodo(quiz);
             if(todo){
                 day.opened = true;
                 quiz.status = todo.status;
@@ -144,7 +143,7 @@ export default {
     
     day.assignments = (function(){
         return day.assignments.map(function(ass){
-            const todo = StudentStore.getSingleTodo(ass);
+            const todo = OldStore.getSingleTodo(ass);
             if(todo){
                 day.opened = true;
                 ass.status = todo.status;
@@ -167,13 +166,13 @@ export default {
 },
     withProjects(day){
     
-        const projects = BCStore.getProjects();
+        const projects = OldStore.getProjects();
         if(!projects) return day;
     
         day.actionables.map((actionable)=>{
             if(actionable.type !== 'assignment') return actionable;
             else{
-                let project = BCStore.getSingleProject(actionable.associated_slug);
+                let project = OldStore.getSingleProject(actionable.associated_slug);
                 if(project){
                     actionable.title = project.title;
                     actionable.project = project;

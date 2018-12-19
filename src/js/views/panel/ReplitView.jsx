@@ -1,7 +1,7 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
 import {Panel, Loading} from '../../components/react-components/src/index';
-import StudentStore from '../../stores/StudentStore';
+import OldStore from '../../stores/OldStore';
 import Raven from 'raven-js';
 import {Session} from 'bc-react-session';
 

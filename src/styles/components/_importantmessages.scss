@@ -1,0 +1,15 @@
+.important-messages{
+    border-bottom: 1px solid grey;
+    border-radius: 0;
+    background: #212528;
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    .bcdroplink.dropdown .btn.dropdown-toggle{
+        font-size: 16px;
+    }
+    ol{ margin-bottom: 0;}
+    i{ color: $darkRed; }
+    li{ margin-left: 5px; }
+    h5{ font-weight: 900; }
+}

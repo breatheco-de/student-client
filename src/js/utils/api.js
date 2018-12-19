@@ -51,7 +51,7 @@ class Wrapper{
         if(method === 'get') path += this.serialize(args).toStr();
         else
         {
-            if((method=='post' || method=='put') && !args) throw new Error('Missing request body');
+            if((method=='put') && !args) throw new Error('Missing request body');
             opts.body = this.serialize(args).toJSON();
         } 
         
@@ -78,7 +78,13 @@ class Wrapper{
                             reject({ msg: 'Unauthorized', code: 401 }); 
                             if(this.options.onLogout) this.options.onLogout();
                         } 
-                        else if(resp.status == 400) reject({ msg: 'Invalid Argument', code: 400 }); 
+                        else if(resp.status == 400) resp.json()
+                                                        .then(err => 
+                                                            reject({ msg: err.msg || err, code: 400 })
+                                                        )
+                                                        .catch(() =>
+                                                            reject({ msg: 'Invalid Argument', code: 400 })
+                                                        ) 
                         else reject({ msg: 'There was an error, try again later', code: 500 });
                     } 
                     return false;
@@ -235,6 +241,21 @@ class Wrapper{
             delete: (id) => {
                 return this.delete(url+'/student/'+id);
             }
+        };
+    }
+    message(){
+        //let url = this.options.apiPath;
+        let assetsURL = this.options.assetsPath;
+        return {
+            getByStudent: (student_id, args=[]) => {
+                return this.get(assetsURL+'/message/student/'+student_id, args);
+            },
+            templates: () => {
+                return this.get(assetsURL+'/message/templates');
+            },
+            markAs: (messageId, status) => {
+                return this.post(assetsURL+'/message/'+messageId+'/'+status);
+            },
         };
     }
     cohort(){

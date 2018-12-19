@@ -1,9 +1,8 @@
 import React from "react";
 import Flux from "@4geeksacademy/react-flux-dash";
 import {withRouter} from 'react-router-dom';
-import {loadAssets} from '../../actions/ContentActions';
-import ContentStore from "../../stores/ContentStore";
-import BCStore from "../../stores/BCStore";
+import { store } from "../../actions/actions";
+import OldStore from "../../stores/OldStore";
 import {DropLink } from '../../components/react-components/src/index';
 
 class SearchMenu extends Flux.DashView {
@@ -11,8 +10,8 @@ class SearchMenu extends Flux.DashView {
   constructor(){
     super();
     this.state = {
-      assets: ContentStore.getState('assets'),
-      days: BCStore.getSyllabusDays(),
+      assets: store.getState('assets'),
+      days: OldStore.getSyllabusDays(),
       syllabusContents: [],
       search: ''
     };
@@ -20,7 +19,7 @@ class SearchMenu extends Flux.DashView {
   
   componentDidMount(){
     //loadAssets();
-    this.subscribe(ContentStore, 'assets', (assets) => this.setState({ assets }));
+    this.subscribe(store, 'assets', (assets) => this.setState({ assets }));
     let syllabusContents = [];
     this.state.days.forEach((day) => {
       syllabusContents = syllabusContents.concat(day.assignments);
@@ -63,7 +62,7 @@ class SearchMenu extends Flux.DashView {
     
     const lessonsHTML = this.state.syllabusContents.filter((l) => {
       if(this.state.search=='') return true;
-      return (l.title.toLowerCase().indexOf(this.state.search.toLowerCase()) != -1);
+      return (typeof l.title !== 'undefined' && l.title.toLowerCase().indexOf(this.state.search.toLowerCase()) != -1);
     }).map((l,i)=>(<li className="actionable" key={i}>
       <DropLink className="task-menu" dropdown={this.getTaskMenu(l)} 
           onSelect={(option) => this.onDropdownSelect(l, option)}

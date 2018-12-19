@@ -5,8 +5,9 @@ import SplitLayout from '../components/SplitLayout';
 
 import { Wizard } from '../components/wizard/Wizard.jsx';
 import TimeMenu from '../components/menus/TimeLineMenu';
-import BCStore from '../stores/BCStore';
-import BCActions from '../actions/BCActions';
+import ImportantMessages from '../components/ImportantMessages';
+import OldStore from '../stores/OldStore';
+import OldActions from '../actions/OldActions';
 
 import CourseIntro from '../views/CourseIntro';
 import DayView from '../views/DayView';
@@ -16,8 +17,6 @@ import ReplitView from '../views/panel/ReplitView';
 import AssignmentView from '../views/panel/AssignmentView';
 import VTurorialView from '../views/panel/VTurorialView';
 
-import StudentActions from '../actions/StudentActions';
-import StudentStore from '../stores/StudentStore';
 import {Session} from 'bc-react-session';
 import {menuModes, getCurrentPath} from '../utils/menu';
 
@@ -30,25 +29,26 @@ class CourseView extends Flux.View{
             courseSlug: null,
             runTutorial: false,
             currentCohort: null,
+            importantMessages: null,
             menuItems: (menuModes[context.path.menu]) ? menuModes[context.path.menu] : menuModes.course,
             currentMenuOption: (menuModes[context.path.menu]) ? menuModes[context.path.menu][0] : menuModes.course[0],
             context
         };
         //this.sessionUpdated();
-        this.bindStore(BCStore, 'syllabus', this.syllabusUpdated.bind(this));
+        this.bindStore(OldStore, 'syllabus', this.syllabusUpdated.bind(this));
     }
     
     componentDidMount(){
       const courseSlug = this.props.match.params.course_slug;
-      const syllabus = BCStore.getSyllabus(courseSlug);
+      const syllabus = OldStore.getSyllabus(courseSlug);
       const _session = Session.get();
       if(!_session.payload.currentCohort || Array.isArray(_session.payload.currentCohort)) this.props.history.push('/choose');
-      if(!syllabus || syllabus.profile != courseSlug) BCActions.fetch().syllabus(courseSlug);
+      if(!syllabus || syllabus.profile != courseSlug) OldActions.fetch().syllabus(courseSlug);
       
       let currentMenuOption = this.state.currentMenuOption;
       if(this.state.context.path.menu == 'syllabus') currentMenuOption = { 
         slug: this.state.context.path.menu, 
-        data: BCStore.getSyllabusDays(),
+        data: OldStore.getSyllabusDays(),
         component: TimeMenu
       };
       
@@ -79,7 +79,7 @@ class CourseView extends Flux.View{
         let currentMenuOption = this.state.currentMenuOption;
         if(this.state.context.path.menu == 'syllabus') currentMenuOption = { 
           slug: this.state.context.path.menu, 
-          data: BCStore.getSyllabusDays(),
+          data: OldStore.getSyllabusDays(),
           component: TimeMenu
         };
         
@@ -87,20 +87,20 @@ class CourseView extends Flux.View{
     }
     
     fetchSecondSyllabusPhase(){
-      const todos = StudentStore.getTodos();
+      const todos = OldStore.getTodos();
       if(!todos){
         const student = Session.get().payload;
-        if(student) StudentActions.fetch().todos(student.bc_id);
+        if(student) OldActions.fetch().todos(student.bc_id);
       } 
-      const projects = BCStore.getProjects();
+      const projects = OldStore.getProjects();
       if(!projects){
-        BCActions.fetch().projects();
+        OldActions.fetch().projects();
       } 
     }
     
     onSelect(option){
         if(typeof option.slug != 'undefined' && this.state.menuItems.find((item => item.slug = option.slug))){
-          if(option.slug == 'syllabus') option.data = BCStore.getSyllabusDays();
+          if(option.slug == 'syllabus') option.data = OldStore.getSyllabusDays();
           this.setState({
             currentMenuOption: option,
             context: this.getCurrentContext()
@@ -116,33 +116,36 @@ class CourseView extends Flux.View{
     
     render() {
         return (
-            <SplitLayout 
-              menuItems={this.state.menuItems}
-              breadcrumb={this.state.context.breadcrumb}
-              selectedOption={this.state.currentMenuOption}
-              onNavBarSelect={this.onSelect.bind(this)}
-              baseLevel="course"
-            >
-              <Wizard 
-                run={this.state.runTutorial}
-                context={this.state.context}
-              />
-              <div>
-                  <Switch>
-                      <Route exact path={this.props.match.path+'/r/:replit_slug'} component={ReplitView} />
-                      <Route exact path={this.props.match.path+'/q/:quiz_slug'} component={QuizView} />
-                      <Route exact path={this.props.match.path+'/a/:assignment_slug'} component={AssignmentView} />
-                      <Route exact path={this.props.match.path+'/l/:lesson_slug'} component={LessonView} />
-                      <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />
-                      <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
-                      <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />
-                      <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug'} component={ReplitView} />
-                      <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug/vtutorial/:vtutorial_slug'} component={VTurorialView} />
-                      <Route exact path={this.props.match.path+'/:day_number/a/:assignment_slug'} component={AssignmentView} />
-                      <Route exact path={this.props.match.path} component={CourseIntro} />
-                  </Switch>
-              </div>
-            </SplitLayout>
+          <div>
+              <ImportantMessages />
+              <SplitLayout 
+                menuItems={this.state.menuItems}
+                breadcrumb={this.state.context.breadcrumb}
+                selectedOption={this.state.currentMenuOption}
+                onNavBarSelect={this.onSelect.bind(this)}
+                baseLevel="course"
+              >
+                <Wizard 
+                  run={this.state.runTutorial}
+                  context={this.state.context}
+                />
+                <div>
+                    <Switch>
+                        <Route exact path={this.props.match.path+'/r/:replit_slug'} component={ReplitView} />
+                        <Route exact path={this.props.match.path+'/q/:quiz_slug'} component={QuizView} />
+                        <Route exact path={this.props.match.path+'/a/:assignment_slug'} component={AssignmentView} />
+                        <Route exact path={this.props.match.path+'/l/:lesson_slug'} component={LessonView} />
+                        <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />
+                        <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
+                        <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />
+                        <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug'} component={ReplitView} />
+                        <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug/vtutorial/:vtutorial_slug'} component={VTurorialView} />
+                        <Route exact path={this.props.match.path+'/:day_number/a/:assignment_slug'} component={AssignmentView} />
+                        <Route exact path={this.props.match.path} component={CourseIntro} />
+                    </Switch>
+                </div>
+              </SplitLayout>
+          </div>
         );
     }
     

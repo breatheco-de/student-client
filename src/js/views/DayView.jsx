@@ -5,9 +5,8 @@ import DayContent from '../components/DayContent.jsx';
 
 import {ActionableItem, List, ProgressKPI, Panel} from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
-import BCStore from '../stores/BCStore';
-import StudentActions from '../actions/StudentActions';
-import StudentStore from '../stores/StudentStore';
+import OldStore from '../stores/OldStore';
+import OldActions from '../actions/OldActions';
 
 class DayView extends Flux.View {
   
@@ -20,7 +19,7 @@ class DayView extends Flux.View {
       visibleLesson: null,
       actionables: [],
     };
-    this.bindStore(BCStore, 'syllabus', this.syllabusUpdated.bind(this));
+    this.bindStore(OldStore, 'syllabus', this.syllabusUpdated.bind(this));
     this.stopDayChangeListener = null;
   }
   
@@ -53,7 +52,7 @@ class DayView extends Flux.View {
   
   loadDay(newDayNumber=null){
     const student = Session.get().payload;
-    const singleDay = BCStore.getSingleDay(newDayNumber || this.props.match.params.day_number);
+    const singleDay = OldStore.getSingleDay(newDayNumber || this.props.match.params.day_number);
     if(singleDay){
       if(singleDay.opened && singleDay.actionables) setTimeout(() => window.location.hash = "started", 500);
       this.setState({ 
@@ -67,13 +66,13 @@ class DayView extends Flux.View {
   actionableSelected(actionable, option){
     switch(option.slug){
       case "mark-done":
-        let task = StudentStore.getSingleTodo(actionable);
+        let task = OldStore.getSingleTodo(actionable);
         if(task.type != 'assignment'){
           task.status = "done";
-          StudentActions.updateTask(task);
+          OldActions.updateTask(task);
         }
         else{
-          StudentActions.deliverAssignment(task);
+          OldActions.deliverAssignment(task);
         }
       break;
       case "goto":
@@ -86,7 +85,7 @@ class DayView extends Flux.View {
   }
   
   enableDay(){
-    StudentActions.startDay(this.state.day);
+    OldActions.startDay(this.state.day);
   }
   
   render() {
@@ -114,7 +113,7 @@ class DayView extends Flux.View {
                 (<div className="alert alert-warning">
                   <span>There are {unsynced.length} new activities on this day &nbsp;</span>
                   <button className="btn btn-warning"
-                  onClick={() => StudentActions.addUnsyncedTodos(unsynced)}><i className="fas fa-sync"></i> Sync now</button>
+                  onClick={() => OldActions.addUnsyncedTodos(unsynced)}><i className="fas fa-sync"></i> Sync now</button>
                 </div>) : ''
               }
               <h3>To finish this day you have to complete the following actions:</h3>
