@@ -21,11 +21,11 @@ class Forgot extends React.Component {
       .then(() => {
         this.setState({ 
           pending: false,
-          successMsg: `Check your email for instructions, if you don't receive th email check your spam folder`
+          successMsg: `Check your email for instructions, the spam folder as well :)`
         });
       })
       .catch((errorMsg) => {
-        this.setState({ errorMsg: [errorMsg.message] || [errorMsg], pending: false });
+        this.setState({ errorMsg: [errorMsg.message || errorMsg.msg || errorMsg], pending: false });
       });
     }
     else this.setState({ errorMsg: errors, pending: false });

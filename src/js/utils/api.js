@@ -96,6 +96,9 @@ class Wrapper{
                 })
                 .catch((error) => {
                     this.pending[method][path] = false;
+                    //recalculate to check if it there is pending requests
+                    this.calculatePending();
+                    
                     this._logError(error.message);
                     reject(error.message);
                 });
@@ -152,7 +155,7 @@ class Wrapper{
                 return this.post(url+'/auth', { username, password });
             },
             remind: (username) => {
-                return this.post(this.options.apiPath+'/remind/user/'+encodeURIComponent(username), { username });
+                return this.post(url+'/remind/'+encodeURIComponent(username), { username });
             }
         };
     }
