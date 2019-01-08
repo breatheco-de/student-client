@@ -59,7 +59,6 @@ class OldActions extends Flux.Action{
                 .then((data) => {
                     Notify.success('The day was updated successfully, you can review your new todo\'s');
                     this.dispatch('OldStore.appendTodos', data.data || data);
-                    window.location.reload();
                 })
                 .catch(()=>{
                     Notify.error('There was an error updating the day todo\'s');
