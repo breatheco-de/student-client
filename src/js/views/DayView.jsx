@@ -54,7 +54,8 @@ class DayView extends Flux.View {
     const student = Session.get().payload;
     const singleDay = OldStore.getSingleDay(newDayNumber || this.props.match.params.day_number);
     if(singleDay){
-      if(singleDay.opened && singleDay.actionables) setTimeout(() => window.location.hash = "started", 500);
+      if(singleDay.opened && singleDay.actionables) setTimeout(() => window.location.hash = "started&menu=syllabus", 500);
+      else setTimeout(() => window.location.hash = "menu=syllabus", 500);
       this.setState({ 
         day: singleDay,
         blocked: (student.type === 'teacher') ? false : !singleDay.opened,

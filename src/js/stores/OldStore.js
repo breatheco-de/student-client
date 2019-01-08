@@ -139,6 +139,8 @@ class OldStore extends Flux.Store{
         this.setStoreState({ 
             todos: this.state.todos.concat(newTodos) 
         }).emit('todos');
+        
+        this._reduceSyllabus();
     }
     getSingleTodo(actionable){
         

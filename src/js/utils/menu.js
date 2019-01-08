@@ -1,4 +1,4 @@
-import TimeMenu from '../components/menus/TimeLineMenu';
+import TimeLineMenu from '../components/menus/TimeLineMenu';
 import TodoMenu from '../components/menus/TodoMenu';
 import SearchMenu from '../components/menus/SearchMenu';
 
@@ -12,7 +12,7 @@ export const menuModes = {
                 slug: "syllabus", 
                 label: "My Journey", 
                 icon: "fas fa-graduation-cap", 
-                component: TimeMenu, 
+                component: TimeLineMenu, 
                 size: 370 
             },
             { 

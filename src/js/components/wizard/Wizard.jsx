@@ -118,7 +118,7 @@ export const tutorialSteps = {
             locale: { last: 'Next phase' }
         }
     ],
-    "\/course\/(.*)\/1#started$": [
+    "\/course\/(.*)\/1#started(&.*)?$": [
         {
             target: '.dayview .bclist',
             content: <div>

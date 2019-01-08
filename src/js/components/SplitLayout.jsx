@@ -33,7 +33,7 @@ class SplitLayout extends React.Component{
         this.setState({ 
             student: session.payload,
             collapsed: collapsed, 
-            currentSize: (collapsed) ? this.state.minSize : this.state.maxSize 
+            currentSize: (collapsed) ? this.state.minSize : this.state.maxSize
         });
        this.props.history.listen((e)=> {
             const currentPath = getCurrentPath();

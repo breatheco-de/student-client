@@ -341,6 +341,30 @@ class Wrapper{
             }
         };
     }
+    catalog(){
+        let url = this.options.apiPath;
+        return {
+            all: () => {
+                return this.get(url+'/catalogs/');
+            },
+            get: (slug=null) => {
+                if(!slug) throw new Error('Missing catalog slug');
+                return this.get(url+'/catalog/'+slug);
+            }
+        };
+    }
+    zap(){
+        let url = this.options.assetsPath;
+        return {
+            all: () => {
+                return this.get(url+'/zap/all');
+            },
+            execute: (slug=null) => {
+                if(!slug) throw new Error('Missing zap slug');
+                return this.post(url+'/zap/execute/'+slug);
+            }
+        };
+    }
 }
 if(typeof module != 'undefined') module.exports = new Wrapper();
 window.BC = new Wrapper();

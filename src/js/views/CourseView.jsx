@@ -66,9 +66,9 @@ class CourseView extends Flux.View{
     getCurrentContext(){
         const path = getCurrentPath();
         let breadcrumb = [{ label: "BreatheCode", path: '/home' }];
-        //if(path.course) breadcrumb.push({ label: 'Course', path: `/course/${path.course}` });
-        //if(path.day) breadcrumb.push({ label: 'Day', path: `/course/${path.course}/${path.day}` });
-        //if(path.type) breadcrumb.push({ label: path.type, path: `/course/${path.course}/${path.day}/${path.type}/${path.view}` });
+        // if(path.course) breadcrumb.push({ label: 'Course', path: `/course/${path.course}` });
+        // if(path.day) breadcrumb.push({ label: 'Day', path: `/course/${path.course}/${path.day}` });
+        // if(path.type) breadcrumb.push({ label: path.type, path: `/course/${path.course}/${path.day}/${path.type}/${path.view}` });
     
         return { path, breadcrumb };
     }
