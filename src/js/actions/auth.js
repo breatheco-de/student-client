@@ -7,8 +7,14 @@ BC.setOptions({
     getToken: (type='api')=> {
         const session = Session.get();
         
-        const token = (typeof session.payload != 'undefined') ? session.payload.access_token : '';
-        return 'Bearer '+token;
+        if(type == 'assets'){
+            const token = (typeof session.payload != 'undefined') ? session.payload.assets_token : '';
+            return 'JWT '+token;
+        } 
+        else if(type == 'api'){
+            const token = (typeof session.payload != 'undefined') ? session.payload.access_token : '';
+            return 'Bearer '+token;
+        } 
     },
     onLoading: setLoading,
     onLogout: () => logout()
@@ -22,6 +28,7 @@ export const login = (username, password, history) =>{
             bc_id: data.id,
             wp_id: data.wp_id,
             access_token: data.access_token,
+            assets_token: data.assets_token,
             bio: data.bio,
             cohorts: data.cohorts,
             currently_active: data.currently_active,
