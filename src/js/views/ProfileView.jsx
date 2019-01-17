@@ -30,7 +30,10 @@ export default class ProfileView extends Flux.View {
       student: session.payload
     });
     Session.onChange((session) => {
-      this.setState({ student: session.payload });
+      this.setState({ 
+        student: session.payload 
+      });
+      
     });
   }
   
@@ -146,8 +149,8 @@ export default class ProfileView extends Flux.View {
             <div>
               <h4 className="mt-5">Your github status</h4>
               <p><small>You can think of Github as the LinkedIn for developers, other people need to see active your are and Github reflects your activity using the following chart: </small></p>
-              {(this.state.student.github) ?
-                (<p><img src={process.env.ASSETS_URL+"/apis/github/student/"+this.state.student.bc_id+"/contributions"} /></p>)
+              {(hasGithub) ?
+                (<p><img src={process.env.ASSETS_URL+"/apis/github/student/"+student.bc_id+"/contributions?"+student.github} /></p>)
                 : <div className="alert alert-danger">The Activity Graph could not be loaded</div>
               }
               <p>
