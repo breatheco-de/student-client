@@ -39,13 +39,18 @@ export const login = (username, password, history) =>{
             show_tutorial: data.show_tutorial || true,
             github: data.github,
             email: data.email || data.username,
+            first_name: data.first_name || null,
+            last_name: data.last_name || null,
             created_at: data.created_at,
-            full_name: data.full_name,
+            full_name: (data.first_name && data.last_name) ? data.first_name+' '+data.first_name : data.full_name,
             type: data.type || 'student',
             currentCohort: (!Array.isArray(data.cohorts)) ? null : (data.cohorts.length === 1) ? data.cohorts[0] : data.cohorts
         };
         Session.start({ payload: user, expiration: (3600*24) });
-        history.push('/');
+        
+        if( data.type != 'student') history.push('/');
+        else if(!data.github || typeof data.github == 'undefined' || data.github == '') history.push('/profile');
+        else history.push('/');
     });
 };
     

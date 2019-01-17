@@ -41,17 +41,17 @@ export class Wizard extends React.Component{
     render() {
         return  <Joyride 
             key={this.state.currentStepGroup+"Wizard"}
-            continuous={true}
+            continuous={this.props.continuous}
             beaconComponent={Beacon}
             run={this.props.run}
-            showSkipButton={true}
+            showSkipButton={this.props.showSkipButton}
             locale={locale}
             styles={{
                 options: {
                     overlayColor: 'rgba(79, 26, 0, 0.4)'
                 }
             }}
-            steps={getSteps(this.state.currentStepGroup)}
+            steps={this.props.steps ? this.props.steps : getSteps(this.state.currentStepGroup)}
             callback={({ action, step, type }) => {
                 if(type == 'tour:end' && typeof step != 'undefined' && typeof step.nextSteps == 'string')  this.setState({ nextStepGroup: step.nextSteps });
                 else if(type == 'tour:end' && typeof step != 'undefined' && step.lastStep == true) this.cancelTour();
@@ -62,10 +62,15 @@ export class Wizard extends React.Component{
 }
 Wizard.propTypes = {
     run: PropTypes.bool,
+    steps: PropTypes.array,
+    showSkipButton: PropTypes.bool,
     initialStepGroup: PropTypes.string
 };
 Wizard.defaultProps = {
     run: true,
+    steps: null,
+    showSkipButton: true,
+    continuous: true,
     initialStepGroup: null
 };
 

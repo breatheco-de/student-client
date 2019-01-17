@@ -21,6 +21,7 @@ import faGithub from '@fortawesome/fontawesome-free-brands/faGithub';
 import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
 import faArrowRight from '@fortawesome/fontawesome-free-solid/faArrowRight';
 import faArrowLeft from '@fortawesome/fontawesome-free-solid/faArrowLeft';
+import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope';
 import faAngleDoubleDown from '@fortawesome/fontawesome-free-solid/faAngleDoubleDown';
 import faAngleDoubleUp from '@fortawesome/fontawesome-free-solid/faAngleDoubleUp';
 import faQuestion from '@fortawesome/fontawesome-free-solid/faQuestion';
@@ -36,7 +37,7 @@ fontawesome.config = {
  * 4) Add the icons into the font-awesome library
 */
 fontawesome.library.add(
-    faCheck, faGraduationCap, faPlay, faSpinner, faSearch, faGithub,
+    faCheck, faGraduationCap, faPlay, faSpinner, faSearch, faGithub, faEnvelope,
     faCog, faSync, faEllipsisV, faExternalLinkAlt, faArrowRight, faArrowLeft,
     faAngleDoubleDown, faAngleDoubleUp, faQuestion, faExclamationCircle
 );

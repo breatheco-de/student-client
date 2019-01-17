@@ -26,6 +26,13 @@ export const loadAssets = () => {
         console.log("ERROR!!",err);
     });
 };
+export const saveProfile = (id, args) => {
+    BC.student().update('me', args).then(() => {
+        Session.setPayload(args);
+    }).catch(function( err ) {
+        console.log("ERROR!!",err);
+    });
+};
 export const loadMessages = (filters) => {
     const session = Session.getPayload();
     BC.message().templates()
