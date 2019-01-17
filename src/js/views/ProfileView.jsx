@@ -20,7 +20,8 @@ export default class ProfileView extends Flux.View {
         last_name: null,
         avatar: null,
         cohorts: [],
-        github: ''
+        github: '',
+        githubChartURL: null
       }
     };
   }
@@ -33,7 +34,8 @@ export default class ProfileView extends Flux.View {
     });
     Session.onChange((session) => {
       this.setState({ 
-        student: session.payload 
+        student: session.payload,
+        githubChartURL: process.env.ASSETS_URL+"/apis/github/student/"+session.payload.bc_id+"/contributions?"+session.payload.github
       });
       
     });
@@ -72,8 +74,8 @@ export default class ProfileView extends Flux.View {
             <form className="text-left" onSubmit={(e) => {
               e.preventDefault();
               saveProfile(student.bc_id, {
-                first_name: student.first_name,
-                last_name: student.last_name,
+                first_name: student.first_name ? student.first_name : '',
+                last_name: student.last_name ? student.last_name : '',
                 full_name: student.first_name + ' ' + student.last_name,
                 github: student.github
               })}
@@ -121,7 +123,7 @@ export default class ProfileView extends Flux.View {
                       />
                     </div>
                 </div>
-                { !hasGithub ? '' :
+                { !hasGithub || !student.first_name || !student.last_name ? <div className='alert alert-danger'><small>Please specify github, first and last name</small></div> :
                   <div>
                     <button className="btn form-control btn-success bg-info text-white">Update Profile Info</button>
                   </div>
@@ -153,7 +155,7 @@ export default class ProfileView extends Flux.View {
               <h4 className="mt-5">Your github status</h4>
               <p><small>You can think of Github as the LinkedIn for developers, other people need to see active your are and Github reflects your activity using the following chart: </small></p>
               {(hasGithub) ?
-                (<p><img src={process.env.ASSETS_URL+"/apis/github/student/"+student.bc_id+"/contributions?"+student.github} /></p>)
+                (<p><img src={this.state.githubChartURL} /></p>)
                 : <div className="alert alert-danger">The Activity Graph could not be loaded</div>
               }
               <p>
