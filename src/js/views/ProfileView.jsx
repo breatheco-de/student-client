@@ -6,6 +6,7 @@ import {saveProfile} from '../actions/actions';
 import OldStore from "../stores/OldStore";
 import {Session} from 'bc-react-session';
 import { Wizard } from '../components/wizard/Wizard.jsx';
+import defaultAvatarURL from '../../img/default-user-image.png';
 import moment from 'moment';
 
 export default class ProfileView extends Flux.View {
@@ -17,6 +18,7 @@ export default class ProfileView extends Flux.View {
         full_name: 'Profile',
         first_name: null,
         last_name: null,
+        avatar: null,
         cohorts: [],
         github: ''
       }
@@ -44,6 +46,7 @@ export default class ProfileView extends Flux.View {
   render() {
     const { student } = this.state;
     const hasGithub = typeof student.github === 'string' && student.github !== '';
+    const hasAvatar = typeof student.avatar === 'string' && student.avatar !== '';
     return (
       <Panel className="profile-view" style={{padding: "10px"}} zDepth={1}>
         <Wizard 
@@ -63,7 +66,7 @@ export default class ProfileView extends Flux.View {
         <div className="row text-center mt-5">
           <div className="col-12 col-md-4 col-lg-3 pt-5">
             <div className="profile-img mb-4" onClick={() => window.open('https://en.gravatar.com/emails/')}> 
-              <img src={this.state.student.avatar}/>
+              <img src={ hasAvatar ? student.avatar : defaultAvatarURL}/>
               <a target="_blank" href="https://en.gravatar.com/emails/" className="btn">edit</a>
             </div>
             <form className="text-left" onSubmit={(e) => {
