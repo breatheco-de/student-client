@@ -50,7 +50,7 @@ class OldStore extends Flux.Store{
     
     getSingleDay(number){
         for(let i=0;i<this.state.days.length;i++){
-            if(this.state.days[i].dayNumber === parseInt(number)){
+            if(this.state.days[i].dayNumber === parseInt(number,10)){
                 const day = this.state.days[i];
                 return day;
             }
@@ -128,6 +128,7 @@ class OldStore extends Flux.Store{
             if(this.state.todos[i].id === task.id){
                 this.state.todos[i].status = task.status;
                 this.emit('todos');
+                this._reduceSyllabus();
                 return this.state.todos[i];
             }
         

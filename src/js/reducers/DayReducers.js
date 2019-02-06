@@ -3,95 +3,95 @@ import OldStore from '../stores/OldStore';
 export default {
     getDay(day, index){
 
-    day.replits = (function(){
-        if(typeof day.replits === 'undefined') return [];
-        return day.replits.map(function(repl){
-            
-            let menu = [
-                { label: 'View it in Repl.it', slug: 'goto'}
-            ];
-            if(typeof repl.vtutorial_slug !== 'undefined' && repl.vtutorial_slug != '') 
-                menu.push({ label: 'Watch video tutorial', slug: 'vtutorial', vtutorial_slug: repl.vtutorial_slug });
-            menu.push({ label: 'Mark as done', slug: 'mark-done'});
-            
-            return {
-                menu,
-                title: repl.title,
-                associated_slug: repl.associated_slug || repl.slug,
-                vtutorial_slug: repl.vtutorial_slug,
-                status: "pending",
-                day: {
-                    label: day.label,
-                    number: index
-                },
-                type: "replit"
-            };
-        });
-    })();
-    day.lessons = (function(){
-        if(typeof day.lessons === 'undefined') return [];
-        return day.lessons.map(function(less){
-            return {
-                title: less.title,
-                associated_slug: less.associated_slug || less.slug,
-                status: "pending",
-                menu: [
-                    { label: 'Go to lesson', slug: 'goto'},
-                    { label: 'Mark as read', slug: 'mark-done'}
-                ],
-                day: {
-                    label: day.label,
-                    number: index
-                },
-                type: "lesson"
-            };
-        });
-    })();
-    day.quizzes = (function(){
-        if(typeof day.quizzes === 'undefined') return [];
-        return day.quizzes.map(function(q){
-            return {
-                title: q.title,
-                associated_slug: q.associated_slug || q.slug,
-                menu: [
-                    { label: 'Take quiz', slug: 'goto'},
-                    { label: 'Mark as done', slug: 'mark-done'}
-                ],
-                status: "pending",
-                day: {
-                    label: day.label,
-                    number: index
-                },
-                type: "quiz"
-            };
-        });
-    })();
-    day.assignments = (function(){
-        if(typeof day.assignments === 'undefined') return [];
-        return day.assignments.map(function(a){
-            return {
-                title: a.title,
-                associated_slug: a.associated_slug || a.slug || a,
-                menu: [
-                    { label: 'Read instructions', slug: 'goto'},
-                    { label: 'Deliver assignment', slug: 'mark-done'}
-                ],
-                status: "pending",
-                day: {
-                    label: day.label,
-                    number: index
-                },
-                type: "assignment"
-            };
-        });
-    })();
-    
-    day.actionables = day.replits.concat(day.lessons,day.assignments,day.quizzes);
-    
-    if(day.actionables.length > 0) day.opened = true;
-    
-    return day;
-},
+        day.replits = (function(){
+            if(typeof day.replits === 'undefined') return [];
+            return day.replits.map(function(repl){
+                
+                let menu = [
+                    { label: 'View it in Repl.it', slug: 'goto'}
+                ];
+                if(typeof repl.vtutorial_slug !== 'undefined' && repl.vtutorial_slug != '') 
+                    menu.push({ label: 'Watch video tutorial', slug: 'vtutorial', vtutorial_slug: repl.vtutorial_slug });
+                menu.push({ label: 'Mark as done', slug: 'mark-done'});
+                
+                return {
+                    menu,
+                    title: repl.title,
+                    associated_slug: repl.associated_slug || repl.slug,
+                    vtutorial_slug: repl.vtutorial_slug,
+                    status: "pending",
+                    day: {
+                        label: day.label,
+                        number: index
+                    },
+                    type: "replit"
+                };
+            });
+        })();
+        day.lessons = (function(){
+            if(typeof day.lessons === 'undefined') return [];
+            return day.lessons.map(function(less){
+                return {
+                    title: less.title,
+                    associated_slug: less.associated_slug || less.slug,
+                    status: "pending",
+                    menu: [
+                        { label: 'Go to lesson', slug: 'goto'},
+                        { label: 'Mark as read', slug: 'mark-done'}
+                    ],
+                    day: {
+                        label: day.label,
+                        number: index
+                    },
+                    type: "lesson"
+                };
+            });
+        })();
+        day.quizzes = (function(){
+            if(typeof day.quizzes === 'undefined') return [];
+            return day.quizzes.map(function(q){
+                return {
+                    title: q.title,
+                    associated_slug: q.associated_slug || q.slug,
+                    menu: [
+                        { label: 'Take quiz', slug: 'goto'},
+                        { label: 'Mark as done', slug: 'mark-done'}
+                    ],
+                    status: "pending",
+                    day: {
+                        label: day.label,
+                        number: index
+                    },
+                    type: "quiz"
+                };
+            });
+        })();
+        day.assignments = (function(){
+            if(typeof day.assignments === 'undefined') return [];
+            return day.assignments.map(function(a){
+                return {
+                    title: a.title,
+                    associated_slug: a.associated_slug || a.slug || a,
+                    menu: [
+                        { label: 'Read instructions', slug: 'goto'},
+                        { label: 'Deliver assignment', slug: 'mark-done'}
+                    ],
+                    status: "pending",
+                    day: {
+                        label: day.label,
+                        number: index
+                    },
+                    type: "assignment"
+                };
+            });
+        })();
+        
+        day.actionables = day.replits.concat(day.lessons,day.assignments,day.quizzes);
+        
+        if(day.actionables.length > 0) day.opened = true;
+        
+        return day;
+    },
     withTodos(day){
 
     day.opened = false;

@@ -55,7 +55,7 @@ class CourseView extends Flux.View{
       let state = { 
         courseSlug,
         currentMenuOption,
-        runTutorial: (typeof _session.payload.show_tutorial != undefined) ? _session.payload.show_tutorial : true,
+        runTutorial: (typeof _session.payload.show_tutorial != 'undefined') ? _session.payload.show_tutorial : true,
         currentCohort: _session.payload.currentCohort
       };
       if(this.state.context.path.day) state.currentOption = menuModes.course[0].items[0];
