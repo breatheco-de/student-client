@@ -36,7 +36,7 @@ export const login = (username, password, history) =>{
             financial_status: data.financial_status,
             avatar: data.avatar_url,
             phone: data.phone,
-            show_tutorial: (typeof data.show_tutorial != 'undefined') ? data.show_tutorial : true,
+            show_tutorial: (typeof data.show_tutorial != 'undefined' && (data.show_tutorial == '0' || data.show_tutorial == 'false')) ? false : true,
             github: data.github,
             email: data.email || data.username,
             first_name: data.first_name || null,
