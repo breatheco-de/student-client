@@ -63,6 +63,7 @@ export default class LessonView extends Flux.View {
           current={this.state.currentAction} 
           previous={this.state.previousAction} 
           next={this.state.nextAction} 
+          styles={{ height: "62px"}}
           onClick={(option) => {
             this.props.history.push(getSlug(option));
             this.setState({loading: true});
@@ -70,8 +71,7 @@ export default class LessonView extends Flux.View {
           }}
           onCollapse={() => this.setState({navbarCollapsed: !this.state.navbarCollapsed})}
         />
-        <iframe onLoad={()=>this.setState({loading: false})} className="lesson-iframe" src={src} 
-          height="100%" width="100%" frameBorder="0" />
+        <iframe onLoad={()=>this.setState({loading: false})} className="lesson-iframe" src={src} width="100%" style={{ height: "calc(100vh - 62px)" }} frameBorder="0" />
       </Panel>
     );
   }

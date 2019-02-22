@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import {withRouter, Link} from 'react-router-dom';
 import './panel-navbar.scss';
 
-const PanelNavbar = ({day, previous, next, current, match, collapsed, onClick, onCollapse}) => {
-    const styles = {
+const PanelNavbar = ({ day, previous, next, current, match, collapsed, onClick, onCollapse, styles }) => {
+    const originalStyles = {
       height: (collapsed) ? "7px" : "initial",
       overflow: (collapsed) ? "hidden" : "initial"
     };
     return (<div className="panel-navbar">
-        <nav className="nav" style={styles}>
+        <nav className="nav" style={Object.assign(originalStyles, styles)}>
           <div className="btn-container mr-auto">
           { (previous) ?
                 <button className="btn btn-light text-right" onClick={() =>onClick(previous)}>
@@ -49,6 +49,7 @@ PanelNavbar.propTypes = {
   onCollapse: PropTypes.func,
   previous: PropTypes.object,
   next: PropTypes.object,
+  styles: PropTypes.object,
   collapsed: PropTypes.bool,
   current: PropTypes.object,
   className: PropTypes.string
@@ -56,6 +57,7 @@ PanelNavbar.propTypes = {
 PanelNavbar.defaultProps = {
   previous: null,
   current: null,
+  styles: {},
   next: null,
   collapsed: false,
   className: ''
