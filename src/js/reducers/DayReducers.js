@@ -1,18 +1,30 @@
 import OldStore from '../stores/OldStore';
-
+import {Session} from 'bc-react-session';
 export default {
     getDay(day, index){
-
+        
+        const { payload } = Session.get();
+        
         day.replits = (function(){
             if(typeof day.replits === 'undefined') return [];
             return day.replits.map(function(repl){
                 
                 let menu = [
-                    { label: 'View it in Repl.it', slug: 'goto'}
+                    { label: 'Open exercises', slug: 'goto', icon: "fas fa-arrow-right"},
+                    { 
+                        label: 'Open exercises on new window', 
+                        slug: 'new_window', url: process.env.REPLIT_URL+repl.associated_slug+'&c='+payload.currentCohort.slug, 
+                        icon: "fas fa-external-link-alt"
+                    },
                 ];
                 if(typeof repl.vtutorial_slug !== 'undefined' && repl.vtutorial_slug != '') 
-                    menu.push({ label: 'Watch video tutorial', slug: 'vtutorial', vtutorial_slug: repl.vtutorial_slug });
-                menu.push({ label: 'Mark as done', slug: 'mark-done'});
+                    menu.push({ 
+                        label: 'Watch video tutorial', 
+                        slug: 'vtutorial', 
+                        vtutorial_slug: repl.vtutorial_slug,
+                        icon: "fab fa-youtube"
+                    });
+                menu.push({ label: 'Mark as done', slug: 'mark-done', icon: "fas fa-check"});
                 
                 return {
                     menu,
@@ -36,8 +48,8 @@ export default {
                     associated_slug: less.associated_slug || less.slug,
                     status: "pending",
                     menu: [
-                        { label: 'Go to lesson', slug: 'goto'},
-                        { label: 'Mark as read', slug: 'mark-done'}
+                        { label: 'Go to lesson', slug: 'goto', icon: "fas fa-arrow-right"},
+                        { label: 'Mark as read', slug: 'mark-done', icon: "fas fa-check"}
                     ],
                     day: {
                         label: day.label,
@@ -54,8 +66,8 @@ export default {
                     title: q.title,
                     associated_slug: q.associated_slug || q.slug,
                     menu: [
-                        { label: 'Take quiz', slug: 'goto'},
-                        { label: 'Mark as done', slug: 'mark-done'}
+                        { label: 'Take quiz', slug: 'goto', icon: "fas fa-arrow-right"},
+                        { label: 'Mark as done', slug: 'mark-done', icon: "fas fa-check"}
                     ],
                     status: "pending",
                     day: {
@@ -73,8 +85,8 @@ export default {
                     title: a.title,
                     associated_slug: a.associated_slug || a.slug || a,
                     menu: [
-                        { label: 'Read instructions', slug: 'goto'},
-                        { label: 'Deliver assignment', slug: 'mark-done'}
+                        { label: 'Read instructions', slug: 'goto', icon: "fas fa-arrow-right"},
+                        { label: 'Deliver assignment', slug: 'mark-done', icon: "fas fa-check"}
                     ],
                     status: "pending",
                     day: {

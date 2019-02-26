@@ -37,7 +37,7 @@ class DropLink extends React.Component{
         const styles = {
             marginLeft: (this.dropdown) ? "-"+this.dropdown.with : '0'
         };
-        const menuOptions = this.props.dropdown.map((opt,i) => (<a key={i} className="dropdown-item" onClick={()=>this.props.onSelect(opt)}>{opt.label}</a>));
+        const menuOptions = this.props.dropdown.map((opt,i) => (<a key={i} className="dropdown-item" onClick={()=>this.props.onSelect(opt)}>{opt.icon && <i className={opt.icon}></i>} {opt.label}</a>));
         return(
             <div className={"bcdroplink dropdown "+this.props.className+((this.state.opened) ? ' show':'')}>
                 <a className="btn dropdown-toggle" 

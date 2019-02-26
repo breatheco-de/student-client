@@ -79,6 +79,9 @@ class DayView extends Flux.View {
       case "goto":
         this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug);
       break;
+      case "new_window":
+        window.open(option.url);
+      break;
       case "vtutorial":
         this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
       break;

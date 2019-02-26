@@ -49,6 +49,7 @@ export default class ProfileView extends Flux.View {
     const { student } = this.state;
     const hasGithub = typeof student.github === 'string' && student.github !== '';
     const hasAvatar = typeof student.avatar === 'string' && student.avatar !== '';
+    console.log("Student: ",student);
     return (
       <Panel className="profile-view" style={{padding: "10px"}} zDepth={1}>
         <Wizard 
@@ -123,7 +124,7 @@ export default class ProfileView extends Flux.View {
                       />
                     </div>
                 </div>
-                { !hasGithub || !student.first_name || !student.last_name ? <div className='alert alert-danger'><small>Please specify github, first and last name</small></div> :
+                { !hasGithub || (!student.first_name && !student.full_name) ? <div className='alert alert-danger'><small>Please specify github, first and last name</small></div> :
                   <div>
                     <button className="btn form-control btn-success bg-info text-white">Update Profile Info</button>
                   </div>

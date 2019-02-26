@@ -51,13 +51,14 @@ ActionableItem.propTypes = {
   // You can declare that a prop is a specific JS primitive. By default, these
   // are all optional.
   label: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   dropdown: PropTypes.array,
   isSelected: PropTypes.bool,
   onDropdownSelect: PropTypes.func.isRequired,
   type: PropTypes.oneOf(options),
-}
+};
 ActionableItem.defaultProps = {
-  icon: false,
+  icon: null,
   dropdown: [],
   done: false
 };
