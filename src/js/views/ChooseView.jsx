@@ -3,6 +3,7 @@ import Flux from '@4geeksacademy/react-flux-dash';
 import { List, Panel } from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
 import { logout } from '../actions/auth';
+import { getStreaming } from '../actions/actions';
 
 export default class ChooseView extends Flux.View {
   
@@ -32,7 +33,16 @@ export default class ChooseView extends Flux.View {
       <li key={i}>
         <button className="btn btn-light ml-3"
           onClick={() => {
-            Session.setPayload({currentCohort: cohort});
+            getStreaming(cohort.slug)
+              .then(data => {
+                cohort.streaming = data;
+                Session.setPayload({ currentCohort: cohort });
+              })
+              .catch(() => {
+                cohort.streaming = null;
+                Session.setPayload({ currentCohort: cohort });
+              });
+            
           }}>
           <i className="fas fa-external-link-alt"></i> launch this course
         </button>

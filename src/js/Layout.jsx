@@ -9,6 +9,7 @@ import CourseView from './views/CourseView';
 import HomeView from './views/HomeView';
 import ProfileView from './views/ProfileView';
 import ChooseView from './views/ChooseView';
+import LiveView from './views/LiveView';
 class Layout extends Flux.View{
     
     constructor(){

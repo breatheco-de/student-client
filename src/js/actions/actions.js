@@ -2,6 +2,7 @@ import Flux from '@4geeksacademy/react-flux-dash';
 import BC from '../utils/api.js';
 import { Session } from 'bc-react-session';
 import { Notify } from 'bc-react-notifier';
+
 export const loadCourses = () => {
     BC.courses().user(3).then((data) => {
         Flux.dispatchEvent('courses', data);
@@ -62,6 +63,8 @@ export const markMessageAs = (message, status) => {
             else console.warn(data.msg);
         });
 };
+
+export const getStreaming = (cohortSlug) => BC.streaming().getCohort(cohortSlug);
 
 class Store extends Flux.DashStore{
     constructor(){

@@ -16,6 +16,7 @@ import QuizView from '../views/panel/QuizView';
 import ReplitView from '../views/panel/ReplitView';
 import AssignmentView from '../views/panel/AssignmentView';
 import VTurorialView from '../views/panel/VTurorialView';
+import LiveView from '../views/LiveView';
 
 import {Session} from 'bc-react-session';
 import {menuModes, getCurrentPath} from '../utils/menu';
@@ -52,11 +53,25 @@ class CourseView extends Flux.View{
         component: TimeMenu
       };
       
+      if(currentMenuOption.slug === 'course' && _session.payload.currentCohort.streaming){
+        currentMenuOption = Object.assign(currentMenuOption, 
+        { items: currentMenuOption.items.filter(item => item.slug !== "live").concat([{
+              slug: "live",
+              label: "Live", 
+              url: this.state.context.path.pathname+"/live",
+              items: currentMenuOption.items,
+              icon: "fab fa-youtube"
+            }]) 
+        });
+      }
+      console.log("Context:", this.state.context);
+      
       let state = { 
         courseSlug,
         currentMenuOption,
         runTutorial: (typeof _session.payload.show_tutorial != 'undefined') ? _session.payload.show_tutorial : true,
-        currentCohort: _session.payload.currentCohort
+        currentCohort: _session.payload.currentCohort,
+        liveStreaming: null
       };
       if(this.state.context.path.day) state.currentOption = menuModes.course[0].items[0];
       this.setState(state);
@@ -77,11 +92,13 @@ class CourseView extends Flux.View{
         this.fetchSecondSyllabusPhase();
         
         let currentMenuOption = this.state.currentMenuOption;
-        if(this.state.context.path.menu == 'syllabus') currentMenuOption = { 
-          slug: this.state.context.path.menu, 
-          data: OldStore.getSyllabusDays(),
-          component: TimeMenu
-        };
+        if(this.state.context.path.menu == 'syllabus') 
+          currentMenuOption = { 
+            slug: this.state.context.path.menu, 
+            data: OldStore.getSyllabusDays(),
+            component: TimeMenu
+          };
+
         
         this.setState({ menuItems: menuModes.course, currentMenuOption });
     }
@@ -101,6 +118,7 @@ class CourseView extends Flux.View{
     onSelect(option){
         if(typeof option.slug != 'undefined' && this.state.menuItems.find((item => item.slug = option.slug))){
           if(option.slug == 'syllabus') option.data = OldStore.getSyllabusDays();
+          if(typeof option.url != 'undefined') this.props.history.push(option.url);
           this.setState({
             currentMenuOption: option,
             context: this.getCurrentContext()
@@ -135,6 +153,7 @@ class CourseView extends Flux.View{
                         <Route exact path={this.props.match.path+'/q/:quiz_slug'} component={QuizView} />
                         <Route exact path={this.props.match.path+'/a/:assignment_slug'} component={AssignmentView} />
                         <Route exact path={this.props.match.path+'/l/:lesson_slug'} component={LessonView} />
+                        <Route exact path={this.props.match.path+'/live'} component={LiveView} />
                         <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />
                         <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
                         <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />

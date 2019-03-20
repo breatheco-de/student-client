@@ -7,30 +7,34 @@ export const menuModes = {
         {slug:"home", label:"BreatheCode" }
     ],
     course: [
-        {slug:"course", label:"Course", items: [
-            { 
-                slug: "syllabus", 
-                label: "My Journey", 
-                icon: "fas fa-graduation-cap", 
-                component: TimeLineMenu, 
-                size: 370 
-            },
-            { 
-                slug: "todos",
-                label: "Todo's", 
-                icon: "fas fa-check", 
-                component: TodoMenu, 
-                size: 370 
-            },
-            { 
-                slug: "search",
-                label: "Search", 
-                icon: "fas fa-search", 
-                component: SearchMenu, 
-                size: 370 
-            }
-        ]},
-        {slug:"search", label:"Search" }
+        {
+            slug:"course", label:"Course", items: 
+            [
+                { 
+                    slug: "syllabus", 
+                    label: "My Journey", 
+                    icon: "fas fa-graduation-cap", 
+                    component: TimeLineMenu, 
+                    size: 370 
+                },
+                { 
+                    slug: "todos",
+                    label: "Todo's", 
+                    icon: "fas fa-check", 
+                    component: TodoMenu, 
+                    size: 370 
+                },
+                { 
+                    slug: "search",
+                    label: "Search", 
+                    icon: "fas fa-search", 
+                    component: SearchMenu, 
+                    size: 370 
+                }
+            ]
+        },
+        {
+            slug:"search", label:"Search" }
     ],
     todos: null,
     syllabus: null

@@ -368,6 +368,14 @@ class Wrapper{
             }
         };
     }
+    streaming(){
+        let url = this.options.assetsPath;
+        return {
+            getCohort: (slug) => {
+                return this.get(url+'/streaming/cohort/'+slug);
+            }
+        };
+    }
 }
 if(typeof module != 'undefined') module.exports = new Wrapper();
 window.BC = new Wrapper();
