@@ -53,12 +53,12 @@ class CourseView extends Flux.View{
         component: TimeMenu
       };
       
-      if(currentMenuOption.slug === 'course' && _session.payload.currentCohort.streaming){
+      if((currentMenuOption.slug === 'course' || currentMenuOption.slug ==='live')  && _session.payload.currentCohort.streaming){
         currentMenuOption = Object.assign(currentMenuOption, 
         { items: currentMenuOption.items.filter(item => item.slug !== "live").concat([{
               slug: "live",
               label: "Live", 
-              url: this.state.context.path.pathname+"/live",
+              url: this.state.context.path.pathname.replace("/live")+"/live",
               items: currentMenuOption.items,
               icon: "fab fa-youtube"
             }]) 
