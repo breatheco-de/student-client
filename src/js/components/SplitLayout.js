@@ -8,7 +8,7 @@ import {Session} from 'bc-react-session';
 import {getCurrentPath} from '../utils/menu.js';
 
 class SplitLayout extends React.Component{
-    
+
     constructor() {
         super();
         this.state = {
@@ -24,51 +24,51 @@ class SplitLayout extends React.Component{
             onRootLevel: true
         };
     }
-    
+
     componentDidMount(){
         const session = Session.get();
-        
+
         const currentPath = getCurrentPath();
         const collapsed = (currentPath.type) ? true : false;
-        this.setState({ 
+        this.setState({
             student: session.payload,
-            collapsed: collapsed, 
+            collapsed: collapsed,
             currentSize: (collapsed) ? this.state.minSize : this.state.maxSize
         });
        this.props.history.listen((e)=> {
             const currentPath = getCurrentPath();
             const collapsed = (currentPath.type) ? true : false;
-            this.setState({ 
-                collapsed: collapsed, 
-                currentSize: (collapsed) ? this.state.minSize : this.state.maxSize 
+            this.setState({
+                collapsed: collapsed,
+                currentSize: (collapsed) ? this.state.minSize : this.state.maxSize
             });
-           
-       }); 
+
+       });
     }
-    
+
     onNavBarSelect(option){
         if(typeof(option.size) !== 'undefined' && !this.state.collapsed) this.setState({ currentSize: option.size });
         if(option.slug == this.props.baseLevel.slug) this.setState({ onRootLevel: true });
         else this.setState({ onRootLevel: false });
         if(this.props.onNavBarSelect) this.props.onNavBarSelect(option);
     }
-    
+
     onSettingsSelect(item){
         switch(item.slug){
             case "logout": logout(this.props.history); break;
             case "profile": this.props.history.push('/profile'); break;
-            case "start_tutorial": 
+            case "start_tutorial":
                 Session.setPayload({ show_tutorial: true });
-                this.props.history.push('/'); 
+                this.props.history.push('/');
             break;
-            case "hide_tutorial": 
+            case "hide_tutorial":
                 Session.setPayload({ show_tutorial: false });
                 this.setState({ student: Object.assign(this.state.student, { show_tutorial: false }) });
             break;
             case "choose": this.props.history.push('/choose'); break;
         }
     }
-    
+
     render() {
         return (
             <div className="layout">
@@ -78,23 +78,23 @@ class SplitLayout extends React.Component{
                     size={this.state.currentSize}
                 >
                     <div style={{ height: "100%", padding: '10px 0px 10px 10px' }}>
-                        <Sidebar 
+                        <Sidebar
                             breadcrumb={this.props.breadcrumb}
-                            onSelect={(opt) => this.onNavBarSelect(opt)} 
+                            onSelect={(opt) => this.onNavBarSelect(opt)}
                             selectedOption={this.props.selectedOption}
                             menuItems={this.props.menuItems}
                             collapsed={this.state.collapsed}
                         />
-                        {   
-                            (this.state.onRootLevel) ? 
+                        {
+                            (this.state.onRootLevel) ?
                                 (<div className={"settings-item"+((this.state.collapsed)?' collapsed':'')}>
-                                    { (this.state.student && !this.state.collapsed) ? this.state.student.full_name : ''}
+                                    <span style={{maxWidth: "100px"}}>{ (this.state.student && !this.state.collapsed) ? this.state.student.full_name.split(' ').slice(0, -1).join(' ') : ''}</span>
                                     <DropLink direction="up" dropdown={[
                                             {label: 'Profile', slug:'profile'},
                                             {label: 'My Courses', slug:'choose'},
                                             (this.state.student && this.state.student.show_tutorial) ? {label: 'Hide Tutorial', slug:'hide_tutorial'} : {label: 'Start Tutorial', slug:'start_tutorial'},
                                             {label: 'Logout', slug:'logout'}
-                                        ]} 
+                                        ]}
                                         onSelect={this.onSettingsSelect.bind(this)}>
                                         <i className="fas fa-cog"></i>
                                     </DropLink>
@@ -109,7 +109,7 @@ class SplitLayout extends React.Component{
             </div>
         );
     }
-    
+
 }
 SplitLayout.propTypes = {
     // the initial with of the sizebar

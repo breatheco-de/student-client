@@ -1,9 +1,9 @@
 import React from 'react';
-import TimeLineDay from '../TimeLineDay.jsx';
+import TimeLineDay from '../TimeLineDay';
 import {withRouter} from 'react-router-dom';
 
 class TimeLineMenu extends React.Component{
-    
+
     constructor(){
         super();
         this.state = {
@@ -14,7 +14,7 @@ class TimeLineMenu extends React.Component{
         };
         this.timeline = null;
     }
-    
+
     componentDidMount(){
         //setInterval(() => this.timeline.scrollTo(0,this.timeline.scrollTop + 5), 100);
         const dayNumber = this.props.match.params.day_number;
@@ -22,7 +22,7 @@ class TimeLineMenu extends React.Component{
             this.setState({ selected: dayNumber });
         }
     }
-    
+
     render(){
         const timelineStyles = {
            // width: (this.state.layout === "one-column") ? "330px" : "660px"
@@ -30,9 +30,9 @@ class TimeLineMenu extends React.Component{
         const aditionalLineClasses = () => { return this.state.side; }
         const days = this.props.data.map((day, i)=>{
             if(typeof day.dayNumber === 'undefined') throw new Error('Days must have a dayNumber property');
-           return <TimeLineDay key={i} 
+           return <TimeLineDay key={i}
                     label={day.label}
-                    description={day.description} 
+                    description={day.description}
                     technologies={day.technologies}
                     isSelected={(this.state.selected == day.dayNumber)}
                     onClick={()=>{
@@ -42,14 +42,14 @@ class TimeLineMenu extends React.Component{
             }} />
         });
         const collapsedClass = (this.props.collapsed) ? 'collapsed':'';
-        
+
         return (
             <div className={"timeline "+collapsedClass}>
                 <span className={"line "+aditionalLineClasses()}></span>
-                <ul style={timelineStyles} 
+                <ul style={timelineStyles}
                     onWheel = {(e) => {
                         this.timeline.scrollTo(0,this.timeline.scrollTop + e.deltaY);
-                    }} 
+                    }}
                     ref={(elm) => this.timeline = elm}>
                 	{days}
                 </ul>

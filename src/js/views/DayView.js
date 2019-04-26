@@ -1,7 +1,7 @@
 import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
 import {withRouter} from "react-router-dom";
-import DayContent from '../components/DayContent.jsx';
+import DayContent from '../components/DayContent';
 
 import {ActionableItem, List, ProgressKPI, Panel} from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
@@ -9,7 +9,7 @@ import OldStore from '../stores/OldStore';
 import OldActions from '../actions/OldActions';
 
 class DayView extends Flux.View {
-  
+
   constructor(){
     super();
     this.state = {
@@ -22,11 +22,11 @@ class DayView extends Flux.View {
     this.bindStore(OldStore, 'syllabus', this.syllabusUpdated.bind(this));
     this.stopDayChangeListener = null;
   }
-  
+
   componentWillMount(){
     this.syllabusUpdated();
   }
-  
+
   syllabusUpdated(){
     this.loadDay();
     if(!this.stopDayChangeListener){
@@ -42,28 +42,28 @@ class DayView extends Flux.View {
       });
     }
   }
-  
+
   componentWillUnmount(){
     if(this.stopDayChangeListener){
       this.stopDayChangeListener();
       this.stopDayChangeListener = null;
-    } 
+    }
   }
-  
+
   loadDay(newDayNumber=null){
     const student = Session.get().payload;
     const singleDay = OldStore.getSingleDay(newDayNumber || this.props.match.params.day_number);
     if(singleDay){
       if(singleDay.opened && singleDay.actionables) setTimeout(() => window.location.hash = "started&menu=syllabus", 500);
       else setTimeout(() => window.location.hash = "menu=syllabus", 500);
-      this.setState({ 
+      this.setState({
         day: singleDay,
         blocked: (student.type === 'teacher') ? false : !singleDay.opened,
         actionables: singleDay.actionables
       });
     }
   }
-  
+
   actionableSelected(actionable, option){
     switch(option.slug){
       case "mark-done":
@@ -87,29 +87,29 @@ class DayView extends Flux.View {
       break;
     }
   }
-  
+
   enableDay(){
     OldActions.startDay(this.state.day);
   }
-  
+
   render() {
-    
+
     if(!this.state.day) return (<Panel className="dayview"><h1>Loading...</h1></Panel>);
 
     const unsynced = this.state.actionables.filter(act => act.status === 'unsynced');
-    
+
     const actionable = this.state.actionables.filter(act => act.status !== 'unsynced').map((l,i) => {
-      return <ActionableItem key={i} type={l.type} 
-                done={(l.status === "done")} 
-                label={(typeof l.title !== 'undefined') ? l.title : l.associated_slug} 
-                dropdown={l.menu} 
-                onDropdownSelect={(option)=>this.actionableSelected(l,option)} 
+      return <ActionableItem key={i} type={l.type}
+                done={(l.status === "done")}
+                label={(typeof l.title !== 'undefined') ? l.title : l.associated_slug}
+                dropdown={l.menu}
+                onDropdownSelect={(option)=>this.actionableSelected(l,option)}
               />;
     });
 
     return (
       <Panel className="dayview">
-        <h1>:{this.state.day.label} <ProgressKPI progress={this.state.day.completition} /></h1> 
+        <h1>:{this.state.day.label} <ProgressKPI progress={this.state.day.completition} /></h1>
         <p className="description">{this.state.day.description}</p>
         {(actionable.length > 0)?
           (<DayContent onStart={this.enableDay.bind(this)} blocked={this.state.blocked}>
