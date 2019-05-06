@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "c9": "webpack-dev-server --host $IP --port $PORT --config webpack.dev.js",
-    "gitpod": "webpack-dev-server --host 0.0.0.0 --port 3000 --config webpack.dev.js",
+    "start": "webpack-dev-server --config webpack.dev.js",
     "dev": "webpack --config webpack.dev.js",
-    "start": "http-server -a $IP",
     "build": "webpack --config webpack.prod.js"
   },
   "author": "",
