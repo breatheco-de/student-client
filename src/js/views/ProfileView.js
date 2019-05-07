@@ -124,7 +124,7 @@ export default class ProfileView extends Flux.View {
                       />
                     </div>
                 </div>
-                { !hasGithub || (!student.first_name && !student.full_name) ? <div className='alert alert-danger'><small>Please specify github, first and last name</small></div> :
+                { !hasGithub || (!student.first_name && !student.full_name) ? <div className='alert alert-danger'><small>Please specify your github, first and last name</small></div> :
                   <div>
                     <button className="btn form-control btn-success bg-info text-white">Update Profile Info</button>
                   </div>

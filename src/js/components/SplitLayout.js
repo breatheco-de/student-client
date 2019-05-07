@@ -88,7 +88,7 @@ class SplitLayout extends React.Component{
                         {
                             (this.state.onRootLevel) ?
                                 (<div className={"settings-item"+((this.state.collapsed)?' collapsed':'')}>
-                                    <span style={{maxWidth: "100px"}}>{ (this.state.student && !this.state.collapsed) ? this.state.student.full_name.split(' ').slice(0, -1).join(' ') : ''}</span>
+                                    <span style={{maxWidth: "100px"}}>{ (this.state.student && !this.state.collapsed) ? this.state.student.first_name : ''}</span>
                                     <DropLink direction="up" dropdown={[
                                             {label: 'Profile', slug:'profile'},
                                             {label: 'My Courses', slug:'choose'},
