@@ -30,6 +30,9 @@ form{
         }
         li{
             list-style: none;
-        }   
+        }
+    }
+    .has-error{
+        border: 1px red solid;
     }
 }
