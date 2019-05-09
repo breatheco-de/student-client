@@ -72,6 +72,7 @@ class CourseView extends Flux.View{
         currentMenuOption,
         runTutorial: (typeof _session.payload.show_tutorial != 'undefined') ? _session.payload.show_tutorial : true,
         currentCohort: _session.payload.currentCohort,
+        session: _session.payload,
         liveStreaming: null
       };
       if(this.state.context.path.day) state.currentOption = menuModes.course[0].items[0];
@@ -135,6 +136,9 @@ class CourseView extends Flux.View{
     }
 
     render() {
+
+        if(!this.state.session) return <p>Loading...</p>;
+        const { assets_token, email } = this.state.session;
         return (
           <div>
               <ImportantMessages />
@@ -156,7 +160,8 @@ class CourseView extends Flux.View{
                         <Route exact path={this.props.match.path+'/a/:assignment_slug'} component={AssignmentView} />
                         <Route exact path={this.props.match.path+'/l/:lesson_slug'} component={LessonView} />
                         <Route exact path={this.props.match.path+'/live'} component={LiveView} />
-                        <Route exact path={this.props.match.path+'/new-project'} component={() => <IFrameView src="https://assets.breatheco.de/apps/new-project" />} />
+                        <Route exact path={this.props.match.path+'/new-project'} component={() =>
+                            <IFrameView src={`https://assets.breatheco.de/apps/new-project?assets_token=${assets_token || ''}&email=${email || ''}`} />} />
                         <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />
                         <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
                         <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />
