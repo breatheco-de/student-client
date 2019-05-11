@@ -4,7 +4,7 @@ import {Panel, Loading} from '../../components/react-components/src/index';
 import {Session} from 'bc-react-session';
 
 export default class LessonView extends Flux.View {
-  
+
   constructor(){
     super();
     const session = Session.store.getSession();
@@ -13,13 +13,13 @@ export default class LessonView extends Flux.View {
       token: session.access_token || ''
     };
   }
-  
+
   render() {
-    const url = "https://breatheco.de/en/project/?plain=true&slug="+this.props.match.params.assignment_slug+'&access_token='+this.state.token;
+    const url = "https://projects.breatheco.de/project/"+this.props.match.params.assignment_slug+'?iframe=true&access_token='+this.state.token;
     return (
       <Panel padding={false}>
         <Loading show={this.state.loading} />
-        <iframe onLoad={()=>this.setState({loading: false})} className="assignment-iframe" src={url} 
+        <iframe onLoad={()=>this.setState({loading: false})} className="assignment-iframe" src={url}
           height="100%" width="100%" frameBorder="0" />
       </Panel>
     );
