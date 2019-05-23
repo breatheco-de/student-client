@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "now-buid":"npm run build",
     "start": "webpack-dev-server --config webpack.dev.js",
     "start:prod": "webpack-dev-server --config webpack.prod.js",
     "build": "webpack --config webpack.prod.js"
