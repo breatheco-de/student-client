@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "alias": "student.breatheco.de",
   "name": "STUDENT-CLIENT",
   "builds": [
     {
