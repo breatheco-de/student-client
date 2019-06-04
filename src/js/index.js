@@ -8,6 +8,16 @@ import '../styles/index.scss';
 import './utils/icons';
 import Layout from './Layout.js';
 import packg from '../../package.json';
+import TagManager from 'react-gtm-module'
+
+const tagManagerArgs = {
+    gtmId: 'GTM-574Z6C5',
+    auth: 'HXY0OFiOxShdVVBJHK5sbg',
+    preview: 'env-2'
+}
+
+TagManager.initialize(tagManagerArgs)
+
 
 
 if(process.env.DEBUG == true){
