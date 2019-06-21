@@ -6,7 +6,7 @@ import { logout } from '../actions/auth';
 import { getStreaming } from '../actions/actions';
 
 export default class ChooseView extends Flux.View {
-  
+
   constructor(){
     super();
     this.state = {
@@ -15,15 +15,15 @@ export default class ChooseView extends Flux.View {
       }
     };
   }
-  
+
   componentDidMount(){
     let session = Session.get();
     this.setState({ student: session.payload });
     const unsubscribe = Session.onChange((session) => {
       if(typeof unsubscribe == 'function') unsubscribe();
-      
+
       const currentCohort = (session.payload) ? session.payload.currentCohort : null;
-      if(currentCohort && typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort)) 
+      if(currentCohort && typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort))
         this.props.history.push('/course/'+currentCohort.profile_slug);
     });
   }
@@ -33,7 +33,8 @@ export default class ChooseView extends Flux.View {
       <li key={i}>
         <button className="btn btn-light ml-3"
           onClick={() => {
-            getStreaming(cohort.slug)
+            const streamingSlug = cohort.streaming_slug || cohort.slug;
+            getStreaming(streamingSlug)
               .then(data => {
                 cohort.streaming = data;
                 Session.setPayload({ currentCohort: cohort });
@@ -42,7 +43,7 @@ export default class ChooseView extends Flux.View {
                 cohort.streaming = null;
                 Session.setPayload({ currentCohort: cohort });
               });
-            
+
           }}>
           <i className="fas fa-external-link-alt"></i> launch this course
         </button>

@@ -1,13 +1,13 @@
 /* global fetch, localStorage, window */
 class Wrapper{
-    
+
     constructor(){
         this.options = {
             assetsPath: (typeof process != 'undefined') ? process.env.ASSETS_URL+'/apis' : null,
             apiPath: (typeof process != 'undefined') ? process.env.API_URL : null,
             _debug: (typeof process != 'undefined') ? process.env.DEBUG : false,
             getToken: (type='api') => {
-                return null;
+                return type == api ? this.apiPath : this.assetsPath;
             },
             onLoading: null,
             onLogout: null
@@ -26,8 +26,8 @@ class Wrapper{
                         if(typeof this.options.onLoading == 'function') this.options.onLoading(this.isPending);
                     }
                     return true;
-                } 
-        
+                }
+
         if(this.isPending){
             this.isPending = false;
             if(typeof this.options.onLoading == 'function') this.options.onLoading(this.isPending);
@@ -35,61 +35,62 @@ class Wrapper{
         return false;
     }
     _logError(error){ if(this.options._debug) console.error(error); }
-    setOptions(options){ 
-        this.options = Object.assign(this.options, options); 
+    setOptions(options){
+        this.options = Object.assign(this.options, options);
     }
     fetch(...args){ return fetch(...args); }
     req(method, path, args){
-        
-        const token = this.options.getToken((path.indexOf('//assets') == -1) ? 'api':'assets');
-        let opts = { 
-            method, 
+
+        const token = this.options.getToken((path.indexOf('assets.') !== -1 || path.indexOf('f0d8e861') !== -1) ? 'assets':'api');
+        let opts = {
+            method,
+            cache: "no-cache",
             headers: {'Content-Type': 'application/json'}
         };
         if(token) opts.headers['Authorization'] = token;
-        
+
         if(method === 'get') path += this.serialize(args).toStr();
         else
         {
             if((method=='put') && !args) throw new Error('Missing request body');
             opts.body = this.serialize(args).toJSON();
-        } 
-        
+        }
+
         return new Promise((resolve, reject) => {
-            
+
             if(typeof this.pending[method][path] !== 'undefined' && this.pending[method][path])
                 reject({ pending: true, msg: `Request ${method}: ${path} was ignored because a previous one was already pending` });
             else this.pending[method][path] = true;
-            
+
             //recalculate to check if it there is pending requests
             this.calculatePending();
-            
+
             this.fetch( path, opts)
                 .then((resp) => {
                     this.pending[method][path] = false;
                     //recalculate to check if it there is pending requests
                     this.calculatePending();
-                    
+
                     if(resp.status == 200) return resp.json();
                     else{
                         this._logError(resp);
-                        if(resp.status == 403) reject({ msg: 'Invalid username or password', code: 403 }); 
+                        if(resp.status == 403) reject({ msg: 'Invalid username or password', code: 403 });
                         else if(resp.status == 401){
-                            reject({ msg: 'Unauthorized', code: 401 }); 
+                            reject({ msg: 'Unauthorized', code: 401 });
                             if(this.options.onLogout) this.options.onLogout();
-                        } 
+                        }
                         else if(resp.status == 400) resp.json()
-                                                        .then(err => 
+                                                        .then(err =>
                                                             reject({ msg: err.msg || err, code: 400 })
                                                         )
                                                         .catch(() =>
                                                             reject({ msg: 'Invalid Argument', code: 400 })
-                                                        ) 
+                                                        )
                         else reject({ msg: 'There was an error, try again later', code: 500 });
-                    } 
+                    }
                     return false;
                 })
-                .then((json) => { 
+                .then((json) => {
                     if(!json) throw new Error('There was a problem processing the request');
                     resolve(json);
                     return json;
@@ -98,17 +99,17 @@ class Wrapper{
                     this.pending[method][path] = false;
                     //recalculate to check if it there is pending requests
                     this.calculatePending();
-                    
+
                     this._logError(error.message);
                     reject(error.message);
                 });
         });
-                
+
     }
     _encodeKeys(obj){
         for(let key in obj){
             let newkey = key.replace('-','_');
-            
+
             let temp = obj[key];
             delete obj[key];
             obj[newkey] = temp;
@@ -118,7 +119,7 @@ class Wrapper{
     _decodeKeys(obj){
         for(let key in obj){
             let newkey = key.replace('_','-');
-            
+
             let temp = obj[key];
             delete obj[key];
             obj[newkey] = temp;

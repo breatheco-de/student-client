@@ -2,30 +2,29 @@ import OldStore from '../stores/OldStore';
 import {Session} from 'bc-react-session';
 export default {
     getDay(day, index){
-        
+
         const { payload } = Session.get();
-        
+
         day.replits = (function(){
             if(typeof day.replits === 'undefined') return [];
             return day.replits.map(function(repl){
-                
+
                 let menu = [
-                    { label: 'Open exercises', slug: 'goto', icon: "fas fa-arrow-right"},
-                    { 
-                        label: 'Open exercises on new window', 
-                        slug: 'new_window', url: process.env.REPLIT_URL+repl.associated_slug+'&c='+payload.currentCohort.slug, 
+                    {
+                        label: 'Open exercises on new window',
+                        slug: 'new_window', url: process.env.REPLIT_URL+repl.associated_slug+'&c='+payload.currentCohort.slug,
                         icon: "fas fa-external-link-alt"
                     },
                 ];
-                if(typeof repl.vtutorial_slug !== 'undefined' && repl.vtutorial_slug != '') 
-                    menu.push({ 
-                        label: 'Watch video tutorial', 
-                        slug: 'vtutorial', 
+                if(typeof repl.vtutorial_slug !== 'undefined' && repl.vtutorial_slug != '')
+                    menu.push({
+                        label: 'Watch video tutorial',
+                        slug: 'vtutorial',
                         vtutorial_slug: repl.vtutorial_slug,
                         icon: "fab fa-youtube"
                     });
                 menu.push({ label: 'Mark as done', slug: 'mark-done', icon: "fas fa-check"});
-                
+
                 return {
                     menu,
                     title: repl.title,
@@ -97,18 +96,18 @@ export default {
                 };
             });
         })();
-        
+
         day.actionables = day.replits.concat(day.lessons,day.assignments,day.quizzes);
-        
+
         if(day.actionables.length > 0) day.opened = true;
-        
+
         return day;
     },
     withTodos(day){
 
     day.opened = false;
     day.totalDone = 0;
-    
+
     const todos = OldStore.getTodos();
     if(!todos) return day;
 
@@ -119,9 +118,9 @@ export default {
                 day.opened = true;
                 repl.status = todo.status;
                 if(todo.status==='done') day.totalDone++;
-            } 
+            }
             if(day.opened && !todo) repl.status = "unsynced";
-            
+
             return repl;
         });
     })();
@@ -133,8 +132,8 @@ export default {
                 day.opened = true;
                 less.status = todo.status;
                 if(todo.status==='done') day.totalDone++;
-            } 
-            
+            }
+
             if(day.opened && !todo) less.status = "unsynced";
             return less;
         });
@@ -147,12 +146,12 @@ export default {
                 day.opened = true;
                 quiz.status = todo.status;
                 if(todo.status==='done') day.totalDone++;
-            } 
+            }
             if(day.opened && !todo) quiz.status = "unsynced";
             return quiz;
         });
     })();
-    
+
     day.assignments = (function(){
         return day.assignments.map(function(ass){
             const todo = OldStore.getSingleTodo(ass);
@@ -160,27 +159,27 @@ export default {
                 day.opened = true;
                 ass.status = todo.status;
                 if(todo.status==='done') day.totalDone++;
-            } 
+            }
             if(day.opened && !todo) ass.status = "unsynced";
             return ass;
         });
     })();
-    
+
     day.actionables = day.lessons.concat(day.replits,day.assignments,day.quizzes);
-    
+
     if(day.actionables.length===0){
         day.completition = 100;
         day.opened = true;
-    } 
+    }
     else day.completition = Math.round((day.totalDone/day.actionables.length)*100);
-    
+
     return day;
 },
     withProjects(day){
-    
+
         const projects = OldStore.getProjects();
         if(!projects) return day;
-    
+
         day.actionables.map((actionable)=>{
             if(actionable.type !== 'assignment') return actionable;
             else{
@@ -188,12 +187,12 @@ export default {
                 if(project){
                     actionable.title = project.title;
                     actionable.project = project;
-                } 
-                
+                }
+
                 return actionable;
             }
         });
-    
+
         return day;
     }
 };
