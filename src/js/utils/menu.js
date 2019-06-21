@@ -51,7 +51,7 @@ export const menuModes = {
                 },
                 {
                     slug: "start-project",
-                    label: "Coding",
+                    label: "Start new project",
                     icon: "fas fa-code",
                     url: () => (getCurrentPath()).pathname.replace("/new-project","")+"/new-project",
                     size: 370

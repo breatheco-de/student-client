@@ -105,76 +105,83 @@ export default {
     },
     withTodos(day){
 
-    day.opened = false;
-    day.totalDone = 0;
+        day.opened = false;
+        day.totalDone = 0;
 
-    const todos = OldStore.getTodos();
-    if(!todos) return day;
+        const todos = OldStore.getTodos();
+        if(!todos) return day;
 
-    day.replits = (function(){
-        return day.replits.map(function(repl){
-            const todo = OldStore.getSingleTodo(repl);
-            if(todo){
-                day.opened = true;
-                repl.status = todo.status;
-                if(todo.status==='done') day.totalDone++;
-            }
-            if(day.opened && !todo) repl.status = "unsynced";
+        day.replits = (function(){
+            return day.replits.map(function(repl){
+                const todo = OldStore.getSingleTodo(repl);
+                if(todo){
+                    day.opened = true;
+                    repl.status = todo.status;
+                    if(todo.status==='done') day.totalDone++;
+                }
+                if(day.opened && !todo) repl.status = "unsynced";
 
-            return repl;
-        });
-    })();
+                return repl;
+            });
+        })();
 
-    day.lessons = (function(){
-        return day.lessons.map(function(less){
-            const todo = OldStore.getSingleTodo(less);
-            if(todo){
-                day.opened = true;
-                less.status = todo.status;
-                if(todo.status==='done') day.totalDone++;
-            }
+        day.lessons = (function(){
+            return day.lessons.map(function(less){
+                const todo = OldStore.getSingleTodo(less);
+                if(todo){
+                    day.opened = true;
+                    less.status = todo.status;
+                    less.menu = less.menu.map(menuItem => {
+                        if(menuItem.slug == 'mark-done'){
+                            if(todo.status == 'done') return ({ label: 'Mark as NOT read', slug: 'mark-done', icon: "fas fa-times"});
+                            else return ({ label: 'Mark as read', slug: 'mark-done', icon: "fas fa-check"});
+                        }
+                        return menuItem;
+                    });
+                    if(todo.status==='done') day.totalDone++;
+                }
 
-            if(day.opened && !todo) less.status = "unsynced";
-            return less;
-        });
-    })();
+                if(day.opened && !todo) less.status = "unsynced";
+                return less;
+            });
+        })();
 
-    day.quizzes = (function(){
-        return day.quizzes.map(function(quiz){
-            const todo = OldStore.getSingleTodo(quiz);
-            if(todo){
-                day.opened = true;
-                quiz.status = todo.status;
-                if(todo.status==='done') day.totalDone++;
-            }
-            if(day.opened && !todo) quiz.status = "unsynced";
-            return quiz;
-        });
-    })();
+        day.quizzes = (function(){
+            return day.quizzes.map(function(quiz){
+                const todo = OldStore.getSingleTodo(quiz);
+                if(todo){
+                    day.opened = true;
+                    quiz.status = todo.status;
+                    if(todo.status==='done') day.totalDone++;
+                }
+                if(day.opened && !todo) quiz.status = "unsynced";
+                return quiz;
+            });
+        })();
 
-    day.assignments = (function(){
-        return day.assignments.map(function(ass){
-            const todo = OldStore.getSingleTodo(ass);
-            if(todo){
-                day.opened = true;
-                ass.status = todo.status;
-                if(todo.status==='done') day.totalDone++;
-            }
-            if(day.opened && !todo) ass.status = "unsynced";
-            return ass;
-        });
-    })();
+        day.assignments = (function(){
+            return day.assignments.map(function(ass){
+                const todo = OldStore.getSingleTodo(ass);
+                if(todo){
+                    day.opened = true;
+                    ass.status = todo.status;
+                    if(todo.status==='done') day.totalDone++;
+                }
+                if(day.opened && !todo) ass.status = "unsynced";
+                return ass;
+            });
+        })();
 
-    day.actionables = day.lessons.concat(day.replits,day.assignments,day.quizzes);
+        day.actionables = day.lessons.concat(day.replits,day.assignments,day.quizzes);
 
-    if(day.actionables.length===0){
-        day.completition = 100;
-        day.opened = true;
-    }
-    else day.completition = Math.round((day.totalDone/day.actionables.length)*100);
+        if(day.actionables.length===0){
+            day.completition = 100;
+            day.opened = true;
+        }
+        else day.completition = Math.round((day.totalDone/day.actionables.length)*100);
 
-    return day;
-},
+        return day;
+    },
     withProjects(day){
 
         const projects = OldStore.getProjects();

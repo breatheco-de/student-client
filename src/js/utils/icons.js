@@ -10,6 +10,7 @@ import fontawesome from '@fortawesome/fontawesome';
  * 2) Then you have to import every icon that you will use
 */
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
+import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 import faSync from '@fortawesome/fontawesome-free-solid/faSync';
 import faEllipsisV from '@fortawesome/fontawesome-free-solid/faEllipsisV';
 import faGraduationCap from '@fortawesome/fontawesome-free-solid/faGraduationCap';
@@ -43,7 +44,7 @@ fontawesome.library.add(
     faCheck, faGraduationCap, faPlay, faSpinner, faSearch, faGithub, faEnvelope,
     faCog, faSync, faEllipsisV, faExternalLinkAlt, faArrowRight, faArrowLeft,
     faAngleDoubleDown, faAngleDoubleUp, faQuestion, faExclamationCircle,
-    faYoutube, faCode
+    faYoutube, faCode, faTimes
 );
 
 

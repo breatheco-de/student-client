@@ -2,7 +2,7 @@ import Flux from '@4geeksacademy/react-flux-dash';
 import React from "react";
 import {withRouter} from "react-router-dom";
 import DayContent from '../components/DayContent';
-
+import { Notify } from 'bc-react-notifier';
 import {ActionableItem, List, ProgressKPI, Panel} from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
 import OldStore from '../stores/OldStore';
@@ -65,15 +65,16 @@ class DayView extends Flux.View {
   }
 
   actionableSelected(actionable, option){
+    let task = OldStore.getSingleTodo(actionable);
     switch(option.slug){
       case "mark-done":
-        let task = OldStore.getSingleTodo(actionable);
         if(task.type != 'assignment'){
-          task.status = "done";
+          task.status = (task.status == "pending") ? "done": "pending";
           OldActions.updateTask(task);
         }
         else{
-          OldActions.deliverAssignment(task);
+            if(task.status == "done") Notify.error("Assignments cannot be undone");
+            else OldActions.deliverAssignment(task);
         }
       break;
       case "goto":
