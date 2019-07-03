@@ -33,7 +33,7 @@ export default class ChooseView extends Flux.View {
       <li key={i}>
         <button className="btn btn-light ml-3"
           onClick={() => {
-            const streamingSlug = cohort.streaming_slug || cohort.slug;
+            const streamingSlug = (cohort.streaming_slug && typeof cohort.streaming_slug == 'string') ? cohort.streaming_slug : cohort.slug;
             getStreaming(streamingSlug)
               .then(data => {
                 cohort.streaming = data;
