@@ -4,7 +4,7 @@ To start your learning, please click on "My Journey" on the left menu and start 
 
 ##### Other Useful links:
 
-1. [Academy Slack](https://4geeksacademy.slack.com)
-2. [Repl.it](https://repl.it/student)
-3. [Cloud 9](https://ide.c9.io/)
+1. [Academy Slack (Ask questions)](https://4geeksacademy.slack.com)
+2. [Repl.it (Practice)](https://repl.it/student)
+3. [Gitpod (Coding Editor Online)](https://gitpod.io/)
 
