@@ -2,8 +2,8 @@
 .checkbox{
     padding: 5px;
     cursor: pointer;
-    span{
-        float: left;        
+    span.check{
+        float: left;
     }
     &:hover{
         background: $light-grey;

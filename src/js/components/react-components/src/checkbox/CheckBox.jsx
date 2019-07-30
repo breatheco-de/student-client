@@ -9,36 +9,36 @@ fontawesome.library.add(faSquare);
 
 import './checkbox.scss';
 class CheckBox extends React.Component{
-    
+
     constructor(){
         super();
         this.state = {
             checked: false
         }
     }
-    
+
     componentWillReceiveProps(){
         if(this.state.checked !== this.props.checked)
             this.setState({ checked: this.props.checked });
     }
-    
+
     onClick(){
         this.setState({
             checked: !this.state.checked
         });
         if(this.props.onClick) this.props.onClick(!this.state.checked);
     }
-    
+
     render(){
         const notchecked = (!this.state.checked) ? "d-none" : "";
         const checked = (this.state.checked) ? "d-none":"";
         const Render = this.props.render;
         return(
             <div className="checkbox">
-                <span className={notchecked} onClick={()=>this.onClick()}>
+                <span className={"check "+notchecked} onClick={()=>this.onClick()}>
                     <i className="far fa-check-square"></i>
                 </span>
-                <span className={checked} onClick={()=>this.onClick()}>
+                <span className={"check "+checked} onClick={()=>this.onClick()}>
                     <i className="far fa-square"></i>
                 </span>
                 {

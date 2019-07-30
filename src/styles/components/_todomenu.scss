@@ -7,6 +7,12 @@
     .show-done{ color: $dark-grey; font-size: 14px;
         &:hover{ color: $darkBlue; }
     }
+    .task-filters{
+
+        font-size: 14px;
+        .bcdroplink.dropdown .btn.dropdown-toggle{ padding-left: 0; padding-right: 0; font-size: 14px; }
+        .bcdroplink a.last-filter{ color: $dark-grey; font-size: 14px; }
+    }
     .show-status{ color: $dark-grey; font-size: 14px; }
     ul.todolist{
         padding: 0;
