@@ -29,6 +29,7 @@ import faQuestion from '@fortawesome/fontawesome-free-solid/faQuestion';
 import faExclamationCircle from '@fortawesome/fontawesome-free-solid/faExclamationCircle';
 import faYoutube from '@fortawesome/fontawesome-free-brands/faYoutube';
 import faCode from '@fortawesome/fontawesome-free-solid/faCode';
+import faSlack from '@fortawesome/fontawesome-free-brands/faSlack';
 
 /**
  * 3) Tell font-awesome that you want to replace your icons with SVGs (recomended for performance)
@@ -44,7 +45,7 @@ fontawesome.library.add(
     faCheck, faGraduationCap, faPlay, faSpinner, faSearch, faGithub, faEnvelope,
     faCog, faSync, faEllipsisV, faExternalLinkAlt, faArrowRight, faArrowLeft,
     faAngleDoubleDown, faAngleDoubleUp, faQuestion, faExclamationCircle,
-    faYoutube, faCode, faTimes
+    faYoutube, faCode, faTimes, faSlack
 );
 
 

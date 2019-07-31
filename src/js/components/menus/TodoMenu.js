@@ -57,7 +57,7 @@ class TodoView extends Flux.View {
       break;
       case "replit": return 'Practice'; break;
       case "assignment":
-        if(td.status=='pending') return 'Code';
+        if(td.status=='pending') return <span>Code - <span>(not delivered)</span></span>;
         else{
           if(td.revision_status=='pending') return <span>Code - <span className="text-warning">(pending teacher approval)</span></span>;
           else if(td.revision_status=='approved') return <span>Code - <span className="text-success">(approved by teacher)</span></span>;
@@ -145,15 +145,15 @@ class TodoView extends Flux.View {
         </div>
         <div className="row text-center">
             <div className="col">
-                <ProgressKPI progress={(lesson.filter(t=>t.status === "done").length*100)/lesson.length} />
+                <ProgressKPI progress={Math.round((lesson.filter(t=>t.status === "done").length*100)/lesson.length)} />
                 <p className="m-0 p-0 show-status"><small>Read</small></p>
             </div>
             <div className="col">
-                <ProgressKPI progress={(replit.filter(t=>t.status === "done").length*100)/replit.length} />
+                <ProgressKPI progress={Math.round((replit.filter(t=>t.status === "done").length*100)/replit.length)} />
                 <p className="m-0 p-0 show-status"><small>Practice</small></p>
             </div>
             <div className="col">
-                <ProgressKPI progress={(project.filter(t=>t.status === "done").length*100)/project.length} />
+                <ProgressKPI progress={Math.round((project.filter(t=>t.status === "done").length*100)/project.length)} />
                 <p className="m-0 p-0 show-status"><small>Code</small></p>
             </div>
         </div>
