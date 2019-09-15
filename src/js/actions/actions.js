@@ -7,7 +7,7 @@ export const loadCourses = () => {
     BC.courses().user(3).then((data) => {
         Flux.dispatchEvent('courses', data);
     }).catch(function( err ) {
-        // handle error 
+        // handle error
         console.log("ERROR!!",err);
     });
 };
@@ -15,7 +15,7 @@ export const loadLessons = () => {
     BC.lessons().all().then((data) => {
         Flux.dispatchEvent('lessons', data);
     }).catch(function( err ) {
-        // handle error 
+        // handle error
         console.log("ERROR!!",err);
     });
 };
@@ -23,13 +23,21 @@ export const loadAssets = () => {
     wpEndpoint.assets().then((data) => {
         Flux.dispatchEvent('assets', data);
     }).catch(function( err ) {
-        // handle error 
+        // handle error
         console.log("ERROR!!",err);
     });
 };
 export const saveProfile = (id, args) => {
     BC.student().update('me', args).then(() => {
         Session.setPayload(args);
+    }).catch(function( err ) {
+        console.log("ERROR!!",err);
+    });
+};
+export const lessonOpened = (slug) => {
+    const session = Session.get();
+    BC.activity().addStudentActivity(session.payload.bc_id, { user_agent: 'bc/student', slug: 'lesson_opened', data: slug }).then(() => {
+        //nothing to do
     }).catch(function( err ) {
         console.log("ERROR!!",err);
     });
@@ -42,12 +50,12 @@ export const loadMessages = (filters) => {
             BC.message().getByStudent(session.bc_id)
                 .then((data) => Flux.dispatchEvent('messages', data))
                 .catch((data) => {
-                    if(typeof data.pending === 'undefined') console.error(data); 
+                    if(typeof data.pending === 'undefined') console.error(data);
                     else console.warn(data.msg);
                 });
         })
         .catch((data) => {
-            if(typeof data.pending === 'undefined') console.error(data); 
+            if(typeof data.pending === 'undefined') console.error(data);
             else console.warn(data.msg);
         });
 };
@@ -59,7 +67,7 @@ export const markMessageAs = (message, status) => {
         })
         .catch((data) => {
             Notify.error(data.msg);
-            if(typeof data.pending === 'undefined') console.error(data); 
+            if(typeof data.pending === 'undefined') console.error(data);
             else console.warn(data.msg);
         });
 };
@@ -74,7 +82,7 @@ class Store extends Flux.DashStore{
         this.addEvent('message-templates');
         this.addEvent('messages', (messages) => {
             if(!Array.isArray(messages)) return [];
-            
+
             const templates = this.getState('message-templates');
             return messages.map(m => {
                m.template = templates[m.slug].template;
@@ -96,7 +104,7 @@ class Store extends Flux.DashStore{
     replace(type, id, item){
         const entities = this.getState(type);
         if(!entities) throw new Error("No item found in "+type);
-        
+
         if(Array.isArray(entities)){
             return entities.concat([]).map(ent => {
                 if(ent.id == id ||ent.key == id) return item;

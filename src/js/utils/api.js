@@ -152,8 +152,8 @@ class Wrapper{
     credentials(){
         let url = this.options.assetsPath+'/credentials';
         return {
-            autenticate: (username, password) => {
-                return this.post(url+'/auth', { username, password });
+            autenticate: (username, password, user_agent='') => {
+                return this.post(url+'/auth', { username, password, user_agent });
             },
             remind: (username) => {
                 return this.post(url+'/remind/'+encodeURIComponent(username), { username });
@@ -374,6 +374,14 @@ class Wrapper{
         return {
             getCohort: (slug) => {
                 return this.get(url+'/streaming/cohort/'+slug);
+            }
+        };
+    }
+    activity(){
+        let url = this.options.assetsPath;
+        return {
+            addStudentActivity: (id, { user_agent, cohort, day, slug, data }) => {
+                return this.post(url+'/activity/user/'+id, { user_agent, cohort, day, slug, data });
             }
         };
     }

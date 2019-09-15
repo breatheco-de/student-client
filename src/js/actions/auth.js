@@ -6,24 +6,24 @@ import { setLoading } from '../components/react-components/src/load-bar/LoadBar.
 BC.setOptions({
     getToken: (type='api')=> {
         const session = Session.get();
-        
+
         if(type == 'assets'){
             const token = (typeof session.payload != 'undefined') ? session.payload.assets_token : '';
             return 'JWT '+token;
-        } 
+        }
         else if(type == 'api'){
             const token = (typeof session.payload != 'undefined') ? session.payload.access_token : '';
             return 'Bearer '+token;
-        } 
+        }
     },
     onLoading: setLoading,
     onLogout: () => logout()
 });
 
 export const login = (username, password, history) =>{
-    return BC.credentials().autenticate(username, password)
+    return BC.credentials().autenticate(username, password, 'bc/student')
     .then((data) => {
-        
+
         const user = {
             bc_id: data.id,
             wp_id: data.wp_id,
@@ -47,19 +47,19 @@ export const login = (username, password, history) =>{
             currentCohort: (!Array.isArray(data.cohorts)) ? null : (data.cohorts.length === 1) ? data.cohorts[0] : data.cohorts
         };
         Session.start({ payload: user, expiration: (3600*24) });
-        
+
         if( data.type != 'student') history.push('/');
         else if(!data.github || typeof data.github == 'undefined' || data.github == '') history.push('/profile');
         else history.push('/');
     });
 };
-    
+
 export const logout = (history=null) => {
     Session.destroy();
     if(history) history.push('/login');
     else window.location.href= "/login";
 };
-    
+
 export const remind = (email) =>{
     return BC.credentials().remind(email)
     .then((data) => {

@@ -3,10 +3,13 @@ import React from "react";
 import {Panel, Loading, PanelNavbar} from '../../components/react-components/src/index';
 import OldStore from '../../stores/OldStore.js';
 import {Session} from 'bc-react-session';
+
+import {lessonOpened} from '../../actions/actions.js';
+
 import {getCurrentPath} from '../../utils/menu';
 
 export default class LessonView extends Flux.View {
-  
+
   constructor(){
     super();
     this.state = {
@@ -15,7 +18,7 @@ export default class LessonView extends Flux.View {
       token: Session.get().payload.access_token || ''
     };
   }
-  
+
   componentDidMount(){
     const dayNumber = this.props.match.params.day_number;
     this.loadDay(dayNumber);
@@ -23,8 +26,11 @@ export default class LessonView extends Flux.View {
       const dayNumber = this.props.match.params.day_number;
       this.loadDay(dayNumber);
     });
+
+    const currentSlug = getCurrentPath().view;
+    lessonOpened(currentSlug);
   }
-  
+
   loadDay(newDay=null){
     const day = OldStore.getSingleDay(newDay || this.props.match.params.day_number);
     if(day){
@@ -40,14 +46,14 @@ export default class LessonView extends Flux.View {
       this.setState({ day, currentAction, previousAction, nextAction });
     }
   }
-  
+
   getCurrentSlug(){
       const quiz = this.props.match.params.quiz_slug;
       const lesson = this.props.match.params.lesson_slug;
       const replit = this.props.match.params.replit_slug;
       return quiz || lesson || replit;
   }
-  
+
   render(option) {
     const course_slug = this.props.match.params.course_slug;
     let getSlug = (as) => {
@@ -57,12 +63,12 @@ export default class LessonView extends Flux.View {
     return (
       <Panel padding={false} style={{overflow: 'hidden'}}>
         <Loading show={this.state.loading} />
-        <PanelNavbar 
+        <PanelNavbar
           collapsed={this.state.navbarCollapsed}
           day={this.state.day}
-          current={this.state.currentAction} 
-          previous={this.state.previousAction} 
-          next={this.state.nextAction} 
+          current={this.state.currentAction}
+          previous={this.state.previousAction}
+          next={this.state.nextAction}
           styles={{ height: "62px"}}
           onClick={(option) => {
             this.props.history.push(getSlug(option));
