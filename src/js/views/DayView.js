@@ -65,6 +65,7 @@ class DayView extends Flux.View {
   }
 
   actionableSelected(actionable, option){
+    const s = Session.get().payload;
     let task = OldStore.getSingleTodo(actionable);
     switch(option.slug){
       case "mark-done":
@@ -81,7 +82,7 @@ class DayView extends Flux.View {
         this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug);
       break;
       case "new_window":
-        window.open(option.url);
+        window.open(`${option.url}&assets_token=${s.assets_token}`);
       break;
       case "vtutorial":
         this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
