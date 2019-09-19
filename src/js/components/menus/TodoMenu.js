@@ -14,6 +14,7 @@ class TodoView extends Flux.View {
       todos: OldStore.getTodos(),
       includeDone: false,
       selectedType: null,
+      beingDeleted: null,
       beingDelivered: null
     };
     this.bindStore(OldStore, 'todos', this.tasksUpdated.bind(this));
@@ -34,7 +35,8 @@ class TodoView extends Flux.View {
     }
     else
     {
-      this.setState({ beingDelivered: task });
+        if(newValue) this.setState({ beingDelivered: task });
+        else this.setState({ beingDeleted: task });
     }
   }
 
@@ -101,11 +103,34 @@ class TodoView extends Flux.View {
                   Assignments need to uploaded into github before delivering them, click "deliver" when you are ready to specify your repository url.
                   <div className="btn-bar text-right">
                     <button className="btn btn-success mr-2"
-                      onClick={()=> OldActions.deliverAssignment(td)}>
+                      onClick={()=> {
+                          OldActions.deliverAssignment(td);
+                          this.setState({ beingDelivered: null });
+                      }}>
                       Deliver {td.status === "done" && "again"}
                     </button>
                     <button className="btn btn-danger mr-2"
-                      onClick={()=> this.setState({ beingDelivered: null })}>
+                      onClick={()=> {
+                          this.setState({ beingDelivered: null });
+                      }}>
+                      Cancel
+                    </button>
+                  </div>
+                </li>);
+      }
+      else if(this.state.beingDeleted && td.type == this.state.beingDeleted.type && this.state.beingDeleted.associated_slug === td.associated_slug){
+        return (<li key={i} className="send-assignment">
+                  Are you sure? By marking this as <strong>not done</strong> you are going to delete your project submition.
+                  <div className="btn-bar text-right">
+                    <button className="btn btn-danger mr-2"
+                      onClick={()=> {
+                          OldActions.updateAssignment(td, { status: 'pending', github_url: ' ', revision_status: 'pending' }, false);
+                          this.setState({ beingDeleted: null });
+                      }}>
+                      Delete
+                    </button>
+                    <button className="btn btn-secondary mr-2"
+                      onClick={()=> this.setState({ beingDeleted: null })}>
                       Cancel
                     </button>
                   </div>
@@ -114,7 +139,7 @@ class TodoView extends Flux.View {
 
 
       return (<li key={i}>
-                <CheckBox checked={(td.status==='done')} render={() => (
+                <CheckBox checked={td.status === 'done'} render={() => (
                     <div className={"task task-"+td.type}>
                       <DropLink className="task-menu" dropdown={this.getTaskMenu(td)}
                           onSelect={(option) => this.onDropdownSelect(td, option)}
@@ -127,7 +152,7 @@ class TodoView extends Flux.View {
                       </p>
                     </div>
                   )}
-                  onClick={(newvalue) => this.updateTask(td, newvalue)}
+                  onClick={(newvalue) => td.revision_status !== 'approved' && this.updateTask(td, newvalue)}
                 />
               </li>);
     });

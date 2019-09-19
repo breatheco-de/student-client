@@ -6,7 +6,7 @@ import DropLink from '../droplink';
 const options = ['lesson', 'replit', 'quiz', 'assignment'];
 
 class ActionableItem extends React.Component{
-    
+
     onClick(force=false){
         if(this.props.dropdown.length==0 || force==true)
         {
@@ -14,12 +14,12 @@ class ActionableItem extends React.Component{
             if(typeof(this.props.onClick) !== 'undefined') this.props.onClick();
         }
     }
-    
+
     componentDidCatch(error, info) {
         // You can also log the error to an error reporting service
         console.log(error, info);
     }
-    
+
     prependMessage(){
         switch(this.props.type){
             case "lesson": return "Read:"; break;
@@ -29,20 +29,18 @@ class ActionableItem extends React.Component{
             default: return ""; break;
         }
     }
-    
+
     render(){
         return(
             <li className="actionable-item" onClick={this.onClick.bind(this)}>
                 {(this.props.icon) ? (<i className={this.props.icon+" menuicon"}></i>):''}
                 {this.prependMessage()}
-                <DropLink dropdown={this.props.dropdown} 
+                <DropLink dropdown={this.props.dropdown}
                     onSelect={(option) => this.props.onDropdownSelect(option)}>
                     {this.props.label}
                 </DropLink>
-                {   (this.props.done) ?
-                        (<i className={"fas fa-check done"}></i>)
-                        : ''
-                }
+                { this.props.done && <i className={"fas fa-check done"}></i>}
+                { this.props.details }
             </li>
         )
     }
@@ -52,6 +50,7 @@ ActionableItem.propTypes = {
   // are all optional.
   label: PropTypes.string.isRequired,
   icon: PropTypes.string,
+  details: PropTypes.string,
   dropdown: PropTypes.array,
   isSelected: PropTypes.bool,
   onDropdownSelect: PropTypes.func.isRequired,
@@ -59,6 +58,7 @@ ActionableItem.propTypes = {
 };
 ActionableItem.defaultProps = {
   icon: null,
+  details: null,
   dropdown: [],
   done: false
 };

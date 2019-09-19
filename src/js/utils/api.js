@@ -178,6 +178,9 @@ class Wrapper{
             add: (id, args) => {
                 return this.post(url+'/student/'+id+'/task/', args);
             },
+            delete: (args) => {
+                return this.post(url+'/task/'+args.id, args);
+            },
             update: (args) => {
                 return this.post(url+'/task/'+args.id, args);
             }

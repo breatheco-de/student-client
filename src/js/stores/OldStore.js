@@ -12,7 +12,7 @@ class OldStore extends Flux.Store{
             days: []
         };
     }
-    
+
     __reduce(entity){
         return {
             with: (reducers) => {
@@ -20,34 +20,34 @@ class OldStore extends Flux.Store{
                 for(let key in reducers){
                     entity = reducers[key](entity, index);
                     index++;
-                } 
+                }
                 return entity;
             }
         };
     }
-    
-    _setSyllabus(syllabus){ 
-        
+
+    _setSyllabus(syllabus){
+
         let allDays = [];
         let dayNumber = 0;
-        syllabus.weeks.forEach((week) => { 
-            week.days.forEach((day) => { 
+        syllabus.weeks.forEach((week) => {
+            week.days.forEach((day) => {
                 if(day){
                     dayNumber++;
                     day.dayNumber = dayNumber;
                     day = this.__reduce(day).with(dayReducers);
-                    allDays.push(day); 
+                    allDays.push(day);
                 }
             });
         });
         this.setStoreState({ syllabus, days: allDays }).emit('syllabus');
     }
-    _reduceSyllabus(){ 
-        if(this.state.syllabus) 
+    _reduceSyllabus(){
+        if(this.state.syllabus)
             this._setSyllabus(this.state.syllabus);
     }
     getSyllabus(){ return this.state.syllabus; }
-    
+
     getSingleDay(number){
         for(let i=0;i<this.state.days.length;i++){
             if(this.state.days[i].dayNumber === parseInt(number,10)){
@@ -55,10 +55,10 @@ class OldStore extends Flux.Store{
                 return day;
             }
         }
-                
+
         return null;
     }
-    
+
     getSyllabusDays(){ return this.state.days; }
     getDayTodos(day){
         const todos = day.lessons.map((l) => {
@@ -94,11 +94,11 @@ class OldStore extends Flux.Store{
                 associated_slug: a.associated_slug
             };
         }));
-        
+
         return todos;
     }
-    
-    _setProjects(projects){ 
+
+    _setProjects(projects){
         this.setStoreState({ projects }).emit('projects');
         this._reduceSyllabus();
     }
@@ -110,19 +110,19 @@ class OldStore extends Flux.Store{
                 return project;
             }
         }
-                
+
         return null;
     }
-    
+
     _setTodos(todos){
         this.setStoreState({ todos }).emit('todos');
-        
+
         this._reduceSyllabus();
     }
     getTodos(){
         return this.state.todos;
     }
-    
+
     _updateSingleTodo(task){
         for(let i = 0; i<this.state.todos.length;i++)
             if(this.state.todos[i].id === task.id){
@@ -131,22 +131,33 @@ class OldStore extends Flux.Store{
                 this._reduceSyllabus();
                 return this.state.todos[i];
             }
-        
+
         throw new Error(`Task ${task.id} not found`);
-        
+
         return false;
     }
+    _deleteSingleTodo(task){
+        const count = this.state.todos.length;
+        this.state.todos = this.state.todos.filter(t => t.id === task.id);
+        if(this.state.todos.length < count){
+            this.emit('todos');
+            this._reduceSyllabus();
+            return true;
+        }
+
+        throw new Error(`Task ${task.id} not found`);
+    }
     _appendTodos(newTodos){
-        this.setStoreState({ 
-            todos: this.state.todos.concat(newTodos) 
+        this.setStoreState({
+            todos: this.state.todos.concat(newTodos)
         }).emit('todos');
-        
+
         this._reduceSyllabus();
     }
     getSingleTodo(actionable){
-        
+
         if(!this.state.todos) return false;
-        
+
         let present = this.state.todos.find((item) => {
             return (item.type === actionable.type && item.associated_slug === actionable.associated_slug);
         });

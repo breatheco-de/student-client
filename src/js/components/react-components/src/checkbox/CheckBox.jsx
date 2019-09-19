@@ -8,46 +8,27 @@ fontawesome.library.add(faCheckSquare);
 fontawesome.library.add(faSquare);
 
 import './checkbox.scss';
-class CheckBox extends React.Component{
+const CheckBox = ({label, checked, render, onClick}) => {
 
-    constructor(){
-        super();
-        this.state = {
-            checked: false
-        }
-    }
+        const _onClick = () => onClick && onClick(!checked);
 
-    componentWillReceiveProps(){
-        if(this.state.checked !== this.props.checked)
-            this.setState({ checked: this.props.checked });
-    }
-
-    onClick(){
-        this.setState({
-            checked: !this.state.checked
-        });
-        if(this.props.onClick) this.props.onClick(!this.state.checked);
-    }
-
-    render(){
-        const notchecked = (!this.state.checked) ? "d-none" : "";
-        const checked = (this.state.checked) ? "d-none":"";
-        const Render = this.props.render;
+        const _notchecked = (!checked) ? "d-none" : "";
+        const _checked = (checked) ? "d-none":"";
+        const Render = render;
         return(
             <div className="checkbox">
-                <span className={"check "+notchecked} onClick={()=>this.onClick()}>
+                <span className={"check "+_notchecked} onClick={()=>_onClick()}>
                     <i className="far fa-check-square"></i>
                 </span>
-                <span className={"check "+checked} onClick={()=>this.onClick()}>
+                <span className={"check "+_checked} onClick={()=>_onClick()}>
                     <i className="far fa-square"></i>
                 </span>
                 {
                     (Render) ? <Render /> :
-                    (<label htmlFor="checkbox">{this.props.label}</label>)
+                    (<label htmlFor="checkbox">{label}</label>)
                 }
             </div>
-        )
-    }
+        );
 }
 CheckBox.propTypes = {
   //you can pass your own component to render the to-do

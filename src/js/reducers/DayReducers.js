@@ -195,6 +195,13 @@ export default {
                     actionable.title = project.title;
                     actionable.project = project;
                 }
+                actionable.menu = actionable.menu.map(mItem => {
+                    if(mItem.slug !== 'mark-done') return mItem;
+                    return actionable.status === 'pending' ?
+                        ({ label: 'Deliver assignment', slug: 'mark-done', icon: "fas fa-check"})
+                        :
+                        ({ label: 'Undo assignment delivery', slug: 'mark-done', icon: "fas fa-times"});
+                });
 
                 return actionable;
             }
