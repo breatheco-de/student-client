@@ -103,11 +103,8 @@ class DayView extends Flux.View {
     const actionable = this.state.actionables.filter(act => act.status !== 'unsynced').map((l,i) => {
       return <ActionableItem key={i} type={l.type}
                 done={(l.status === "done")}
-                details={l.status === 'pending' ? null :
-                    l.revision_status === 'pending' ? '(Pending teacher revision)' :
-                    l.revision_status === 'approved' ? '(Approved by teacher)' :
-                    l.revision_status === 'rejected' ? '(Rejected by teacher)' : console.log("Actionable: ",l)
-                }
+                revisionStatus={l.revision_status}
+                description={l.description}
                 label={(typeof l.title !== 'undefined') ? l.title : l.associated_slug}
                 dropdown={l.menu}
                 onDropdownSelect={(option)=>this.actionableSelected(l,option)}

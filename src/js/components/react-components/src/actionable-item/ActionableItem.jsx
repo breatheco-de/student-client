@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DropLink from '../droplink';
+import Popover from '../popover';
 
 const options = ['lesson', 'replit', 'quiz', 'assignment'];
 
@@ -40,6 +41,13 @@ class ActionableItem extends React.Component{
                     {this.props.label}
                 </DropLink>
                 { this.props.done && <i className={"fas fa-check done"}></i>}
+                { this.props.revisionStatus === "rejected" &&
+                    <Popover
+                        body={<div className="bg-light border border-dark p-2"><h5>Your teacher said: </h5><small>{this.props.description}</small></div>}
+                    >
+                        <span className=" ml-2 text-danger">(rejected by teacher)</span>
+                    </Popover>
+                }
                 { this.props.details }
             </li>
         )
@@ -50,7 +58,8 @@ ActionableItem.propTypes = {
   // are all optional.
   label: PropTypes.string.isRequired,
   icon: PropTypes.string,
-  details: PropTypes.string,
+  description: PropTypes.string,
+  revisionStatus: PropTypes.string,
   dropdown: PropTypes.array,
   isSelected: PropTypes.bool,
   onDropdownSelect: PropTypes.func.isRequired,
@@ -58,7 +67,8 @@ ActionableItem.propTypes = {
 };
 ActionableItem.defaultProps = {
   icon: null,
-  details: null,
+  revisionStatus: "pending",
+  description: null,
   dropdown: [],
   done: false
 };

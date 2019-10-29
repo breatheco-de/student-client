@@ -165,6 +165,8 @@ export default {
                 if(todo){
                     day.opened = true;
                     ass.status = todo.status;
+                    ass.revision_status = todo.revision_status;
+                    ass.description = todo.description;
                     if(todo.status==='done') day.totalDone++;
                 }
                 if(day.opened && !todo) ass.status = "unsynced";

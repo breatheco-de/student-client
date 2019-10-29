@@ -3,7 +3,7 @@ import Flux from "@4geeksacademy/react-flux-dash";
 import {withRouter} from 'react-router-dom';
 import OldStore from "../../stores/OldStore";
 import OldActions from "../../actions/OldActions";
-import {DropLink, CheckBox, NotifyActions, ProgressKPI } from '../../components/react-components/src/index';
+import {DropLink, CheckBox, NotifyActions, ProgressKPI, Popover } from '../../components/react-components/src/index';
 
 
 class TodoView extends Flux.View {
@@ -63,7 +63,14 @@ class TodoView extends Flux.View {
         else{
           if(td.revision_status=='pending') return <span>Code - <span className="text-warning">(pending teacher approval)</span></span>;
           else if(td.revision_status=='approved') return <span>Code - <span className="text-success">(approved by teacher)</span></span>;
-          else if(td.revision_status=='rejected') return <span>Code - <span className="text-danger">(rejected by teacher)</span></span>;
+          else if(td.revision_status=='rejected')
+            return <span>Code -
+                <Popover
+                    body={<div className="bg-light border border-dark p-2"><h5>Your teacher said: </h5><small>{td.description}</small></div>}
+                >
+                    <span className="text-danger">(rejected by teacher)</span>
+                </Popover>
+            </span>;
         }
       break;
       case "quiz": return 'Answer'; break;
