@@ -1,6 +1,8 @@
+import React from 'react';
 import TimeLineMenu from '../components/menus/TimeLineMenu';
 import TodoMenu from '../components/menus/TodoMenu';
 import SearchMenu from '../components/menus/SearchMenu';
+import IFrameView from '../views/panel/IFrameView';
 
 export const getCurrentPath = (pathname=null, hash=null) => {
     if(!pathname) pathname = window.location.pathname;
@@ -53,7 +55,14 @@ export const menuModes = {
                     slug: "start-project",
                     label: "Start new project",
                     icon: "fas fa-code",
-                    url: () => (getCurrentPath()).pathname.replace("/new-project","")+"/new-project",
+                    url: () => (getCurrentPath()).pathname.replace("/new-project","").replace("/appointments","")+"/new-project",
+                    size: 370
+                },
+                {
+                    slug: "make-appointment",
+                    label: "Appointments",
+                    icon: "fas fa-calendar-alt",
+                    component: () => <IFrameView src={`https://4geeks.setmore.com`} style={{ width: "100%", marginLeft: "-1px" }} />,
                     size: 370
                 }
             ]

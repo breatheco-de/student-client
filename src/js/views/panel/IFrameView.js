@@ -11,7 +11,7 @@ export default class IFrameView extends Component {
 
   render() {
     return (
-      <Panel padding={false} style={{overflow: 'hidden'}}>
+      <Panel padding={false} style={Object.assign({overflow: 'hidden'},this.props.style)}>
         <Loading show={this.state.loading} />
         <iframe onLoad={()=>this.setState({loading: false})} className="lesson-iframe" src={this.props.src} width="100%" style={{ height: "calc(100vh - 62px)" }} frameBorder="0" />
       </Panel>

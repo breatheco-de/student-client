@@ -160,8 +160,11 @@ class CourseView extends Flux.View{
                         <Route exact path={this.props.match.path+'/a/:assignment_slug'} component={AssignmentView} />
                         <Route exact path={this.props.match.path+'/l/:lesson_slug'} component={LessonView} />
                         <Route exact path={this.props.match.path+'/live'} component={LiveView} />
-                        <Route exact path={this.props.match.path+'/new-project'} component={() =>
-                            <IFrameView src={`https://assets.breatheco.de/apps/new-project?assets_token=${assets_token || ''}&email=${email || ''}`} />} />
+                        <Route exact path={this.props.match.path+'/new-project'}
+                            component={() =>
+                                <IFrameView src={`https://assets.breatheco.de/apps/new-project?assets_token=${assets_token || ''}&email=${email || ''}`} />
+                            }
+                        />
                         <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />
                         <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
                         <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />
