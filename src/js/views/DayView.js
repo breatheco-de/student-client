@@ -69,10 +69,8 @@ class DayView extends Flux.View {
     let task = OldStore.getSingleTodo(actionable);
     if(!task){
         Notify.error("The task was not not found");
-
+        return;
     } 
-
-    return;
 
     switch(option.slug){
       case "mark-done":
