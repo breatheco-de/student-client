@@ -67,6 +67,13 @@ class DayView extends Flux.View {
   actionableSelected(actionable, option){
     const s = Session.get().payload;
     let task = OldStore.getSingleTodo(actionable);
+    if(!task){
+        Notify.error("The task was not not found");
+
+    } 
+
+    return;
+
     switch(option.slug){
       case "mark-done":
         if(task.type != 'assignment'){

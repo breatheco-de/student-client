@@ -76,6 +76,17 @@ class OldActions extends Flux.Action{
             });
     }
 
+    createTask(task){
+        return BC.todo().add(task)
+            .then((data) => {
+                Notify.success('The task has added updated successfully');
+                this.dispatch('OldStore.appendTodos', [data.data || data]);
+            })
+            .catch((error) => {
+                Notify.error('There was an error adding the task');
+            });
+    }
+
     deliverAssignment(task){
         Notify.info(DeliverAssignment, (githubURL) => {
             if(githubURL){

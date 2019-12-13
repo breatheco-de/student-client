@@ -119,7 +119,7 @@ export default {
                     repl.status = todo.status;
                     if(todo.status==='done') day.totalDone++;
                 }
-                if(day.opened && !todo) repl.status = "unsynced";
+                if(!todo) repl.status = "unsynced";
 
                 return repl;
             });
@@ -141,7 +141,7 @@ export default {
                     if(todo.status==='done') day.totalDone++;
                 }
 
-                if(day.opened && !todo) less.status = "unsynced";
+                if(!todo) less.status = "unsynced";
                 return less;
             });
         })();
@@ -154,7 +154,7 @@ export default {
                     quiz.status = todo.status;
                     if(todo.status==='done') day.totalDone++;
                 }
-                if(day.opened && !todo) quiz.status = "unsynced";
+                if(!todo) quiz.status = "unsynced";
                 return quiz;
             });
         })();
@@ -169,7 +169,7 @@ export default {
                     ass.description = todo.description;
                     if(todo.status==='done') day.totalDone++;
                 }
-                if(day.opened && !todo) ass.status = "unsynced";
+                if(!todo) ass.status = "unsynced";
                 return ass;
             });
         })();
