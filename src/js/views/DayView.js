@@ -105,7 +105,7 @@ class DayView extends Flux.View {
 
     const unsynced = this.state.actionables.filter(act => act.status === 'unsynced');
 
-    const actionable = this.state.actionables.filter(act => act.status !== 'unsynced').map((l,i) => {
+    const actionable = this.state.actionables.filter(act => this.state.blocked || act.status !== 'unsynced').map((l,i) => {
       return <ActionableItem key={i} type={l.type}
                 done={(l.status === "done")}
                 revisionStatus={l.revision_status}
