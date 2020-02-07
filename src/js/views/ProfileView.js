@@ -144,8 +144,9 @@ export default class ProfileView extends Flux.View {
                         { (!student.first_name || !student.last_name) && <small>Please specify your first and last name</small>}
                         </div>
                     }
-                    <div>
+                    <div className="text-center">
                         <button className="btn form-control btn-success bg-info text-white">Update Profile Info</button>
+                        <small><Link className="a text-info" to="/">or skip and go to dashboard</Link></small>
                     </div>
                 </form>
             </div>
