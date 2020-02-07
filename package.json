@@ -1,6 +1,8 @@
 {
   "name": "workspace",
-  "engines": { "node": "10.x" },
+  "engines": {
+    "node": "10.x"
+  },
   "version": "1.1.58",
   "description": "",
   "main": "index.js",
@@ -8,7 +10,8 @@
     "start": "webpack-dev-server --config webpack.dev.js",
     "start:prod": "webpack-dev-server --config webpack.prod.js",
     "build": "webpack --config webpack.prod.js",
-    "now-build": "webpack --config webpack.prod.js"
+    "now-build": "webpack --config webpack.prod.js",
+    "deploy": "now --prod"
   },
   "author": "",
   "license": "ISC",

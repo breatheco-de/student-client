@@ -4,7 +4,9 @@
 # track this file .gitignore (i.e. do NOT ignore it)
 !.gitignore
 !.env.dev
+!.env_dev
 !.env.prod
+!.env_prod
 !.gitpod.yml
 php_errorlog
 .log
@@ -64,3 +66,4 @@ server.js
 
 !.gitkeep
 !.htaccess
+.now
