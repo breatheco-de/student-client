@@ -163,7 +163,7 @@ class Wrapper{
     syllabus(){
         let url = this.options.assetsPath+'/syllabus';
         return {
-            get: (slug, version='') => {
+            get: (slug, version='1') => {
                 if(!slug) throw new Error('Missing slug');
                 else return this.get(url+'/'+slug+'?v='+version);
             }
