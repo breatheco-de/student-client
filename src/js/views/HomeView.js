@@ -13,7 +13,10 @@ export default class HomeView extends Flux.View {
       let currentCohort = session.payload.currentCohort;
       if(currentCohort){
         if(Array.isArray(currentCohort)) this.props.history.push('/choose');
-        else this.props.history.push('/course/'+currentCohort.profile_slug);
+        else{
+            const slug = currentCohort.syllabus_slug && typeof(currentCohort.syllabus_slug) !== "undefined" && currentCohort.syllabus_slug !== "" ? currentCohort.syllabus_slug : currentCohort.profile_slug;
+            this.props.history.push('/course/'+slug);
+        } 
       }
     }
     // let user = OldStore.getUser();

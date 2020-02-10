@@ -166,14 +166,15 @@ class OldActions extends Flux.Action{
                 });
             },
             syllabus: (slug) =>{
-                BC.syllabus().get(slug)
-                .then((data) => {
-                    this.dispatch('OldStore.setSyllabus', data);
-                })
-                .catch((data) => {
-                    if(typeof data.pending === 'undefined') console.error(data);
-                    else console.warn(data.msg);
-                });
+                const [ _slug, version ] = slug.split('.');
+                BC.syllabus().get(_slug, version)
+                    .then((data) => {
+                        this.dispatch('OldStore.setSyllabus', data);
+                    })
+                    .catch((data) => {
+                        if(typeof data.pending === 'undefined') console.error(data);
+                        else console.warn(data.msg);
+                    });
             },
             projects: (syllabus_slug) =>{
                 BC.project().all(syllabus_slug)

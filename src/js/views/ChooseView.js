@@ -23,8 +23,10 @@ export default class ChooseView extends Flux.View {
       if(typeof unsubscribe == 'function') unsubscribe();
 
       const currentCohort = (session.payload) ? session.payload.currentCohort : null;
-      if(currentCohort && typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort))
-        this.props.history.push('/course/'+currentCohort.profile_slug);
+      if(currentCohort && typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort)){
+          const slug = currentCohort.syllabus_slug && typeof(currentCohort.syllabus_slug) !== "undefined" && currentCohort.syllabus_slug !== "" ? currentCohort.syllabus_slug : currentCohort.profile_slug;
+          this.props.history.push('/course/'+slug);
+      }
     });
   }
 
