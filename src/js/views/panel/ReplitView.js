@@ -25,7 +25,8 @@ export default class ReplitView extends Flux.View {
   getReplitURL(){
     const replit_slug = this.props.match.params.replit_slug;
     const cohort_slug = this.state.cohort.slug;
-    const url = process.env.REPLIT_URL+replit_slug+'&c='+cohort_slug;
+    const profile_slug = this.state.cohort.profile_slug;
+    const url = process.env.REPLIT_URL+replit_slug+'&c='+cohort_slug+'&profile='+profile_slug;
     if(typeof replit_slug === 'undefined' || typeof cohort_slug === 'undefined' || typeof process.env.REPLIT_URL === 'undefined')
       Raven.captureException(new Error(`Invalid Replit URL ${url}`));
 

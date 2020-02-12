@@ -12,7 +12,7 @@ export default {
                 let menu = [
                     {
                         label: 'Open exercises on new window',
-                        slug: 'new_window', url: process.env.REPLIT_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug,
+                        slug: 'new_window', url: process.env.REPLIT_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
                         icon: "fas fa-external-link-alt"
                     },
                 ];
