@@ -30,15 +30,14 @@ class OldStore extends Flux.Store{
 
         let allDays = [];
         let dayNumber = 0;
-        syllabus.weeks.forEach((week) => {
-            week.days.forEach((day) => {
-                if(day){
-                    dayNumber++;
-                    day.dayNumber = dayNumber;
-                    day = this.__reduce(day).with(dayReducers);
-                    allDays.push(day);
-                }
-            });
+        if(syllabus.weeks) syllabus.days = syllabus.weeks.map(w => w.days).flat();
+        syllabus.days.forEach((day) => {
+            if(day){
+                dayNumber++;
+                day.dayNumber = dayNumber;
+                day = this.__reduce(day).with(dayReducers);
+                allDays.push(day);
+            }
         });
         this.setStoreState({ syllabus, days: allDays }).emit('syllabus');
     }
