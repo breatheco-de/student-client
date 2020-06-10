@@ -16,13 +16,6 @@ export default {
                         icon: "fas fa-external-link-alt"
                     },
                 ];
-                if(typeof repl.vtutorial_slug !== 'undefined' && repl.vtutorial_slug != '')
-                    menu.push({
-                        label: 'Watch video tutorial',
-                        slug: 'vtutorial',
-                        vtutorial_slug: repl.vtutorial_slug,
-                        icon: "fab fa-youtube"
-                    });
                 menu.push({ label: 'Mark as done', slug: 'mark-done', icon: "fas fa-check"});
 
                 return {
