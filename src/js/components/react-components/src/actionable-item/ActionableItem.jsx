@@ -41,11 +41,12 @@ class ActionableItem extends React.Component{
                     {this.props.label}
                 </DropLink>
                 { this.props.done && <i className={"fas fa-check done"}></i>}
-                { this.props.revisionStatus === "rejected" &&
+                { this.props.revisionStatus !== "pending" &&
                     <Popover
                         body={<div className="bg-light border border-dark p-2"><h5>Your teacher said: </h5><small>{this.props.description}</small></div>}
                     >
-                        <span className=" ml-2 text-danger">(rejected by teacher)</span>
+                        {this.props.revisionStatus === "rejected" && <span className=" ml-2 text-danger">(rejected by teacher)</span>}
+                        {this.props.revisionStatus === "approved" && <span className=" ml-2 text-danger">(approved by teacher)</span>}
                     </Popover>
                 }
                 { this.props.details }
