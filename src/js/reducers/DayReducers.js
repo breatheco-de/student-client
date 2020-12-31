@@ -5,14 +5,14 @@ export default {
 
         const { payload } = Session.get();
 
-        day.replits = (function(){
-            if(typeof day.replits === 'undefined') return [];
-            return day.replits.map(function(repl){
+        day.exercises = (function(){
+            if(typeof day.exercises === 'undefined') return [];
+            return day.exercises.map(function(repl){
 
                 let menu = [
                     {
                         label: 'Open exercises on new window',
-                        slug: 'new_window', url: process.env.REPLIT_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
+                        slug: 'new_window', url: process.env.EXERCISE_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
                         icon: "fas fa-external-link-alt"
                     },
                 ];
@@ -23,12 +23,12 @@ export default {
                     title: repl.title,
                     associated_slug: repl.associated_slug || repl.slug,
                     vtutorial_slug: repl.vtutorial_slug,
-                    status: "pending",
+                    task_status: "PENDING",
                     day: {
                         label: day.label,
                         number: index
                     },
-                    type: "replit"
+                    task_type: 'EXERCISE'
                 };
             });
         })();
@@ -38,7 +38,7 @@ export default {
                 return {
                     title: less.title,
                     associated_slug: less.associated_slug || less.slug,
-                    status: "pending",
+                    task_status: "PENDING",
                     menu: [
                         { label: 'Go to lesson', slug: 'goto', icon: "fas fa-arrow-right"},
                         { label: 'Mark as read', slug: 'mark-done', icon: "fas fa-check"}
@@ -47,7 +47,7 @@ export default {
                         label: day.label,
                         number: index
                     },
-                    type: "lesson"
+                    task_type: "LESSON"
                 };
             });
         })();
@@ -61,12 +61,12 @@ export default {
                         { label: 'Take quiz', slug: 'goto', icon: "fas fa-arrow-right"},
                         { label: 'Mark as done', slug: 'mark-done', icon: "fas fa-check"}
                     ],
-                    status: "pending",
+                    task_status: "PENDING",
                     day: {
                         label: day.label,
                         number: index
                     },
-                    type: "quiz"
+                    task_type: "QUIZ"
                 };
             });
         })();
@@ -80,17 +80,17 @@ export default {
                         { label: 'Read instructions', slug: 'goto', icon: "fas fa-arrow-right"},
                         { label: 'Deliver assignment', slug: 'mark-done', icon: "fas fa-check"}
                     ],
-                    status: "pending",
+                    task_status: "PENDING",
                     day: {
                         label: day.label,
                         number: index
                     },
-                    type: "assignment"
+                    task_type: 'PROJECT'
                 };
             });
         })();
 
-        day.actionables = day.replits.concat(day.lessons,day.assignments,day.quizzes);
+        day.actionables = day.exercises.concat(day.lessons,day.assignments,day.quizzes);
 
         if(day.actionables.length > 0) day.opened = true;
 
@@ -104,15 +104,15 @@ export default {
         const todos = OldStore.getTodos();
         if(!todos) return day;
 
-        day.replits = (function(){
-            return day.replits.map(function(repl){
+        day.exercises = (function(){
+            return day.exercises.map(function(repl){
                 const todo = OldStore.getSingleTodo(repl);
                 if(todo){
                     day.opened = true;
-                    repl.status = todo.status;
-                    if(todo.status==='done') day.totalDone++;
+                    repl.task_status = todo.task_status;
+                    if(todo.task_status==='DONE') day.totalDone++;
                 }
-                if(!todo) repl.status = "unsynced";
+                if(!todo) repl.task_status = "unsynced";
 
                 return repl;
             });
@@ -123,18 +123,18 @@ export default {
                 const todo = OldStore.getSingleTodo(less);
                 if(todo){
                     day.opened = true;
-                    less.status = todo.status;
+                    less.task_status = todo.task_status;
                     less.menu = less.menu.map(menuItem => {
                         if(menuItem.slug == 'mark-done'){
-                            if(todo.status == 'done') return ({ label: 'Mark as NOT read', slug: 'mark-done', icon: "fas fa-times"});
+                            if(todo.task_status == 'DONE') return ({ label: 'Mark as NOT read', slug: 'mark-done', icon: "fas fa-times"});
                             else return ({ label: 'Mark as read', slug: 'mark-done', icon: "fas fa-check"});
                         }
                         return menuItem;
                     });
-                    if(todo.status==='done') day.totalDone++;
+                    if(todo.task_status==='DONE') day.totalDone++;
                 }
 
-                if(!todo) less.status = "unsynced";
+                if(!todo) less.task_status = "unsynced";
                 return less;
             });
         })();
@@ -144,10 +144,10 @@ export default {
                 const todo = OldStore.getSingleTodo(quiz);
                 if(todo){
                     day.opened = true;
-                    quiz.status = todo.status;
-                    if(todo.status==='done') day.totalDone++;
+                    quiz.task_status = todo.task_status;
+                    if(todo.task_status==='DONE') day.totalDone++;
                 }
-                if(!todo) quiz.status = "unsynced";
+                if(!todo) quiz.task_status = "unsynced";
                 return quiz;
             });
         })();
@@ -157,17 +157,17 @@ export default {
                 const todo = OldStore.getSingleTodo(ass);
                 if(todo){
                     day.opened = true;
-                    ass.status = todo.status;
+                    ass.task_status = todo.task_status;
                     ass.revision_status = todo.revision_status;
                     ass.description = todo.description;
-                    if(todo.status==='done') day.totalDone++;
+                    if(todo.task_status==='DONE') day.totalDone++;
                 }
-                if(!todo) ass.status = "unsynced";
+                if(!todo) ass.task_status = "unsynced";
                 return ass;
             });
         })();
 
-        day.actionables = day.lessons.concat(day.replits,day.assignments,day.quizzes);
+        day.actionables = day.lessons.concat(day.exercises,day.assignments,day.quizzes);
 
         if(day.actionables.length===0){
             day.completition = 100;
@@ -183,7 +183,7 @@ export default {
         if(!projects) return day;
 
         day.actionables.map((actionable)=>{
-            if(actionable.type !== 'assignment') return actionable;
+            if(actionable.task_type !== 'PROJECT') return actionable;
             else{
                 let project = OldStore.getSingleProject(actionable.associated_slug);
                 if(project){
@@ -192,7 +192,7 @@ export default {
                 }
                 actionable.menu = actionable.menu.map(mItem => {
                     if(mItem.slug !== 'mark-done') return mItem;
-                    return actionable.status === 'pending' ?
+                    return actionable.task_status === 'PENDING' ?
                         ({ label: 'Deliver assignment', slug: 'mark-done', icon: "fas fa-check"})
                         :
                         ({ label: 'Undo assignment delivery', slug: 'mark-done', icon: "fas fa-times"});

@@ -16,7 +16,7 @@ class SearchResult extends React.Component{
             <ul className="toolbar down">
               <li><Link to="/lesson/1">read now</Link></li>
             </ul>
-            <h4><i className="fas fa-book" legend="Lesson"></i> How does the internet works</h4>
+            <h4><i className="fas fa-book" legend="LESSON"></i> How does the internet works</h4>
             <p className="technolgies">HTML, CSS</p>
             <p className="result-description">Learn the process we have polished to make you learn 2 years of content in just a few weeks.</p>
           </li>

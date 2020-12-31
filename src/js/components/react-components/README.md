@@ -51,13 +51,13 @@ Properties
   dropdown: PropTypes.array,
   isSelected: PropTypes.bool,
   onDropdownSelect: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(['lesson', 'replit', 'quiz', 'assignment']),
+  type: PropTypes.oneOf(['lesson', 'exercise', 'QUIZ', 'assignment']),
 }
 ```
 
 ```html
     <ActionableItem key={i} type={l.type} 
-        done={(l.status === "done")} 
+        done={(l.task_status === "DONE")} 
         label={(typeof l.title !== 'undefined') ? l.title : l.associated_slug} 
         dropdown={l.menu} 
         onDropdownSelect={(option)=>this.actionableSelected(l,option)} 

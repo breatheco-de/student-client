@@ -42,36 +42,6 @@ export const lessonOpened = (slug) => {
         console.log("ERROR!!",err);
     });
 };
-export const loadMessages = (filters) => {
-    const session = Session.getPayload();
-    BC.message().templates()
-        .then((data) => {
-            Flux.dispatchEvent('message-templates', data);
-            BC.message().getByStudent(session.bc_id)
-                .then((data) => Flux.dispatchEvent('messages', data))
-                .catch((data) => {
-                    if(typeof data.pending === 'undefined') console.error(data);
-                    else console.warn(data.msg);
-                });
-        })
-        .catch((data) => {
-            if(typeof data.pending === 'undefined') console.error(data);
-            else console.warn(data.msg);
-        });
-};
-export const markMessageAs = (message, status) => {
-    if(status === 'later') Flux.dispatchEvent('messages', store.replace('messages', message.key, Object.assign(message, { answered: true, read: true })));
-    else BC.message().markAs(message.key, status)
-        .then((data) => {
-            Flux.dispatchEvent('messages', store.replace('messages', message.key, data));
-        })
-        .catch((data) => {
-            Notify.error(data.msg);
-            if(typeof data.pending === 'undefined') console.error(data);
-            else console.warn(data.msg);
-        });
-};
-
 export const getStreaming = (cohortSlug) => BC.streaming().getCohort(cohortSlug);
 
 class Store extends Flux.DashStore{
@@ -79,16 +49,6 @@ class Store extends Flux.DashStore{
         super();
         this.addEvent('lessons');
         this.addEvent('assets');
-        this.addEvent('message-templates');
-        this.addEvent('messages', (messages) => {
-            if(!Array.isArray(messages)) return [];
-
-            const templates = this.getState('message-templates');
-            return messages.map(m => {
-               m.template = templates[m.slug].template;
-               return m;
-            });
-        });
     }
     get(type, id){
         const entities = this.getState(type);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import DropLink from '../droplink';
 import Popover from '../popover';
 
-const options = ['lesson', 'replit', 'quiz', 'assignment'];
+const options = ['lesson', 'exercise', 'QUIZ', 'project'];
 
 class ActionableItem extends React.Component{
 
@@ -22,11 +22,12 @@ class ActionableItem extends React.Component{
     }
 
     prependMessage(){
-        switch(this.props.type){
-            case "lesson": return "Read:"; break;
-            case "quiz": return "Answer:"; break;
-            case "replit": return "Practice:"; break;
-            case "assignment": return "Code:"; break;
+        const upper = this.props.type.toUpperCase();
+        switch(upper){
+            case "LESSON": return "Read:"; break;
+            case "QUIZ": return "Answer:"; break;
+            case "EXERCISE": return "Practice:"; break;
+            case "PROJECT": return "Code:"; break;
             default: return ""; break;
         }
     }
@@ -41,12 +42,12 @@ class ActionableItem extends React.Component{
                     {this.props.label}
                 </DropLink>
                 { this.props.done && <i className={"fas fa-check done"}></i>}
-                { this.props.revisionStatus !== "pending" &&
+                { this.props.revisionStatus !== "PENDING" &&
                     <Popover
                         body={<div className="bg-light border border-dark p-2"><h5>Your teacher said: </h5><small>{this.props.description}</small></div>}
                     >
-                        {this.props.revisionStatus === "rejected" && <span className=" ml-2 text-danger">(rejected by teacher)</span>}
-                        {this.props.revisionStatus === "approved" && <span className=" ml-2 text-success">(approved by teacher)</span>}
+                        {this.props.revisionStatus === 'REJECTED' && <span className=" ml-2 text-danger">(rejected by teacher)</span>}
+                        {this.props.revisionStatus === 'APPROVED' && <span className=" ml-2 text-success">(approved by teacher)</span>}
                     </Popover>
                 }
                 { this.props.details }
@@ -68,7 +69,7 @@ ActionableItem.propTypes = {
 };
 ActionableItem.defaultProps = {
   icon: null,
-  revisionStatus: "pending",
+  revisionStatus: "PENDING",
   description: null,
   dropdown: [],
   done: false

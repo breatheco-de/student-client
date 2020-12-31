@@ -32,20 +32,20 @@ class SearchMenu extends Flux.DashView {
   onDropdownSelect(actionable, option){
     switch(option.slug){
       case "goto":
-        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug);
+        this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug);
       break;
       case "vtutorial":
-        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
+        this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
       break;
     }
   }
   
   getTaskMenu(td){
     switch(td.type){
-      case "lesson": return [{label: 'Read the lesson', slug:'goto'}]; break;
-      case "replit": return [{label: 'Practice on Repl.it', slug:'goto'}]; break;
-      case "quiz": return [{label: 'Take the quiz', slug:'goto'}]; break;
-      case "assignment": return [{label: 'Read the instructions', slug:'goto'}]; break;
+      case "LESSON": return [{label: 'Read the lesson', slug:'goto'}]; break;
+      case 'EXERCISE': return [{label: 'Practice on Repl.it', slug:'goto'}]; break;
+      case "QUIZ": return [{label: 'Take the quiz', slug:'goto'}]; break;
+      case 'PROJECT': return [{label: 'Read the instructions', slug:'goto'}]; break;
     }
   }
   
@@ -53,9 +53,9 @@ class SearchMenu extends Flux.DashView {
     
     const getLabel = (type) => {
       switch(type){
-        case "assignment": return "Code";
-        case "lesson": return "Read";
-        case "quiz": return "Answer";
+        case 'PROJECT': return "Code";
+        case "LESSON": return "Read";
+        case "QUIZ": return "Answer";
         case "repl": return "Practice";
       }
     };

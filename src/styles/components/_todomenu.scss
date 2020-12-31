@@ -22,7 +22,7 @@
                 .task-title{ margin: 0; }
                 .task-description{ margin: -5px 0 0 30px; font-size: 14px; color:$dark-grey; }
                 &.task-lesson .task-description{ color: $darkBlue; }
-                &.task-replit .task-description{ color: $darkYellow; }
+                &.task-exercise .task-description{ color: $darkYellow; }
                 &.task-quiz .task-description{ color: $darkGreen; }
                 .task-menu{
                     position: absolute;
