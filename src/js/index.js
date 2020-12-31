@@ -8,6 +8,7 @@ import '../styles/index.scss';
 import './utils/icons';
 import Layout from './Layout.js';
 import packg from '../../package.json';
+import {autoLogin} from './actions/auth';
 import TagManager from 'react-gtm-module'
 
 const tagManagerArgs = {
@@ -31,7 +32,16 @@ if(process.env.DEBUG == true){
 
 console.log("BreatheCode Platform",packg.version, process.env.ENVIRONMENT, `, debug: ${process.env.DEBUG}`);
 
-ReactDOM.render(
-  <Layout />,
-  document.getElementById('app')
-);
+const app = document.querySelector('#app');
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get('token');
+
+//if token comes in the URL we have to login with that token;
+console.log("token", token)
+if(token && typeof token != 'undefined' && token != '') 
+    autoLogin(token)
+        .then(() => { ReactDOM.render(<Layout />,app); })
+        .catch(() => { ReactDOM.render(<div className="alert alert-danger text-center">Invalid Credentials</div>,app); });
+
+//else normal rendering
+else ReactDOM.render(<Layout />,app);

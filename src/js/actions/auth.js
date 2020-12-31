@@ -46,6 +46,31 @@ export const login = async (username, password, history) =>{
     else history.push('/');
 };
 
+export const autoLogin = async (token) =>{
+
+    const data = await BC.admissions().me(token);
+    const user = {
+        bc_id: data.id,
+        token: token,
+        email: data.email,
+
+        cohorts: data.cohorts,
+        
+        bio: null,
+        avatar: data.avatar_url,
+        show_tutorial: (typeof data.profile == 'undefined' || data.profile.show_tutorial),
+        github: data.github,
+        first_name: data.first_name || null,
+        last_name: data.last_name || null,
+        created_at: data.date_joined,
+        full_name: (data.first_name && data.last_name) ? data.first_name+' '+data.first_name : data.full_name,
+        currentCohort: (!Array.isArray(data.cohorts)) ? null : (data.cohorts.length === 1) ? data.cohorts[0] : data.cohorts
+    };
+    Session.start({ payload: user, expiration: (3600*24) });
+
+    return user;
+};
+
 export const logout = (history=null) => {
     Session.destroy();
     if(history) history.push('/login');
