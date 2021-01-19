@@ -197,16 +197,16 @@ class Wrapper{
         };
     }
     user(){
-        let url = this.options.apiPath;
+        let url = this.options.apiPath+'/v1/auth';
         return {
             all: () => {
-                return this.get(url+'/user/');
+                return this.get(url+'/user');
             },
             add: (args) => {
-                return this.put(url+'/user/', args);
+                return this.post(url+'/user/', args);
             },
             update: (id, args) => {
-                return this.post(url+'/user/'+id, args);
+                return this.put(url+'/user/'+id, args);
             },
             delete: (id) => {
                 return this.delete(url+'/user/'+id);

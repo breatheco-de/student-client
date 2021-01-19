@@ -68,6 +68,8 @@ export const autoLogin = async (token) =>{
     };
     Session.start({ payload: user, expiration: (3600*24) });
 
+    if(window.location.href.includes("/login")) window.location.href = "/";
+
     return user;
 };
 

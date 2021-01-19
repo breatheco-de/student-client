@@ -21,7 +21,6 @@ export default class ProfileView extends Flux.View {
         avatar: null,
         cohorts: [],
         github: '',
-        githubChartURL: null,
         githubError: null
       }
     };
@@ -36,7 +35,6 @@ export default class ProfileView extends Flux.View {
     Session.onChange((session) => {
       this.setState({
         student: session.payload,
-        githubChartURL: process.env.ASSETS_URL+"/apis/github/student/"+session.payload.bc_id+"/contributions?"+session.payload.github
       });
 
     });
@@ -151,39 +149,6 @@ export default class ProfileView extends Flux.View {
                 </form>
             </div>
           </div>
-          <div className="row text-center">
-                <div className="col-12 text-left">
-                    {/* ACADEMY SITUATION
-                    <div>
-                    <h4 className="mt-5">Your academy status</h4>
-                    { !Array.isArray(student.cohorts) ? <p>You don't seem to be a student</p> :
-                        <div>
-                        <p className="mb-0">
-                            <small>You started {moment(student.created_at).fromNow()}, </small>
-                            <small> since then you have joined {student.cohorts.length} cohorts: </small>
-                            <small>{student.cohorts.map(c => c.name).join(', ')}.</small>
-                        </p>
-                        <p className="mt-0">
-                        <small>You have acumulated {student.total_points} points of the <a target="_blank" href="https://www.4geeksacademy.co/the-talent-tree/">Talent Tree ™️</a></small>
-                        </p>
-                        </div>
-                    }
-                    </div>*/}
-                    {/* GITHUB SITUATION */}
-                    <div>
-                    <h4 className="mt-5">Your github status</h4>
-                    <p><small>You can think of Github as the LinkedIn for developers, other people need to see active your are and Github reflects your activity using the following chart: </small></p>
-                    {(hasGithub && !this.state.githubError) ?
-                        (<p><img src={this.state.githubChartURL} /></p>)
-                        : <div className="alert alert-danger">The Activity Graph could not be loaded</div>
-                    }
-                    <p>
-                        <small>Each square is one day of the past 364 days and the color of the square determins how active where you on that day. The greener the better!
-                        <a target="_blank" href="https://help.github.com/articles/viewing-contributions-on-your-profile/"> You can read more about it here</a></small>
-                    </p>
-                    </div>
-                </div>
-            </div>
         </div>
       </Panel>
     );

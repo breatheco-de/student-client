@@ -32,7 +32,7 @@ export class Wizard extends React.Component{
         Session.setPayload({
             show_tutorial: false
         });
-        BC.student().update('me', { show_tutorial: false })
+        BC.user().update('me', { profile: { show_tutorial: false } })
             .then(() => window.location.reload())
             .catch(err => {
                 Notify.error("Unable to disable tutorial on the database");

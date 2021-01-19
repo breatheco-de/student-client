@@ -5,6 +5,7 @@ export default {
 
         const { payload } = Session.get();
 
+        if(Array.isArray(day.replits) && !Array.isArray(day.exercises)) day.exercises = day.replits;
         day.exercises = (function(){
             if(typeof day.exercises === 'undefined') return [];
             return day.exercises.map(function(repl){
@@ -104,6 +105,7 @@ export default {
         const todos = OldStore.getTodos();
         if(!todos) return day;
 
+        if(Array.isArray(day.replits) && !Array.isArray(day.exercises)) day.exercises = day.replits;
         day.exercises = (function(){
             return day.exercises.map(function(repl){
                 const todo = OldStore.getSingleTodo(repl);

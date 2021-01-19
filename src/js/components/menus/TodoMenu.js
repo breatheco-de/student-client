@@ -163,9 +163,9 @@ class TodoView extends Flux.View {
               </li>);
     });
 
-    const lesson = this.state.todos.filter(t => t.type === "LESSON");
-    const project = this.state.todos.filter(t => t.type === 'PROJECT');
-    const exercise = this.state.todos.filter(t => t.type === 'EXERCISE');
+    const lesson = this.state.todos.filter(t => t.task_type === "LESSON");
+    const project = this.state.todos.filter(t => t.task_type === 'PROJECT');
+    const exercise = this.state.todos.filter(t => t.task_type === 'EXERCISE');
 
     return (
       <div className="todo-menu with-padding">
