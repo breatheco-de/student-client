@@ -92,9 +92,9 @@ export default class ProfileView extends Flux.View {
 
                 }}>
                     <div className="form-group">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">First Name</span>
+                        <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">First Name</span>
                         </div>
                         <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="First Name"
                             value={student.first_name || student.full_name}
@@ -103,20 +103,20 @@ export default class ProfileView extends Flux.View {
                         </div>
                     </div>
                     <div className="form-group">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Last Name</span>
+                        <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">Last Name</span>
                         </div>
                         <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="Last Name"
-                            value={student.last_name}
+                            value={student.last_name || ""}
                             onChange={(e) => this.updateProfile({ last_name: e.target.value})}
                         />
                         </div>
                     </div>
                     <div className="form-group">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i className="fab fa-github"></i></span>
+                        <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1"><i className="fab fa-github"></i></span>
                         </div>
                         {hasGithub ?
                           <input type="text" className={`form-control github ${(this.state.githubError || !hasGithub) ? "has-error" : ''}`} placeholder="Your Github"
@@ -132,9 +132,9 @@ export default class ProfileView extends Flux.View {
                         </div>
                     </div>
                     <div className="form-group">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+                        <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1"><i className="fas fa-envelope"></i></span>
                         </div>
                         <input type="email" readOnly="true" className="form-control" placeholder="Your email"
                             value={student.email} style={{ background: "#FBFBFB"}}
