@@ -21,6 +21,10 @@ export default class ReplitView extends Flux.View {
     const session = Session.get();
     this.setState({ cohort: session.payload.currentCohort });
   }
+
+  componentDidMount(){
+    window.open(this.getReplitURL());
+  }
   
   getReplitURL(){
     const replit_slug = this.props.match.params.replit_slug;
@@ -35,18 +39,9 @@ export default class ReplitView extends Flux.View {
   
   render() {
     return (
-      <Panel padding={false}>
-        {
-          (!this.state.error) ? 
-            (<span><Loading show={this.state.loading} />
-              <iframe onLoad={(e)=> {
-                this.setState({loading: false});
-              }} className="replit-iframe" src={this.getReplitURL()} 
-                height="100%" width="100%" frameBorder="0" /></span>)
-            : (<div className="alert alert-danger">
-                {this.state.error}
-              </div>)
-        }
+      <Panel padding={false} className="text-center">
+        <p className="w-50 mx-auto">Opening {this.props.match.params.replit_slug} exercises on a new window...</p>
+        <p className="w-50  mx-auto"><a className="small" target="_blank" href={this.getReplitURL()} rel="noopener noreferrer">{this.getReplitURL()}</a></p>
       </Panel>
     );
   }
