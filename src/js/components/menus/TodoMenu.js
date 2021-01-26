@@ -81,6 +81,9 @@ class TodoView extends Flux.View {
       case "goto":
         this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug);
       break;
+      case "goto_blank":
+        window.open(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug);
+      break;
       case "vtutorial":
         this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
       break;
@@ -90,7 +93,7 @@ class TodoView extends Flux.View {
   getTaskMenu(td){
     switch(td.type){
       case "LESSON": return [{label: 'Read the lesson', slug:'goto'}]; break;
-      case 'EXERCISE': return [{label: 'Practice on Repl.it', slug:'goto'}]; break;
+      case 'EXERCISE': return [{label: 'Open Exercises', slug:'goto_blank'}]; break;
       case "QUIZ": return [{label: 'Take the quiz', slug:'goto'}]; break;
       case 'PROJECT': return [{label: 'Read the instructions', slug:'goto'}]; break;
     }
@@ -206,7 +209,7 @@ class TodoView extends Flux.View {
                 <a className="p-2 last-filter" href="#" onClick={(e) => {
                     this.setState({ includeDone: !this.state.includeDone });
                     e.preventDefault();
-                }}>{(!this.state.includeDone) ? 'without done':'including done'}</a>.
+                }}>{(!this.state.includeDone) ? 'show done tasks':'hide done tasks'}</a>.
             </div>
         </div>
         { (todoElms.length===0) ?
