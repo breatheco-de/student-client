@@ -28,7 +28,7 @@ export const loadAssets = () => {
     });
 };
 export const saveProfile = (id, args) => {
-    BC.student().update('me', args).then(() => {
+    BC.user().update('me', args).then(() => {
         Session.setPayload(args);
     }).catch(function( err ) {
         console.log("ERROR!!",err);

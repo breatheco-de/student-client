@@ -74,7 +74,7 @@ class Login extends React.Component {
             </form>
             :
             <div>
-                <a href={`https://breathecode.herokuapp.com/v1/auth/github?url=${window.location.href}`} className="btn btn-lg btn-light btn-block"><i class="fab fa-github mr-2"></i>With Github</a>
+                <a href={`https://breathecode.herokuapp.com/v1/auth/github?url=${window.location.href}`} className="btn btn-lg btn-light btn-block"><i className="fab fa-github mr-2"></i>With Github</a>
                 <small><a href="#" onClick={() => this.setState({ withEmail: true })}>or with your email</a></small>
             </div>
           } 

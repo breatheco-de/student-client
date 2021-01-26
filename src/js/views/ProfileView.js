@@ -7,7 +7,6 @@ import OldStore from "../stores/OldStore";
 import {Session} from 'bc-react-session';
 import { Wizard } from '../components/wizard/Wizard';
 import defaultAvatarURL from '../../img/default-user-image.png';
-import moment from 'moment';
 
 export default class ProfileView extends Flux.View {
 
@@ -15,12 +14,12 @@ export default class ProfileView extends Flux.View {
     super();
     this.state = {
       student: {
-        full_name: 'Profile',
+        full_name: '',
         first_name: null,
         last_name: null,
         avatar: null,
         cohorts: [],
-        github: '',
+        github: null,
         githubError: null
       }
     };
@@ -46,9 +45,9 @@ export default class ProfileView extends Flux.View {
 
   render() {
     const { student } = this.state;
-    const hasGithub = typeof student.github === 'string' && student.github !== '';
-    const hasAvatar = typeof student.avatar === 'string' && student.avatar !== '';
-    console.log("Student: ",student);
+    const hasGithub = student.github && student.github.username !== '';
+    const hasAvatar = student.github && student.github.avatar_url && student.github.avatar_url!='';
+
     return (
       <Panel className="profile-view" style={{padding: "10px"}} zDepth={1}>
         <Wizard
@@ -68,16 +67,15 @@ export default class ProfileView extends Flux.View {
         <div className="container">
         <div className="row text-center">
             <div className="col-12 col-md-6 mx-auto">
-                <div className="profile-img mb-4" onClick={() => window.open('https://en.gravatar.com/emails/')}>
-                <img src={ hasAvatar ? student.avatar : defaultAvatarURL}/>
-                <a target="_blank" href="https://en.gravatar.com/emails/" className="btn">edit</a>
+                <div className="profile-img mb-4">
+                  <img src={ hasAvatar ? student.github.avatar_url : defaultAvatarURL}/>
                 </div>
                 <form className="text-left" onSubmit={(e) => {
 
                     e.preventDefault();
-                    if(this.state.student.github && this.state.student.github !== '' && this.state.student.first_name && this.state.student.first_name !=='' && this.state.student.last_name && this.state.student.last_name !== '')
+                    if(this.state.student.github != undefined && this.state.student.github.username !== '' && this.state.student.first_name && this.state.student.first_name !=='' && this.state.student.last_name && this.state.student.last_name !== '')
                     {
-                        fetch('https://api.github.com/users/'+student.github)
+                        fetch('https://api.github.com/users/'+student.github.username)
                             .then(resp => {
                                 if(resp.status == 200){
                                     this.setState({ githubError: null });
@@ -85,7 +83,6 @@ export default class ProfileView extends Flux.View {
                                         first_name: student.first_name ? student.first_name : '',
                                         last_name: student.last_name ? student.last_name : '',
                                         full_name: student.first_name + ' ' + student.last_name,
-                                        github: student.github
                                     });
                                 }
                                 else this.setState({ githubError: 'This github username seems to be invalid' })
@@ -95,9 +92,9 @@ export default class ProfileView extends Flux.View {
 
                 }}>
                     <div className="form-group">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">First Name</span>
+                        <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">First Name</span>
                         </div>
                         <input type="text" className="form-control"  aria-describedby="emailHelp" placeholder="First Name"
                             value={student.first_name || student.full_name}
@@ -106,39 +103,46 @@ export default class ProfileView extends Flux.View {
                         </div>
                     </div>
                     <div className="form-group">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Last Name</span>
+                        <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">Last Name</span>
                         </div>
                         <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="Last Name"
-                            value={student.last_name}
+                            value={student.last_name || ""}
                             onChange={(e) => this.updateProfile({ last_name: e.target.value})}
                         />
                         </div>
                     </div>
                     <div className="form-group">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i className="fab fa-github"></i></span>
+                        <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1"><i className="fab fa-github"></i></span>
                         </div>
-                        <input type="text" className={`form-control github ${(this.state.githubError || !hasGithub) ? "has-error" : ''}`} placeholder="Your Github"
-                            value={ !hasGithub ? '' : student.github.replace(/(:?https?:\/\/)?(?:www\.)?github.com\//gm, '')}
-                            onChange={(e) => this.updateProfile({ github: e.target.value})}
-                        />
+                        {hasGithub ?
+                          <input type="text" className={`form-control github ${(this.state.githubError || !hasGithub) ? "has-error" : ''}`} placeholder="Your Github"
+                              readOnly={true}
+                              value={student.github.username.replace(/(:?https?:\/\/)?(?:www\.)?github.com\//gm, '')}
+                          />
+                          :
+                          <a className="form-control text-primary" href="#" onClick={(e) => {
+                            e.preventDefault();
+                            window.location.href = `https://breathecode.herokuapp.com/v1/auth/github?url=${window.location.href}`;
+                          }}>connect with github</a>
+                        }
                         </div>
                     </div>
                     <div className="form-group">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+                        <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1"><i className="fas fa-envelope"></i></span>
                         </div>
                         <input type="email" readOnly="true" className="form-control" placeholder="Your email"
                             value={student.email} style={{ background: "#FBFBFB"}}
                         />
                         </div>
                     </div>
-                    { (!hasGithub || !student.first_name || this.state.githubError) && <div className='alert alert-danger'>
-                        { (this.state.githubError || !hasGithub) && <small>Invalid github username</small>}
+                    { (!hasGithub || !student.first_name || this.state.githubError) && <div className='alert alert-danger text-center mb-2'>
+                        { (this.state.githubError || !hasGithub) && <small>Please connect your github account</small>}
                         { (!student.first_name || !student.last_name) && <small>Please specify your first and last name</small>}
                         </div>
                     }
