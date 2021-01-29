@@ -52,9 +52,10 @@ class Wrapper{
             cache: "no-cache",
             headers: {
                 'Content-Type': 'application/json',
-                'Academy': this.academy_id || this.options.sessionAcademy(),
             },
         };
+
+        if(path.indexOf('herokuapp.') !== -1) opts.headers['Academy'] = this.academy_id || this.options.sessionAcademy()
 
         if(args && args.token!=undefined && args.token!=''){
             opts.headers['Authorization'] = "Token "+args.token;
@@ -184,7 +185,7 @@ class Wrapper{
         let url = this.options.apiPath+'/v1/assignment';
         return {
             getByStudent: (id) => {
-                return this.get(url+'/task/?user='+id);
+                return this.get(url+'/user/me/task');
             },
             add: (id, args) => {
                 return this.post(url+'/user/'+id+'/task', args);
