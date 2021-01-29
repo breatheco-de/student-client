@@ -16,6 +16,11 @@ BC.setOptions({
             return 'Token '+token;
         }
     },
+    sessionAcademy: () => {
+        const session = Session.get();
+        const user = session.payload;
+        if(user.currentCohort && !Array.isArray(user.currentCohort)) return user.currentCohort.cohort.academy.id;
+    },
     onLoading: setLoading,
     onLogout: () => logout()
 });
@@ -42,6 +47,8 @@ export const login = async (username, password, history) =>{
     };
     Session.start({ payload: user, expiration: (3600*24) });
 
+    if(user.currentCohort && !Array.isArray(user.currentCohort)) BC.setAcademy(user.currentCohort.academy.id);
+
     if(!data.profile || typeof data.profile == 'undefined') history.push('/profile');
     else history.push('/');
 };
@@ -67,6 +74,8 @@ export const autoLogin = async (token) =>{
         currentCohort: (!Array.isArray(data.cohorts)) ? null : (data.cohorts.length === 1) ? data.cohorts[0] : data.cohorts
     };
     Session.start({ payload: user, expiration: (3600*24) });
+
+    if(user.currentCohort && !Array.isArray(user.currentCohort)) BC.setAcademy(user.currentCohort.academy.id);
 
     if(window.location.href.includes("/login")) window.location.href = "/";
 

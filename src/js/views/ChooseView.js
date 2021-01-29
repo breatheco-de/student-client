@@ -4,7 +4,7 @@ import { List, Panel } from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
 import { logout } from '../actions/auth';
 import { getStreaming } from '../actions/actions';
-
+import BC from "../utils/api";
 export default class ChooseView extends Flux.View {
 
   constructor(){
@@ -36,6 +36,7 @@ export default class ChooseView extends Flux.View {
         <button className="btn btn-light ml-3"
           onClick={() => {
                 Session.setPayload({ currentCohort: cu });
+                BC.setAcademy(cu.academy.id);
           }}>
           <i className="fas fa-external-link-alt"></i> launch this course
         </button>

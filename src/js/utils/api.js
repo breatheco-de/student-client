@@ -9,6 +9,7 @@ class Wrapper{
             getToken: (type='api') => {
                 return type == api ? this.apiPath : this.assetsPath;
             },
+            sessionAcademy: () => null,
             onLoading: null,
             onLogout: null
         };
@@ -38,6 +39,10 @@ class Wrapper{
     setOptions(options){
         this.options = Object.assign(this.options, options);
     }
+    setAcademy(id){
+        console.log("The academy ID is now ", id)
+        this.academy_id = id;
+    }
     fetch(...args){ return fetch(...args); }
     req(method, path, args){
 
@@ -45,7 +50,10 @@ class Wrapper{
         let opts = {
             method,
             cache: "no-cache",
-            headers: {'Content-Type': 'application/json'}
+            headers: {
+                'Content-Type': 'application/json',
+                'Academy': this.academy_id || this.options.sessionAcademy(),
+            },
         };
 
         if(args && args.token!=undefined && args.token!=''){
@@ -164,10 +172,11 @@ class Wrapper{
     }
     syllabus(){
         let url = this.options.apiPath+'/v1/coursework/course';
+        const academy = this.options.sessionAcademy();
         return {
             get: (slug, version='1') => {
                 if(!slug) throw new Error('Missing slug');
-                else return this.get(`${url}/${slug}/syllabus/${version}`);
+                else return this.get(`${url}/${slug}/academy/${academy}/syllabus/${version}`);
             }
         };
     }
