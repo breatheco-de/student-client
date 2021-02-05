@@ -4,7 +4,7 @@ import { List, Panel } from '../components/react-components/src/index';
 import {Session} from 'bc-react-session';
 import { logout } from '../actions/auth';
 import { getStreaming } from '../actions/actions';
-
+import BC from "../utils/api";
 export default class ChooseView extends Flux.View {
 
   constructor(){
@@ -24,33 +24,24 @@ export default class ChooseView extends Flux.View {
 
       const currentCohort = (session.payload) ? session.payload.currentCohort : null;
       if(currentCohort && typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort)){
-          const slug = currentCohort.syllabus_slug && typeof(currentCohort.syllabus_slug) !== "undefined" && currentCohort.syllabus_slug !== "" ? currentCohort.syllabus_slug : currentCohort.profile_slug;
+          const slug = currentCohort.cohort.certificate.slug;
           this.props.history.push('/course/'+slug);
       }
     });
   }
 
   render() {
-    const cohorts = this.state.student.cohorts.map((cohort,i) => (
+    const cohorts = this.state.student.cohorts.map((cu,i) => (
       <li key={i}>
         <button className="btn btn-light ml-3"
           onClick={() => {
-            const streamingSlug = (cohort.streaming_slug && typeof cohort.streaming_slug == 'string') ? cohort.streaming_slug : cohort.slug;
-            getStreaming(streamingSlug)
-              .then(data => {
-                cohort.streaming = data;
-                Session.setPayload({ currentCohort: cohort });
-              })
-              .catch(() => {
-                cohort.streaming = null;
-                Session.setPayload({ currentCohort: cohort });
-              });
-
+                Session.setPayload({ currentCohort: cu });
+                BC.setAcademy(cu.academy.id);
           }}>
           <i className="fas fa-external-link-alt"></i> launch this course
         </button>
-        <span className="cohort-name">{cohort.profile_slug}</span>
-        <p className="cohort-description m-0">Cohort: {cohort.name}</p>
+        <span className="cohort-name">{cu.cohort.certificate.name}</span>
+        <p className="cohort-description m-0">Cohort: {cu.cohort.name}</p>
       </li>
     ));
     return (

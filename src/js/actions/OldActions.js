@@ -66,7 +66,8 @@ class OldActions extends Flux.Action{
     }
 
     updateTask(task){
-        return BC.todo().update(task)
+        const session = Session.get();
+        return BC.todo().update(session.payload.bc_id, task)
             .then((data) => {
                 Notify.success('The task has been updated successfully');
                 this.dispatch('OldStore.updateSingleTodo', data.data || data);
@@ -77,6 +78,7 @@ class OldActions extends Flux.Action{
     }
 
     createTask(task){
+
         return BC.todo().add(task)
             .then((data) => {
                 Notify.success('The task has added updated successfully');
@@ -88,15 +90,16 @@ class OldActions extends Flux.Action{
     }
 
     deliverAssignment(task){
+        const session = Session.get();
         Notify.info(DeliverAssignment, (githubURL) => {
             if(githubURL){
                 task.github_url = githubURL;
-                task.status = 'done';
-                task.revision_status = 'pending';
+                task.task_status = 'DONE';
+                task.revision_status = 'PENDING';
                 Notify.info("Are you sure you want to submit?", (answer) => {
                     Notify.clean();
                     if(answer){
-                        return BC.todo().update(task)
+                        return BC.todo().update(session.payload.bc_id, task)
                             .then((data) => {
                                 Notify.success('Your assignment has been delivered successfully');
                                 this.dispatch('OldStore.updateSingleTodo', data.data || data);
@@ -113,11 +116,12 @@ class OldActions extends Flux.Action{
     }
 
     updateAssignment(task, updatedFields, confirm=true){
+        const session = Session.get();
         if(confirm) Notify.info("Are you sure you want to remove your project submission?", (answer) => {
                 Notify.clean();
                 if(answer){
                     const _task = Object.assign(task, updatedFields);
-                    return BC.todo().update(_task)
+                    return BC.todo().update(session.payload.bc_id, _task)
                         .then((data) => {
                             Notify.success('Your assignment has been updated successfully');
                             this.dispatch('OldStore.updateSingleTodo', data.data || data);
@@ -129,7 +133,7 @@ class OldActions extends Flux.Action{
             });
         else{
             const _task = Object.assign(task, updatedFields);
-            return BC.todo().update(_task)
+            return BC.todo().update(session.paylod.bc_id, _task)
                 .then((data) => {
                     Notify.success('Your assignment has been updated successfully');
                     this.dispatch('OldStore.updateSingleTodo', data.data || data);
@@ -169,7 +173,7 @@ class OldActions extends Flux.Action{
                 const [ _slug, version ] = slug.split('.');
                 BC.syllabus().get(_slug, version)
                     .then((data) => {
-                        this.dispatch('OldStore.setSyllabus', data);
+                        this.dispatch('OldStore.setSyllabus', data.json);
                     })
                     .catch((data) => {
                         if(typeof data.pending === 'undefined') console.error(data);

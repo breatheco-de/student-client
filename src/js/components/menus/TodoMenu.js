@@ -28,9 +28,9 @@ class TodoView extends Flux.View {
   }
 
   updateTask(task, newValue){
-    if(task.type !== 'assignment')
+    if(task.task_type !== 'PROJECT')
     {
-      task.status = (newValue) ? "done":"pending";
+      task.task_status = (newValue) ? "DONE":"PENDING";
       OldActions.updateTask(task);
     }
     else
@@ -43,7 +43,7 @@ class TodoView extends Flux.View {
   deliverAssignment(task){
     if(this.projectDeliveredURL !== '')
     {
-      task.status = "done";
+      task.task_status = "DONE";
       task.github_url = this.projectDeliveredURL;
       OldActions.updateTask(task);
     }
@@ -54,51 +54,54 @@ class TodoView extends Flux.View {
 
   getTaskDescription(td){
     switch(td.type){
-      case "lesson":
+      case "LESSON":
         return 'Read';
       break;
-      case "replit": return 'Practice'; break;
-      case "assignment":
-        if(td.status=='pending') return <span>Code - <span>(not delivered)</span></span>;
+      case 'EXERCISE': return 'Practice'; break;
+      case 'PROJECT':
+        if(td.task_status=='PENDING') return <span>Code - <span>(not delivered)</span></span>;
         else{
-          if(td.revision_status=='pending') return <span>Code - <span className="text-warning">(pending teacher approval)</span></span>;
+          if(td.revision_status=='PENDING') return <span>Code - <span className="text-warning">(pending teacher approval)</span></span>;
           else return <span>Code -
                 <Popover
                     body={<div className="bg-light border border-dark p-2"><h5>Your teacher said: </h5><small>{td.description}</small></div>}
                 >
-                    {td.revision_status === "rejected" && <span className=" ml-2 text-danger">(rejected by teacher)</span>}
-                    {td.revision_status === "approved" && <span className=" ml-2 text-success">(approved by teacher)</span>}
+                    {td.revision_status === 'REJECTED' && <span className=" ml-2 text-danger">(rejected by teacher)</span>}
+                    {td.revision_status === 'APPROVED' && <span className=" ml-2 text-success">(approved by teacher)</span>}
                 </Popover>
             </span>;
         }
       break;
-      case "quiz": return 'Answer'; break;
+      case "QUIZ": return 'Answer'; break;
     }
   }
 
   onDropdownSelect(actionable, option){
     switch(option.slug){
       case "goto":
-        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug);
+        this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug);
+      break;
+      case "goto_blank":
+        window.open(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug);
       break;
       case "vtutorial":
-        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
+        this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
       break;
     }
   }
 
   getTaskMenu(td){
     switch(td.type){
-      case "lesson": return [{label: 'Read the lesson', slug:'goto'}]; break;
-      case "replit": return [{label: 'Practice on Repl.it', slug:'goto'}]; break;
-      case "quiz": return [{label: 'Take the quiz', slug:'goto'}]; break;
-      case "assignment": return [{label: 'Read the instructions', slug:'goto'}]; break;
+      case "LESSON": return [{label: 'Read the lesson', slug:'goto'}]; break;
+      case 'EXERCISE': return [{label: 'Open Exercises', slug:'goto_blank'}]; break;
+      case "QUIZ": return [{label: 'Take the quiz', slug:'goto'}]; break;
+      case 'PROJECT': return [{label: 'Read the instructions', slug:'goto'}]; break;
     }
   }
 
   render() {
     const todoElms = (!this.state.todos) ? [] : this.state.todos.filter((td) => {
-        if(!this.state.includeDone && td.status === 'done') return false;
+        if(!this.state.includeDone && td.task_status === 'DONE') return false;
         if(this.state.selectedType && this.state.selectedType.value && this.state.selectedType.value !== td.type) return false;
 
         return true;
@@ -113,7 +116,7 @@ class TodoView extends Flux.View {
                           OldActions.deliverAssignment(td);
                           this.setState({ beingDelivered: null });
                       }}>
-                      Deliver {td.status === "done" && "again"}
+                      Deliver {td.task_status === "DONE" && "again"}
                     </button>
                     <button className="btn btn-danger mr-2"
                       onClick={()=> {
@@ -130,7 +133,7 @@ class TodoView extends Flux.View {
                   <div className="btn-bar text-right">
                     <button className="btn btn-danger mr-2"
                       onClick={()=> {
-                          OldActions.updateAssignment(td, { status: 'pending', github_url: ' ', revision_status: 'pending' }, false);
+                          OldActions.updateAssignment(td, { task_status: 'PENDING', github_url: ' ', revision_status: 'PENDING' }, false);
                           this.setState({ beingDeleted: null });
                       }}>
                       Delete
@@ -145,7 +148,7 @@ class TodoView extends Flux.View {
 
 
       return (<li key={i}>
-                <CheckBox checked={td.status === 'done'} render={() => (
+                <CheckBox checked={td.task_status === 'DONE'} render={() => (
                     <div className={"task task-"+td.type}>
                       <DropLink className="task-menu" dropdown={this.getTaskMenu(td)}
                           onSelect={(option) => this.onDropdownSelect(td, option)}
@@ -158,33 +161,33 @@ class TodoView extends Flux.View {
                       </p>
                     </div>
                   )}
-                  onClick={(newvalue) => td.revision_status !== 'approved' && this.updateTask(td, newvalue)}
+                  onClick={(newvalue) => td.revision_status !== 'APPROVED' && this.updateTask(td, newvalue)}
                 />
               </li>);
     });
 
-    const lesson = this.state.todos.filter(t => t.type === "lesson");
-    const project = this.state.todos.filter(t => t.type === "assignment");
-    const replit = this.state.todos.filter(t => t.type === "replit");
+    const lesson = this.state.todos.filter(t => t.task_type === "LESSON");
+    const project = this.state.todos.filter(t => t.task_type === 'PROJECT');
+    const exercise = this.state.todos.filter(t => t.task_type === 'EXERCISE');
 
     return (
       <div className="todo-menu with-padding">
         <div className="row mx-1 text-center">
             <div className="col">
-                <span className="show-status">You have completed {this.state.todos.filter(t => t.status === "done").length} tasks out of the {this.state.todos.length} total</span>
+                <span className="show-status">You have completed {this.state.todos.filter(t => t.task_status === "DONE").length} tasks out of the {this.state.todos.length} total</span>
             </div>
         </div>
         <div className="row text-center">
             <div className="col">
-                <ProgressKPI progress={Math.round((lesson.filter(t=>t.status === "done").length*100)/lesson.length)} />
+                <ProgressKPI progress={Math.round((lesson.filter(t=>t.task_status === "DONE").length*100)/lesson.length)} />
                 <p className="m-0 p-0 show-status"><small>Read</small></p>
             </div>
             <div className="col">
-                <ProgressKPI progress={Math.round((replit.filter(t=>t.status === "done").length*100)/replit.length)} />
+                <ProgressKPI progress={Math.round((exercise.filter(t=>t.task_status === "DONE").length*100)/exercise.length)} />
                 <p className="m-0 p-0 show-status"><small>Practice</small></p>
             </div>
             <div className="col">
-                <ProgressKPI progress={Math.round((project.filter(t=>t.status === "done").length*100)/project.length)} />
+                <ProgressKPI progress={Math.round((project.filter(t=>t.task_status === "DONE").length*100)/project.length)} />
                 <p className="m-0 p-0 show-status"><small>Code</small></p>
             </div>
         </div>
@@ -194,9 +197,9 @@ class TodoView extends Flux.View {
                 <DropLink className="task-menu"
                     dropdown={[
                         { label: "all tasks", value: null },
-                        { label: "only readings", value: "lesson" },
-                        { label: "only replits", value: "replit" },
-                        { label: "only projects", value: "assignment" }
+                        { label: "only readings", value: "LESSON" },
+                        { label: "only exercises", value: 'EXERCISE' },
+                        { label: "only projects", value: 'PROJECT' }
                     ]}
                     onSelect={(option) => {
                         this.setState({ selectedType: option });
@@ -206,7 +209,7 @@ class TodoView extends Flux.View {
                 <a className="p-2 last-filter" href="#" onClick={(e) => {
                     this.setState({ includeDone: !this.state.includeDone });
                     e.preventDefault();
-                }}>{(!this.state.includeDone) ? 'without done':'including done'}</a>.
+                }}>{(!this.state.includeDone) ? 'show done tasks':'hide done tasks'}</a>.
             </div>
         </div>
         { (todoElms.length===0) ?

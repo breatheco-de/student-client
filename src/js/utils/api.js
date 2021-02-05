@@ -3,12 +3,13 @@ class Wrapper{
 
     constructor(){
         this.options = {
-            assetsPath: (typeof process != 'undefined') ? process.env.ASSETS_URL+'/apis' : null,
+            assetsPath: (typeof process != 'undefined') ? process.env.ASSETS_URL+"/apis" : null,
             apiPath: (typeof process != 'undefined') ? process.env.API_URL : null,
             _debug: (typeof process != 'undefined') ? process.env.DEBUG : false,
             getToken: (type='api') => {
                 return type == api ? this.apiPath : this.assetsPath;
             },
+            sessionAcademy: () => null,
             onLoading: null,
             onLogout: null
         };
@@ -38,6 +39,10 @@ class Wrapper{
     setOptions(options){
         this.options = Object.assign(this.options, options);
     }
+    setAcademy(id){
+        console.log("The academy ID is now ", id)
+        this.academy_id = id;
+    }
     fetch(...args){ return fetch(...args); }
     req(method, path, args){
 
@@ -45,9 +50,18 @@ class Wrapper{
         let opts = {
             method,
             cache: "no-cache",
-            headers: {'Content-Type': 'application/json'}
+            headers: {
+                'Content-Type': 'application/json',
+            },
         };
-        if(token) opts.headers['Authorization'] = token;
+
+        if(path.indexOf('herokuapp.') !== -1) opts.headers['Academy'] = this.academy_id || this.options.sessionAcademy()
+
+        if(args && args.token!=undefined && args.token!=''){
+            opts.headers['Authorization'] = "Token "+args.token;
+            delete args.token;
+        } 
+        else if(token && !path.includes("/login")) opts.headers['Authorization'] = token;
 
         if(method === 'get') path += this.serialize(args).toStr();
         else
@@ -71,7 +85,7 @@ class Wrapper{
                     //recalculate to check if it there is pending requests
                     this.calculatePending();
 
-                    if(resp.status == 200) return resp.json();
+                    if(resp.ok) return resp.json();
                     else{
                         this._logError(resp);
                         if(resp.status == 403) reject({ msg: 'Invalid username or password', code: 403 });
@@ -150,39 +164,37 @@ class Wrapper{
     }
 
     credentials(){
-        let url = this.options.assetsPath+'/credentials';
+        let url = this.options.apiPath+'/v1/auth';
         return {
-            autenticate: (username, password, user_agent='') => {
-                return this.post(url+'/auth', { username, password, user_agent });
-            },
-            remind: (username) => {
-                return this.post(url+'/remind/'+encodeURIComponent(username), { username });
+            autenticate: (email, password, user_agent='') => {
+                return this.post(url+'/login/', { email, password, user_agent });
             }
         };
     }
     syllabus(){
-        let url = this.options.assetsPath+'/syllabus';
+        let url = this.options.apiPath+'/v1/coursework/course';
+        const academy = this.options.sessionAcademy();
         return {
             get: (slug, version='1') => {
                 if(!slug) throw new Error('Missing slug');
-                else return this.get(url+'/'+slug+'?v='+version);
+                else return this.get(`${url}/${slug}/academy/${academy}/syllabus/${version}`);
             }
         };
     }
     todo(){
-        let url = this.options.apiPath;
+        let url = this.options.apiPath+'/v1/assignment';
         return {
             getByStudent: (id) => {
-                return this.get(url+'/student/'+id+'/task/');
+                return this.get(url+'/user/me/task');
             },
             add: (id, args) => {
-                return this.post(url+'/student/'+id+'/task/', args);
+                return this.post(url+'/user/'+id+'/task', args);
             },
             delete: (args) => {
-                return this.post(url+'/task/'+args.id, args);
+                return this.delete(`${url}/user/${user_id}/task/${args.id}`, args);
             },
-            update: (args) => {
-                return this.post(url+'/task/'+args.id, args);
+            update: (user_id, args) => {
+                return this.put(`${url}/task/${args.id}`, args);
             }
         };
     }
@@ -195,16 +207,16 @@ class Wrapper{
         };
     }
     user(){
-        let url = this.options.apiPath;
+        let url = this.options.apiPath+'/v1/auth';
         return {
             all: () => {
-                return this.get(url+'/user/');
+                return this.get(url+'/user');
             },
             add: (args) => {
-                return this.put(url+'/user/', args);
+                return this.post(url+'/user/', args);
             },
             update: (id, args) => {
-                return this.post(url+'/user/'+id, args);
+                return this.put(url+'/user/'+id, args);
             },
             delete: (id) => {
                 return this.delete(url+'/user/'+id);
@@ -250,20 +262,13 @@ class Wrapper{
             }
         };
     }
-    message(){
-        //let url = this.options.apiPath;
-        let assetsURL = this.options.assetsPath;
+    admissions(){
+        let url = this.options.apiPath+'/v1/admissions';
         return {
-            getByStudent: (student_id, args=[]) => {
-                return this.get(assetsURL+'/message/student/'+student_id, args);
+            me: (token) => {
+                return this.get(url+'/user/me', {token});
             },
-            templates: () => {
-                return this.get(assetsURL+'/message/templates');
-            },
-            markAs: (messageId, status) => {
-                return this.post(assetsURL+'/message/'+messageId+'/'+status);
-            },
-        };
+        }
     }
     cohort(){
         let url = this.options.apiPath;
@@ -389,5 +394,4 @@ class Wrapper{
         };
     }
 }
-if(typeof module != 'undefined') module.exports = new Wrapper();
-window.BC = new Wrapper();
+export default new Wrapper();

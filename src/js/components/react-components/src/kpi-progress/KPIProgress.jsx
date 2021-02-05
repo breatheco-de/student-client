@@ -5,9 +5,9 @@ import './kpi-progress.scss';
 class KPIProgress extends React.Component{
     
     render(){
-        
+        const progress = isNaN(this.props.progress) ? 0 : this.props.progress;
         return(
-            <div className="bcprogress" data-progress={this.props.progress}>
+            <div className="bcprogress" data-progress={progress}>
                 <div className="ko-circle">
                     <div className="full ko-progress-circle__slice">
                         <div className="ko-progress-circle__fill"></div>
@@ -17,7 +17,7 @@ class KPIProgress extends React.Component{
                         <div className="ko-progress-circle__fill ko-progress-circle__bar"></div>
                     </div>
                 </div>
-                <div className="ko-progress-circle__overlay">{this.props.progress}%</div>
+                <div className="ko-progress-circle__overlay">{progress}%</div>
             </div>
         )
     }

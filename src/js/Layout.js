@@ -1,7 +1,7 @@
 import React from 'react';
 import Flux from '@4geeksacademy/react-flux-dash';
-import { PrivateRoute } from 'bc-react-session';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Session } from 'bc-react-session';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import {Notifier} from 'bc-react-notifier';
 import { LoadBar } from './components/react-components/src/index';
 import { LoginView, ForgotView } from './views/auth';
@@ -45,3 +45,19 @@ class Layout extends Flux.View{
 }
 export default Layout;
 //export default withShortcuts(Layout, keymap)
+
+const PrivateRoute = function(props){
+    const Component = props.component;
+    var rest = Object.assign({}, props);
+    delete rest.component;
+    let session = Session.getSession();
+    console.log("session info", session)
+    return(
+        <Route
+          {...rest}
+          render={(props) => (session.active)
+            ? <Component {...rest} {...props} />
+            : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        />
+    );
+};

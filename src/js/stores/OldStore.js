@@ -7,7 +7,6 @@ class OldStore extends Flux.Store{
         this.state = {
             syllabus: null,
             projects: null,
-            messages: null,
             todos: null,
             days: []
         };
@@ -63,24 +62,24 @@ class OldStore extends Flux.Store{
         const todos = day.lessons.map((l) => {
             return {
                 title: l.title,
-                status: 'pending',
-                type: 'lesson',
+                task_status: 'PENDING',
+                task_type: 'LESSON',
                 associated_slug: l.associated_slug
             };
         })
         .concat(day.quizzes.map((q,i) => {
             return {
                 title: q.title,
-                status: 'pending',
-                type: 'quiz',
+                task_status: 'PENDING',
+                task_type: 'QUIZ',
                 associated_slug: q.associated_slug
             };
         }))
-        .concat(day.replits.map((r,i) => {
+        .concat(day.exercises.map((r,i) => {
             return {
                 title: r.title,
-                status: 'pending',
-                type: 'replit',
+                task_status: 'PENDING',
+                task_type: 'EXERCISE',
                 associated_slug: r.associated_slug,
                 vtutorial_slug: r.vtutorial_slug
             };
@@ -88,8 +87,8 @@ class OldStore extends Flux.Store{
         .concat(day.assignments.map((a,i) => {
             return {
                 title: a.title,
-                status: 'pending',
-                type: 'assignment',
+                task_status: 'PENDING',
+                task_type: 'PROJECT',
                 associated_slug: a.associated_slug
             };
         }));
@@ -125,7 +124,7 @@ class OldStore extends Flux.Store{
     _updateSingleTodo(task){
         for(let i = 0; i<this.state.todos.length;i++)
             if(this.state.todos[i].id === task.id){
-                this.state.todos[i].status = task.status;
+                this.state.todos[i].task_status = task.task_status;
                 this.emit('todos');
                 this._reduceSyllabus();
                 return this.state.todos[i];
@@ -158,7 +157,7 @@ class OldStore extends Flux.Store{
         if(!this.state.todos) return false;
 
         let present = this.state.todos.find((item) => {
-            return (item.type === actionable.type && item.associated_slug === actionable.associated_slug);
+            return (item.task_type === actionable.task_type && item.associated_slug === actionable.associated_slug);
         });
         if(typeof present === 'undefined') return false;
         else return present;

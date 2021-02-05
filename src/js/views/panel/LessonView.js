@@ -50,20 +50,20 @@ export default class LessonView extends Flux.View {
   getCurrentSlug(){
       const quiz = this.props.match.params.quiz_slug;
       const lesson = this.props.match.params.lesson_slug;
-      const replit = this.props.match.params.replit_slug;
-      return quiz || lesson || replit;
+      const exercise = this.props.match.params.exercise_slug;
+      return quiz || lesson || exercise;
   }
 
   render(option) {
     const course_slug = this.props.match.params.course_slug;
     let getSlug = (as) => {
-      return `/course/${course_slug}/${this.state.day.dayNumber}/${as.type.charAt(0)}/${as.associated_slug}`;
+      return `/course/${course_slug}/${this.state.day.dayNumber}/${as.type.charAt(0).toLowerCase()}/${as.associated_slug}`;
     };
     const src = `${process.env.ASSETS_URL}/apis/lesson/redirect/${this.props.match.params.lesson_slug}?plain=true&access_token=${this.state.token}`;
     return (
       <Panel padding={false} style={{overflow: 'hidden'}}>
         <Loading show={this.state.loading} />
-        <PanelNavbar
+        {/* <PanelNavbar
           collapsed={this.state.navbarCollapsed}
           day={this.state.day}
           current={this.state.currentAction}
@@ -76,7 +76,7 @@ export default class LessonView extends Flux.View {
             this.loadDay(option.day.number);
           }}
           onCollapse={() => this.setState({navbarCollapsed: !this.state.navbarCollapsed})}
-        />
+        /> */}
         <iframe onLoad={()=>this.setState({loading: false})} className="lesson-iframe" src={src} width="100%" style={{ height: "calc(100vh - 62px)" }} frameBorder="0" />
       </Panel>
     );

@@ -67,3 +67,4 @@ server.js
 !.gitkeep
 !.htaccess
 .now
+.vercel

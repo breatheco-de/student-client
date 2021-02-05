@@ -5,7 +5,6 @@ import SplitLayout from '../components/SplitLayout';
 
 import { Wizard } from '../components/wizard/Wizard';
 import TimeMenu from '../components/menus/TimeLineMenu';
-import ImportantMessages from '../components/ImportantMessages';
 import OldStore from '../stores/OldStore';
 import OldActions from '../actions/OldActions';
 
@@ -14,7 +13,7 @@ import DayView from '../views/DayView';
 import LessonView from '../views/panel/LessonView';
 import QuizView from '../views/panel/QuizView';
 import IFrameView from '../views/panel/IFrameView';
-import ReplitView from '../views/panel/ReplitView';
+import ExerciseView from '../views/panel/ExerciseView';
 import AssignmentView from '../views/panel/AssignmentView';
 import VTurorialView from '../views/panel/VTurorialView';
 import LiveView from '../views/LiveView';
@@ -42,6 +41,7 @@ class CourseView extends Flux.View{
 
     componentDidMount(){
       const courseSlug = this.props.match.params.course_slug;
+    //   console.log(this.props.match);
       const syllabus = OldStore.getSyllabus(courseSlug);
       const _session = Session.get();
       if(!_session.payload.currentCohort || Array.isArray(_session.payload.currentCohort)) this.props.history.push('/choose');
@@ -141,7 +141,6 @@ class CourseView extends Flux.View{
         const { assets_token, email } = this.state.session;
         return (
           <div>
-              <ImportantMessages />
               <SplitLayout
                 menuItems={this.state.menuItems}
                 breadcrumb={this.state.context.breadcrumb}
@@ -155,22 +154,22 @@ class CourseView extends Flux.View{
                 />
                 <div>
                     <Switch>
-                        <Route exact path={this.props.match.path+'/r/:replit_slug'} component={ReplitView} />
+                        <Route exact path={this.props.match.path+'/r/:exercise_slug'} component={ExerciseView} />
                         <Route exact path={this.props.match.path+'/q/:quiz_slug'} component={QuizView} />
-                        <Route exact path={this.props.match.path+'/a/:assignment_slug'} component={AssignmentView} />
+                        <Route exact path={this.props.match.path+'/p/:assignment_slug'} component={AssignmentView} />
                         <Route exact path={this.props.match.path+'/l/:lesson_slug'} component={LessonView} />
                         <Route exact path={this.props.match.path+'/live'} component={LiveView} />
                         <Route exact path={this.props.match.path+'/new-project'}
                             component={() =>
-                                <IFrameView src={`https://assets.breatheco.de/apps/new-project?assets_token=${assets_token || ''}&email=${email || ''}`} />
+                                <IFrameView src={`https://assets.breatheco.de/apps/new-project?assets_token=${token || ''}&email=${email || ''}`} />
                             }
                         />
                         <Route exact path={this.props.match.path+'/:day_number'} component={DayView} />
                         <Route exact path={this.props.match.path+'/:day_number/l/:lesson_slug'} component={LessonView} />
                         <Route exact path={this.props.match.path+'/:day_number/q/:quiz_slug'} component={QuizView} />
-                        <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug'} component={ReplitView} />
-                        <Route exact path={this.props.match.path+'/:day_number/r/:replit_slug/vtutorial/:vtutorial_slug'} component={VTurorialView} />
-                        <Route exact path={this.props.match.path+'/:day_number/a/:assignment_slug'} component={AssignmentView} />
+                        <Route exact path={this.props.match.path+'/:day_number/e/:exercise_slug'} component={ExerciseView} />
+                        <Route exact path={this.props.match.path+'/:day_number/e/:exercise_slug/vtutorial/:vtutorial_slug'} component={VTurorialView} />
+                        <Route exact path={this.props.match.path+'/:day_number/p/:assignment_slug'} component={AssignmentView} />
                         <Route exact path={this.props.match.path} component={CourseIntro} />
                     </Switch>
                 </div>

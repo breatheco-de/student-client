@@ -74,23 +74,23 @@ class DayView extends Flux.View {
 
     switch(option.slug){
       case "mark-done":
-        if(task.type != 'assignment'){
-          task.status = (task.status == "pending") ? "done": "pending";
+        if(task.task_type != 'PROJECT'){
+          task.task_status = (task.task_status == "PENDING") ? "DONE": "PENDING";
           OldActions.updateTask(task);
         }
         else{
-            if(task.status == "done") OldActions.updateAssignment(task, { status: 'pending', github_url: '', revision_status: 'pending' });
+            if(task.task_status == "DONE") OldActions.updateAssignment(task, { task_status: 'PENDING', github_url: '', revision_status: 'PENDING' });
             else OldActions.deliverAssignment(task);
         }
       break;
       case "goto":
-        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug);
+        this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug);
       break;
       case "new_window":
         window.open(`${option.url}&assets_token=${s.assets_token}`);
       break;
       case "vtutorial":
-        this.props.history.push(this.props.match.url+`/${actionable.type.charAt(0)}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
+        this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
       break;
     }
   }
@@ -103,11 +103,11 @@ class DayView extends Flux.View {
 
     if(!this.state.day) return (<Panel className="dayview"><h1>Loading...</h1></Panel>);
 
-    const unsynced = this.state.actionables.filter(act => act.status === 'unsynced');
+    const unsynced = this.state.actionables.filter(act => act.task_status === 'unsynced');
 
-    const actionable = this.state.actionables.filter(act => this.state.blocked || act.status !== 'unsynced').map((l,i) => {
-      return <ActionableItem key={i} type={l.type}
-                done={(l.status === "done")}
+    const actionable = this.state.actionables.filter(act => this.state.blocked || act.task_status !== 'unsynced').map((l,i) => {
+      return <ActionableItem key={i} type={l.task_type}
+                done={(l.task_status === "DONE")}
                 revisionStatus={l.revision_status}
                 description={l.description}
                 label={(typeof l.title !== 'undefined') ? l.title : l.associated_slug}

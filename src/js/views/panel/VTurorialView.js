@@ -17,7 +17,7 @@ export default class VTurorialView extends Flux.View {
   
   componentDidMount(){
     this.setState({
-      alertMsg: <span>You should only watch this video if you are stuck <Link to={'/course/'+this.props.match.params.course_slug+'/'+this.props.match.params.day_number+'/r/'+this.props.match.params.replit_slug}>continue working on the exercises</Link></span>
+      alertMsg: <span>You should only watch this video if you are stuck <Link to={'/course/'+this.props.match.params.course_slug+'/'+this.props.match.params.day_number+'/r/'+this.props.match.params.exercise_slug}>continue working on the exercises</Link></span>
     });
     setTimeout(() => this.setState({alertMsg: null}), 4000);
   }
