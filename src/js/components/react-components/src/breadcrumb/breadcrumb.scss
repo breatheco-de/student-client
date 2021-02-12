@@ -1,4 +1,15 @@
 @import '../theme/colors';
+.bc-sidebar.collapsed{
+    h2{
+        width: 100%;
+    }
+    .breadcrumb li{
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+        margin-right: 5px;
+    }
+}
 .breadcrumb{
     padding: 0;
     background: inherit;

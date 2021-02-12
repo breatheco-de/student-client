@@ -7,7 +7,6 @@ class OldStore extends Flux.Store{
         this.state = {
             syllabus: null,
             projects: null,
-            messages: null,
             todos: null,
             days: []
         };

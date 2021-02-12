@@ -34,6 +34,7 @@ class TimeLineMenu extends React.Component{
                     label={day.label}
                     description={day.description}
                     technologies={day.technologies}
+                    dayNumber={day.dayNumber}
                     isSelected={(this.state.selected == day.dayNumber)}
                     onClick={()=>{
                         day.course = this.state.course;

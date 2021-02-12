@@ -5,7 +5,6 @@ import SplitLayout from '../components/SplitLayout';
 
 import { Wizard } from '../components/wizard/Wizard';
 import TimeMenu from '../components/menus/TimeLineMenu';
-import ImportantMessages from '../components/ImportantMessages';
 import OldStore from '../stores/OldStore';
 import OldActions from '../actions/OldActions';
 
@@ -31,7 +30,6 @@ class CourseView extends Flux.View{
             courseSlug: null,
             runTutorial: false,
             currentCohort: null,
-            importantMessages: null,
             menuItems: (menuModes[context.path.menu]) ? menuModes[context.path.menu] : menuModes.course,
             currentMenuOption: (menuModes[context.path.menu]) ? menuModes[context.path.menu][0] : menuModes.course[0],
             context
@@ -141,7 +139,6 @@ class CourseView extends Flux.View{
         const { assets_token, email } = this.state.session;
         return (
           <div>
-              <ImportantMessages />
               <SplitLayout
                 menuItems={this.state.menuItems}
                 breadcrumb={this.state.context.breadcrumb}

@@ -16,6 +16,13 @@ class TimeLineDay extends React.Component{
         const timeWrapperStyles = {
           top: this.state.top
         };
+        let label = this.props.label;
+        let technologies = this.props.technologies.length > 0 ? this.props.technologies.join(', ') : null;
+
+        if(!this.props.label.includes("Day")){
+            label = `Day ${this.props.dayNumber}`;
+            technologies = this.props.label;
+        }
         return(
         	<li className={(this.props.isSelected) ? 'selected':''} onClick={() => this.toggleSelected()}>
         		<div className={"direction-r "} onMouseOver={(e) => {
@@ -26,12 +33,10 @@ class TimeLineDay extends React.Component{
         		}}>
         			<div className="flag-wrapper">
         			    <span className="flag-point"></span>
-        				<span className="flag">{this.props.label}</span>
-        				{ (this.props.technologies.length > 0) ? 
-          				(<span className="time-wrapper" style={timeWrapperStyles}>
-          				    <span className="time">{this.props.technologies.join(', ')}</span>
-          				</span>)
-          				:''
+        				<span className="flag">{label}</span>
+        				{ technologies && <span className="time-wrapper" style={timeWrapperStyles}>
+          				    <span className="time">{technologies}</span>
+          				</span>
         				}
         			</div>
         			<div className="desc">{this.props.description}</div>

@@ -30,17 +30,18 @@ class SplitLayout extends React.Component{
 
         const currentPath = getCurrentPath();
         const collapsed = (currentPath.type) ? true : false;
+        debugger;
         this.setState({
             student: session.payload,
             collapsed: collapsed,
-            currentSize: (collapsed) ? this.state.minSize : this.state.maxSize
+            currentSize: (collapsed) ? this.state.minSize : this.props.selectedOption.size || this.state.maxSize
         });
        this.props.history.listen((e)=> {
             const currentPath = getCurrentPath();
             const collapsed = (currentPath.type) ? true : false;
             this.setState({
                 collapsed: collapsed,
-                currentSize: (collapsed) ? this.state.minSize : this.state.maxSize
+                currentSize: (collapsed) ? this.state.minSize :  this.props.selectedOption.size || this.state.maxSize
             });
 
        });
@@ -70,12 +71,13 @@ class SplitLayout extends React.Component{
     }
 
     render() {
+        const size = this.state.collapsed ? this.state.currentSize : this.props.selectedOption.size || this.state.currentSize;
         return (
             <div className="layout">
                 <SplitPane split="vertical"
                     className="white-resizer"
                     minSize={this.state.minSize}
-                    size={this.state.currentSize}
+                    size={size}
                 >
                     <div style={{ height: "100%", padding: '10px 0px 10px 10px' }}>
                         <Sidebar
