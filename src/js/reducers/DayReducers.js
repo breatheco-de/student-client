@@ -12,7 +12,7 @@ export default {
                 let menu = [
                     {
                         label: 'Open exercises on new window',
-                        slug: 'new_window', url: process.env.REPLIT_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
+                        slug: 'new_window', url: repl.url ? repl.url : process.env.REPLIT_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
                         icon: "fas fa-external-link-alt"
                     },
                 ];
@@ -35,14 +35,21 @@ export default {
         day.lessons = (function(){
             if(typeof day.lessons === 'undefined') return [];
             return day.lessons.map(function(less){
+
+                let menu = [];
+                if(typeof(less.url)==="string" && less.url!="") menu.push({ 
+                        label: 'Go to lesson', 
+                        slug: 'new_window', url: less.url,
+                        icon: "fas fa-arrow-right"
+                    })
+                else menu.push({ label: 'Go to lesson', slug: 'goto', icon: "fas fa-arrow-right"});
+                menu.push({ label: 'Mark as read', slug: 'mark-done', icon: "fas fa-check"});
+
                 return {
                     title: less.title,
                     associated_slug: less.associated_slug || less.slug,
                     status: "pending",
-                    menu: [
-                        { label: 'Go to lesson', slug: 'goto', icon: "fas fa-arrow-right"},
-                        { label: 'Mark as read', slug: 'mark-done', icon: "fas fa-check"}
-                    ],
+                    menu,
                     day: {
                         label: day.label,
                         number: index
@@ -54,13 +61,20 @@ export default {
         day.quizzes = (function(){
             if(typeof day.quizzes === 'undefined') return [];
             return day.quizzes.map(function(q){
+
+                let menu = [];
+                if(typeof(q.url)==="string" && q.url!="") menu.push({ 
+                        label: 'Take quiz', 
+                        slug: 'new_window', url: q.url,
+                        icon: "fas fa-arrow-right"
+                    })
+                else menu.push({ label: 'Take quiz', slug: 'goto', icon: "fas fa-arrow-right"});
+                menu.push({ label: 'Mark as done', slug: 'mark-done', icon: "fas fa-check"});
+
                 return {
                     title: q.title,
                     associated_slug: q.associated_slug || q.slug,
-                    menu: [
-                        { label: 'Take quiz', slug: 'goto', icon: "fas fa-arrow-right"},
-                        { label: 'Mark as done', slug: 'mark-done', icon: "fas fa-check"}
-                    ],
+                    menu,
                     status: "pending",
                     day: {
                         label: day.label,
@@ -73,13 +87,20 @@ export default {
         day.assignments = (function(){
             if(typeof day.assignments === 'undefined') return [];
             return day.assignments.map(function(a){
+
+                let menu = [];
+                if(typeof(a.url)==="string" && a.url!="") menu.push({ 
+                        label: 'Read instructions', 
+                        slug: 'new_window', url: a.url,
+                        icon: "fas fa-arrow-right"
+                    })
+                else menu.push({ label: 'Read instructions', slug: 'goto', icon: "fas fa-arrow-right"});
+                menu.push({ label: 'Deliver assignment', slug: 'mark-done', icon: "fas fa-check"});
+
                 return {
                     title: a.title,
                     associated_slug: a.associated_slug || a.slug || a,
-                    menu: [
-                        { label: 'Read instructions', slug: 'goto', icon: "fas fa-arrow-right"},
-                        { label: 'Deliver assignment', slug: 'mark-done', icon: "fas fa-check"}
-                    ],
+                    menu,
                     status: "pending",
                     day: {
                         label: day.label,
