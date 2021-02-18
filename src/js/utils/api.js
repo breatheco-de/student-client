@@ -190,7 +190,7 @@ class Wrapper{
         let url = this.options.assetsPath;
         return {
             all: (syllabus_slug) => {
-                return this.get(url+'/project/all');
+                return this.get(url+'/project/registry/all');
             }
         };
     }
