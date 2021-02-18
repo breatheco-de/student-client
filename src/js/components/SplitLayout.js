@@ -30,7 +30,6 @@ class SplitLayout extends React.Component{
 
         const currentPath = getCurrentPath();
         const collapsed = (currentPath.type) ? true : false;
-        debugger;
         this.setState({
             student: session.payload,
             collapsed: collapsed,

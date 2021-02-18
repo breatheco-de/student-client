@@ -12,7 +12,7 @@ export default {
                 let menu = [
                     {
                         label: 'Open exercises on new window',
-                        slug: 'new_window', url: repl.url ? repl.url : process.env.REPLIT_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
+                        slug: 'new_window', url: repl.url ? repl.url+'?' : process.env.REPLIT_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
                         icon: "fas fa-external-link-alt"
                     },
                 ];
@@ -21,6 +21,7 @@ export default {
                 return {
                     menu,
                     title: repl.title,
+                    url: repl.url,
                     associated_slug: repl.associated_slug || repl.slug,
                     vtutorial_slug: repl.vtutorial_slug,
                     status: "pending",
