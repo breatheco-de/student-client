@@ -26,6 +26,7 @@
       z-index: 5;
     }
   ul {
+    scroll-behavior: smooth;
     &::-webkit-scrollbar {
       width: 5px;
       display: none;
