@@ -70,7 +70,7 @@ class SearchMenu extends Flux.DashView {
       ></DropLink>
       <p className="actionable-title">{l.title}</p>
       <p className="actionable-details">
-        <span className={"type "+l.type}>{getLabel(l.type)}</span> during <span className="day">{l.day.label}</span>
+        <span className={"type "+l.type}>{getLabel(l.type)}</span> during <span className="day">Day {l.day.number}</span>
       </p>
     </li>));
     return (

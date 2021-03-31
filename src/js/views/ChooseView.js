@@ -24,7 +24,7 @@ export default class ChooseView extends Flux.View {
 
       const currentCohort = (session.payload) ? session.payload.currentCohort : null;
       if(currentCohort && typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort)){
-          const slug = currentCohort.cohort.certificate.slug;
+          const slug = currentCohort.cohort.syllabus.certificate.slug+".v"+currentCohort.cohort.syllabus.version;
           this.props.history.push('/course/'+slug);
       }
     });
@@ -36,11 +36,11 @@ export default class ChooseView extends Flux.View {
         <button className="btn btn-light ml-3"
           onClick={() => {
                 Session.setPayload({ currentCohort: cu });
-                BC.setAcademy(cu.academy.id);
+                BC.setAcademy(cu.cohort.academy.id);
           }}>
           <i className="fas fa-external-link-alt"></i> launch this course
         </button>
-        <span className="cohort-name">{cu.cohort.certificate.name}</span>
+        <span className="cohort-name">{cu.cohort.syllabus.certificate.name}</span>
         <p className="cohort-description m-0">Cohort: {cu.cohort.name}</p>
       </li>
     ));

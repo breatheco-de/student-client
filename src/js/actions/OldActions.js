@@ -171,9 +171,9 @@ class OldActions extends Flux.Action{
             },
             syllabus: (slug) =>{
                 const [ _slug, version ] = slug.split('.');
-                BC.syllabus().get(_slug, version)
+                BC.syllabus().get(_slug, version.replace(/[a-z]/ig,''))
                     .then((data) => {
-                        this.dispatch('OldStore.setSyllabus', data.json);
+                        this.dispatch('OldStore.setSyllabus', typeof(data.json) === "string" ? JSON.parse(data.json) : data.json);
                     })
                     .catch((data) => {
                         if(typeof data.pending === 'undefined') console.error(data);

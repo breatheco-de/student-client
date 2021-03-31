@@ -36,13 +36,14 @@ class CourseView extends Flux.View{
             context
         };
         //this.sessionUpdated();
+        console.log("Constructooooooooooor")
         this.bindStore(OldStore, 'syllabus', this.syllabusUpdated.bind(this));
     }
 
     componentDidMount(){
       const courseSlug = this.props.match.params.course_slug;
-    //   console.log(this.props.match);
       const syllabus = OldStore.getSyllabus(courseSlug);
+        console.log("syllabus", syllabus);
       const _session = Session.get();
       if(!_session.payload.currentCohort || Array.isArray(_session.payload.currentCohort)) this.props.history.push('/choose');
       if(!syllabus || syllabus.profile != courseSlug) OldActions.fetch().syllabus(courseSlug);
@@ -91,6 +92,7 @@ class CourseView extends Flux.View{
     }
 
     syllabusUpdated(){
+        console.log("Syllabus updated");
         this.fetchSecondSyllabusPhase();
 
         let currentMenuOption = this.state.currentMenuOption;
@@ -106,7 +108,8 @@ class CourseView extends Flux.View{
     }
 
     fetchSecondSyllabusPhase(){
-      const todos = OldStore.getTodos();
+        const todos = OldStore.getTodos();
+        console.log("fetchSecondSyllabusPhase", todos);
       if(!todos){
         const student = Session.get().payload;
         if(student) OldActions.fetch().todos(student.bc_id);

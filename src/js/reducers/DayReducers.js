@@ -13,7 +13,7 @@ export default {
                 let menu = [
                     {
                         label: 'Open exercises on new window',
-                        slug: 'new_window', url: repl.url ? repl.url : process.env.EXERCISE_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
+                        slug: 'new_window', url: repl.url ? repl.url+'?' : process.env.REPLIT_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
                         icon: "fas fa-external-link-alt"
                     },
                 ];
@@ -22,12 +22,13 @@ export default {
                 return {
                     menu,
                     title: repl.title,
+                    url: repl.url,
                     associated_slug: repl.associated_slug || repl.slug,
                     vtutorial_slug: repl.vtutorial_slug,
                     task_status: "PENDING",
                     day: {
                         label: day.label,
-                        number: index
+                        number: day.dayNumber
                     },
                     task_type: 'EXERCISE'
                 };
@@ -53,7 +54,7 @@ export default {
                     menu,
                     day: {
                         label: day.label,
-                        number: index
+                        number: day.dayNumber
                     },
                     task_type: "LESSON"
                 };
@@ -75,14 +76,11 @@ export default {
                 return {
                     title: q.title,
                     associated_slug: q.associated_slug || q.slug,
-                    menu: [
-                        { label: 'Take quiz', slug: 'goto', icon: "fas fa-arrow-right"},
-                        { label: 'Mark as done', slug: 'mark-done', icon: "fas fa-check"}
-                    ],
+                    menu,
                     task_status: "PENDING",
                     day: {
                         label: day.label,
-                        number: index
+                        number: day.dayNumber
                     },
                     task_type: "QUIZ"
                 };
@@ -104,14 +102,11 @@ export default {
                 return {
                     title: a.title,
                     associated_slug: a.associated_slug || a.slug || a,
-                    menu: [
-                        { label: 'Read instructions', slug: 'goto', icon: "fas fa-arrow-right"},
-                        { label: 'Deliver assignment', slug: 'mark-done', icon: "fas fa-check"}
-                    ],
+                    menu,
                     task_status: "PENDING",
                     day: {
                         label: day.label,
-                        number: index
+                        number: day.dayNumber
                     },
                     task_type: 'PROJECT'
                 };

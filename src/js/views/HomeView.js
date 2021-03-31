@@ -14,7 +14,7 @@ export default class HomeView extends Flux.View {
       if(currentCohort){
         if(Array.isArray(currentCohort)) this.props.history.push('/choose');
         else{
-            const slug = currentCohort.cohort.certificate.slug;
+            const slug = currentCohort.cohort.syllabus.certificate.slug+".v"+currentCohort.cohort.syllabus.version;
             this.props.history.push('/course/'+slug);
         } 
       }

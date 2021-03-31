@@ -172,7 +172,7 @@ class Wrapper{
         };
     }
     syllabus(){
-        let url = this.options.apiPath+'/v1/coursework/course';
+        let url = this.options.apiPath+'/v1/admissions/certificate';
         const academy = this.options.sessionAcademy();
         return {
             get: (slug, version='1') => {
@@ -202,7 +202,7 @@ class Wrapper{
         let url = this.options.assetsPath;
         return {
             all: (syllabus_slug) => {
-                return this.get(url+'/project/all');
+                return this.get(url+'/project/registry/all');
             }
         };
     }

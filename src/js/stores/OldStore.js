@@ -102,14 +102,7 @@ class OldStore extends Flux.Store{
     }
     getProjects(){ return this.state.projects; }
     getSingleProject(slug){
-        for(let i=0;i<this.state.projects.length;i++){
-            if(this.state.projects[i].slug === slug){
-                const project = this.state.projects[i];
-                return project;
-            }
-        }
-
-        return null;
+        return this.state.projects[slug];
     }
 
     _setTodos(todos){

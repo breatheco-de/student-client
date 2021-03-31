@@ -12,7 +12,7 @@ class TimeLineMenu extends React.Component{
             selected: null,
             course: "web-development",
         };
-        this.timeline = null;
+        //this.timeline = null;
     }
 
     componentDidMount(){
@@ -46,12 +46,9 @@ class TimeLineMenu extends React.Component{
         return (
             <div className={"timeline "+collapsedClass}>
                 <span className={"line "+aditionalLineClasses()}></span>
-                <ul style={timelineStyles}
-                    onWheel = {(e) => {
-                        this.timeline.scrollTo(0,this.timeline.scrollTop + e.deltaY);
-                    }}
-                    ref={(elm) => this.timeline = elm}>
+                <ul style={timelineStyles}>
                 	{days}
+                    <li>&nbsp;</li>
                 </ul>
             </div>
         );
