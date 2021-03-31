@@ -6,7 +6,7 @@
     <h2 align="center"> BreatheCode's Student Web Client </h2>
 </p>
 
-This is the application used to deliver the courses on the BreatheCode's platform: [student.breatheco.de](https://student.breatheco.de)
+This is the application used to deliver the courses on the BreatheCode's platform: [learn.breatheco.de](https://learn.breatheco.de)
 
 <p align="center">
   <img width="400" src="https://github.com/breatheco-de/desktop-client/blob/master/preview.gif?raw=true">
