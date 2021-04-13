@@ -13,7 +13,8 @@ export default {
                 let menu = [
                     {
                         label: 'Open exercises on new window',
-                        slug: 'new_window', url: repl.url ? repl.url+'?' : process.env.REPLIT_URL+(repl.associated_slug || repl.slug)+'&c='+payload.currentCohort.slug+'&profile='+payload.currentCohort.profile_slug,
+                        slug: 'new_window', 
+                        url: repl.url ? repl.url+'?' : process.env.API_URL + `/v1/registry/asset/gitpod/${repl.associated_slug || repl.slug}?`,
                         icon: "fas fa-external-link-alt"
                     },
                 ];
