@@ -141,7 +141,7 @@ class CourseView extends Flux.View{
     render() {
 
         if(!this.state.session) return <p>Loading...</p>;
-        const { assets_token, email } = this.state.session;
+        const { token, email } = this.state.session;
         return (
           <div>
               <SplitLayout
