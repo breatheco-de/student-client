@@ -75,7 +75,7 @@ class DayView extends Flux.View {
     switch(option.slug){
       case "mark-done":
         if(task.task_type != 'PROJECT'){
-          task.task_status = (task.task_status == "PENDING") ? "DONE": "PENDING";
+          task.task_status = (task.task_status == undefined || task.task_status == "PENDING") ? "DONE": "PENDING";
           OldActions.updateTask(task);
         }
         else{
