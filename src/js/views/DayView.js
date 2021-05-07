@@ -87,7 +87,7 @@ class DayView extends Flux.View {
         this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug);
       break;
       case "new_window":
-        window.open(`${option.url}&assets_token=${s.assets_token}`);
+        window.open(`${option.url}${option.url.includes("?") ? "&" : "?"}assets_token=${s.assets_token}`);
       break;
       case "vtutorial":
         this.props.history.push(this.props.match.url+`/${actionable.task_type.charAt(0).toLowerCase()}/`+actionable.associated_slug+'/vtutorial/'+option.vtutorial_slug);
