@@ -14,7 +14,7 @@ export default {
                     {
                         label: 'Open exercises on new window',
                         slug: 'new_window', 
-                        url: repl.url ? repl.url+'?' : process.env.API_URL + `/v1/registry/asset/gitpod/${repl.associated_slug || repl.slug}?`,
+                        url: repl.url ? repl.url : process.env.API_URL + `/v1/registry/asset/gitpod/${repl.associated_slug || repl.slug}`,
                         icon: "fas fa-external-link-alt"
                     },
                 ];
@@ -40,7 +40,7 @@ export default {
             return day.lessons.map(function(less){
 
                 let menu = [];
-                if(typeof(less.url)==="string" && less.url!="") menu.push({ 
+                if(typeof(less.url)==="string" && less.url!="" && (less.target === "blank" || less.custom === true)) menu.push({ 
                         label: 'Go to lesson', 
                         slug: 'new_window', url: less.url,
                         icon: "fas fa-arrow-right"
@@ -66,7 +66,7 @@ export default {
             return day.quizzes.map(function(q){
 
                 let menu = [];
-                if(typeof(q.url)==="string" && q.url!="") menu.push({ 
+                if(typeof(q.url)==="string" && q.url!="" && (q.target === "blank" || q.custom === true)) menu.push({ 
                         label: 'Take quiz', 
                         slug: 'new_window', url: q.url,
                         icon: "fas fa-arrow-right"
@@ -92,7 +92,7 @@ export default {
             return day.assignments.map(function(a){
 
                 let menu = [];
-                if(typeof(a.url)==="string" && a.url!="") menu.push({ 
+                if(typeof(a.url)==="string" && a.url!="" && (a.target === "blank" || a.custom === true)) menu.push({ 
                         label: 'Read instructions', 
                         slug: 'new_window', url: a.url,
                         icon: "fas fa-arrow-right"
