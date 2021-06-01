@@ -15,7 +15,7 @@ export default class LessonView extends Flux.View {
   }
 
   render() {
-    const url = "https://projects.breatheco.de/project/"+this.props.match.params.assignment_slug+'?iframe=true&access_token='+this.state.token;
+    const url = "https://breatheco.de/project/"+this.props.match.params.assignment_slug+'?plain=true&access_token='+this.state.token;
     return (
       <Panel padding={false}>
         <Loading show={this.state.loading} />
