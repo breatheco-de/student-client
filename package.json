@@ -1,7 +1,7 @@
 {
     "name": "workspace",
     "engines": {
-        "node": "10.x"
+        "node": "14.x"
     },
     "version": "1.1.58",
     "description": "",
