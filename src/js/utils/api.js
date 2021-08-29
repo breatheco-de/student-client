@@ -60,7 +60,7 @@ class Wrapper{
         if(args && args.token!=undefined && args.token!=''){
             opts.headers['Authorization'] = "Token "+args.token;
             delete args.token;
-        } 
+        }
         else if(token && !path.includes("/login")) opts.headers['Authorization'] = token;
 
         if(method === 'get') path += this.serialize(args).toStr();
@@ -172,12 +172,12 @@ class Wrapper{
         };
     }
     syllabus(){
-        let url = this.options.apiPath+'/v1/admissions/certificate';
+        let url = this.options.apiPath+'/v1/admissions';
         const academy = this.options.sessionAcademy();
         return {
             get: (slug, version='1') => {
                 if(!slug) throw new Error('Missing slug');
-                else return this.get(`${url}/${slug}/academy/${academy}/syllabus/${version}`);
+                else return this.get(`${url}/academy/${academy}/syllabus/${slug}/version/${version}`);
             }
         };
     }

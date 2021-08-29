@@ -23,8 +23,9 @@ export default class ChooseView extends Flux.View {
       if(typeof unsubscribe == 'function') unsubscribe();
 
       const currentCohort = (session.payload) ? session.payload.currentCohort : null;
+      console.log('===========================', currentCohort)
       if(currentCohort && typeof currentCohort !== 'undefined' && !Array.isArray(currentCohort)){
-          const slug = currentCohort.cohort.syllabus.certificate.slug+".v"+currentCohort.cohort.syllabus.version;
+          const slug = currentCohort.cohort.syllabus_version.slug + ".v" + currentCohort.cohort.syllabus_version.version;
           this.props.history.push('/course/'+slug);
       }
     });
@@ -40,7 +41,7 @@ export default class ChooseView extends Flux.View {
           }}>
           <i className="fas fa-external-link-alt"></i> launch this course
         </button>
-        <span className="cohort-name">{cu.cohort.syllabus.certificate.name}</span>
+        <span className="cohort-name">{cu.cohort.syllabus_version.name}</span>
         <p className="cohort-description m-0">Cohort: {cu.cohort.name}</p>
       </li>
     ));
