@@ -8,6 +8,8 @@ import {Session} from 'bc-react-session';
 import { Wizard } from '../components/wizard/Wizard';
 import defaultAvatarURL from '../../img/default-user-image.png';
 
+const apiUrl = (process.env.API_URL || '').replace('\/$', '')
+
 export default class ProfileView extends Flux.View {
 
   constructor(){
@@ -126,7 +128,7 @@ export default class ProfileView extends Flux.View {
                           :
                           <a className="form-control text-primary" href="#" onClick={(e) => {
                             e.preventDefault();
-                            window.location.href = `https://breathecode.herokuapp.com/v1/auth/github?url=${window.location.href}`;
+                            window.location.href = `${apiUrl}/v1/auth/github?url=${window.location.href}`;
                           }}>connect with github</a>
                         }
                         </div>

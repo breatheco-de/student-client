@@ -8,9 +8,9 @@ module.exports = merge(common, {
     mode: 'development',
     devtool: "source-map",
     output: {
-        filename: '[hash].bundle.js',
+        filename: 'bundle.js',
         path: path.resolve(__dirname, 'public'),
-        publicPath: path.resolve(__dirname, '/')
+        publicPath: '/'
     },
     plugins: [
         // new UglifyJSPlugin({
