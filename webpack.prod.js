@@ -23,8 +23,8 @@ module.exports = merge(common, {
         //         }
         //     }
         // }),
-        new Dotenv({
-            path: './.env_prod'
-        })
+        // new Dotenv({
+        //     path: './.env_prod'
+        // })
     ]
 })
