@@ -23,8 +23,9 @@ module.exports = merge(common, {
         //         }
         //     }
         // }),
-        // new Dotenv({
-        //     path: './.env_prod'
-        // })
+        new Dotenv({
+            safe: true,
+            systemvars: true
+        })
     ]
 })
