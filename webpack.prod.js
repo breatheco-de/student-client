@@ -24,7 +24,6 @@ module.exports = merge(common, {
         //     }
         // }),
         new Dotenv({
-            safe: true,
             systemvars: true
         })
     ]
