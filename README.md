@@ -29,3 +29,4 @@ $ npm install
 //The wordpress host
 WP_HOST=127.0.0.1
 ```
+c
