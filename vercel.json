@@ -1,0 +1,24 @@
+{
+  "routes": [
+    {
+      "src":"/(.*).ico",
+      "headers": { "cache-control": "s-maxage=31536000,immutable" },
+      "dest":"/$1.ico"
+    },
+    {
+      "src":"/(.*).png",
+      "headers": { "cache-control": "s-maxage=31536000,immutable" },
+      "dest":"/$1.png"
+    },
+    {
+      "src":"/(.*).bundle.js",
+      "headers": { "cache-control": "s-maxage=31536000,immutable" },
+      "dest":"/$1.bundle.js"
+    },
+    {
+      "src": "/(.*)",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/index.html"
+    }
+  ]
+}

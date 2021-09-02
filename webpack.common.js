@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: [
@@ -57,6 +58,7 @@ module.exports = {
         title: 'Student at BreatheCode Platform',
         favicon: 'favicon.png',
         template: 'template.html'
-    })
+    }),
+    new Dotenv({ path: './.env', systemvars: true })
   ]
 };
