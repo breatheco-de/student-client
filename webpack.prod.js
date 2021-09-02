@@ -10,7 +10,7 @@ module.exports = merge(common, {
     output: {
         filename: '[hash].bundle.js',
         path: path.resolve(__dirname, 'public'),
-        publicPath: path.resolve(__dirname, '/')
+        publicPath: '/'
     },
     plugins: [
         // new UglifyJSPlugin({
@@ -24,7 +24,7 @@ module.exports = merge(common, {
         //     }
         // }),
         new Dotenv({
-            path: './.env_prod'
+            systemvars: true
         })
     ]
 })
