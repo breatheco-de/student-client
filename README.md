@@ -18,11 +18,11 @@ This is the application used to deliver the courses on the BreatheCode's platfor
 ```sh
 $ git clone <repo_url>
 ```
-2. Install npm packaes
+2. Install npm packages
 ```sh
 $ npm install
 ```
-3. Create your **.env** file and setup the envirnoment variables
+3. Create your **.env** file and setup the environment variables
 ```js
 // .env
 
