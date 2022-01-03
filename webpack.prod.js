@@ -1,7 +1,6 @@
 const merge = require('webpack-merge');
 //const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const common = require('./webpack.common.js');
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 module.exports = merge(common, {
@@ -10,7 +9,7 @@ module.exports = merge(common, {
     output: {
         filename: '[hash].bundle.js',
         path: path.resolve(__dirname, 'public'),
-        publicPath: path.resolve(__dirname, '/')
+        publicPath: '/'
     },
     plugins: [
         // new UglifyJSPlugin({
@@ -23,8 +22,5 @@ module.exports = merge(common, {
         //         }
         //     }
         // }),
-        new Dotenv({
-            path: './.env_prod'
-        })
     ]
 })

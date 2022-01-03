@@ -6,7 +6,7 @@ import {Session} from 'bc-react-session';
 import {logout} from '../actions/auth';
 
 export default class HomeView extends Flux.View {
-  
+
   componentDidMount(){
     const session = Session.get();
     if(session.active){
@@ -14,18 +14,18 @@ export default class HomeView extends Flux.View {
       if(currentCohort){
         if(Array.isArray(currentCohort)) this.props.history.push('/choose');
         else{
-            const slug = currentCohort.cohort.syllabus.certificate.slug+".v"+currentCohort.cohort.syllabus.version;
+            const slug = currentCohort.cohort.syllabus_version.slug + ".v" + currentCohort.cohort.syllabus_version.version;
             this.props.history.push('/course/'+slug);
-        } 
+        }
       }
     }
     // let user = OldStore.getUser();
     //if(user.type === 'student' && currentCohort) this.props.history.push('/course/'+currentCohort.profile_slug);
     //else this.setState({ user, currentCohort });
   }
-  
+
   render() {
-    
+
     return (
       <div className="with-padding">
         <Panel style={{padding: "10px"}} zDepth={1}>
