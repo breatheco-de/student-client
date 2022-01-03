@@ -98,7 +98,7 @@
         "react-router": "^4.3.1",
         "react-split-pane": "^0.1.77",
         "react-transition-group": "^1.2.1",
-        "validator": "^9.4.1",
+        "validator": "^13.7.0",
         "wordpress-rest-api": "^0.8.0"
     }
 }
