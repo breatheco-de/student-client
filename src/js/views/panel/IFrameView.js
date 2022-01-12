@@ -13,9 +13,8 @@ export default class IFrameView extends Component {
     return (
       <Panel padding={false} style={Object.assign({ overflow: 'hidden' }, this.props.style)}>
         <Loading show={this.state.loading} />
-        {/* 
-        <iframe onLoad={() => this.setState({ loading: false })} className="lesson-iframe" src={this.props.src2} width="100%" style={{ height: "calc(35vh - 62px)" }} frameBorder="0" /> */}
-        <iframe onLoad={() => this.setState({ loading: false })} className="lesson-iframe" src={this.props.src} width="100%" style={{ height: "calc(60vh - 62px)" }} frameBorder="0" />
+
+        <iframe onLoad={() => this.setState({ loading: false })} className="lesson-iframe" src={this.props.src} width="100%" style={{ height: "calc(90vh - 62px)" }} frameBorder="0" />
       </Panel>
     );
   }
