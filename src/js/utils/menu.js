@@ -65,16 +65,17 @@ export const menuModes = {
                         icon: "fas fa-calendar-alt",
                         component: () => {
                             //  What the iframe URL must look like if student is in Miami
-                            //  https://mentor.breatheco.de/academy/downtown-miami/service/geekpal/mentor?token=2538c67e585ab65e4845a6843ae1c689d04c1192
+                            //  https://mentor.breatheco.de/academy/downtown-miami?token=2538c67e585ab65e4845a6843ae1c689d04c1192
 
                             let session = Session.getSession();
                             console.log(session);
                             let token = session.payload.token ? session.payload.token : ''
                             let academySlug = session.payload.currentCohort ? session.payload.currentCohort.cohort.academy.slug : ''
-                            let newIframUrl = token && academySlug && `https://mentor.breatheco.de/academy/${academySlug}/service/geekpal/mentor?token=${token}`
+                            let newIframUrl = token && academySlug && `https://mentor.breatheco.de/academy/${academySlug}/?token=${token}`
                             const oldIframeUrl = "https://4geeks.setmore.com"
 
-                            return (<IFrameView src={academySlug === 'downtown-miami' ? newIframUrl : oldIframeUrl} style={{ width: "100%", marginLeft: "-1px" }} />
+                            return (
+                                <IFrameView src={academySlug === 'downtown-miami' ? newIframUrl : oldIframeUrl} style={{ width: "100%", marginLeft: "-1px" }} style2={{ height: "10vh", width: "100%" }} />
                             )
                         },
                         size: 370
