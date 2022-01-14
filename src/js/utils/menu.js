@@ -68,7 +68,6 @@ export const menuModes = {
                             //  https://mentor.breatheco.de/academy/downtown-miami?token=2538c67e585ab65e4845a6843ae1c689d04c1192
 
                             let session = Session.getSession();
-                            console.log(session);
                             let token = session.payload.token ? session.payload.token : ''
                             let academySlug = session.payload.currentCohort ? session.payload.currentCohort.cohort.academy.slug : ''
                             let newIframUrl = token && academySlug && `https://mentor.breatheco.de/academy/${academySlug}/?token=${token}`
