@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = merge(common, {
   mode: 'development',
-  devtool: "source-map",
+  devtool: "eval",
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public'),
