@@ -28,7 +28,6 @@ export default class ChooseView extends Flux.View {
         this.props.history.push('/course/' + slug);
       }
     });
-    console.log("Cohorts STATE: ", this.state);
   }
 
   render() {
