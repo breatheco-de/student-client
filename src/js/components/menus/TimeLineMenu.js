@@ -1,10 +1,10 @@
 import React from 'react';
 import TimeLineDay from '../TimeLineDay';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-class TimeLineMenu extends React.Component{
+class TimeLineMenu extends React.Component {
 
-    constructor(){
+    constructor() {
         super();
         this.state = {
             layout: "one-column",
@@ -15,39 +15,40 @@ class TimeLineMenu extends React.Component{
         //this.timeline = null;
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //setInterval(() => this.timeline.scrollTo(0,this.timeline.scrollTop + 5), 100);
         const dayNumber = this.props.match.params.day_number;
-        if(typeof dayNumber != 'undefined'){
+        if (typeof dayNumber != 'undefined') {
             this.setState({ selected: dayNumber });
         }
     }
 
-    render(){
+    render() {
         const timelineStyles = {
-           // width: (this.state.layout === "one-column") ? "330px" : "660px"
+            // width: (this.state.layout === "one-column") ? "330px" : "660px"
         };
         const aditionalLineClasses = () => { return this.state.side; }
-        const days = this.props.data.map((day, i)=>{
-            if(typeof day.dayNumber === 'undefined') throw new Error('Days must have a dayNumber property');
-           return <TimeLineDay key={i}
-                    label={day.label}
-                    description={day.description}
-                    technologies={day.technologies}
-                    isSelected={(this.state.selected == day.dayNumber)}
-                    onClick={()=>{
-                        day.course = this.state.course;
-                        this.setState({ selected: day.dayNumber });
-                        this.props.onClick(day);
-            }} />
+        const days = this.props.data.map((day, i) => {
+            if (typeof day.dayNumber === 'undefined') throw new Error('Days must have a dayNumber property');
+            return <TimeLineDay key={i}
+                day={day.dayNumber}
+                label={day.label}
+                description={day.description}
+                technologies={day.technologies}
+                isSelected={(this.state.selected == day.dayNumber)}
+                onClick={() => {
+                    day.course = this.state.course;
+                    this.setState({ selected: day.dayNumber });
+                    this.props.onClick(day);
+                }} />
         });
-        const collapsedClass = (this.props.collapsed) ? 'collapsed':'';
+        const collapsedClass = (this.props.collapsed) ? 'collapsed' : '';
 
         return (
-            <div className={"timeline "+collapsedClass}>
-                <span className={"line "+aditionalLineClasses()}></span>
+            <div className={"timeline " + collapsedClass}>
+                <span className={"line " + aditionalLineClasses()}></span>
                 <ul style={timelineStyles}>
-                	{days}
+                    {days}
                     <li>&nbsp;</li>
                 </ul>
             </div>
