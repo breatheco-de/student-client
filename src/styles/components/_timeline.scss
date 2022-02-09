@@ -107,14 +107,19 @@
   
   .flag-wrapper {
     position: relative;
-    display: inline-block;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
     text-align: center;
   }
   
   .flag {
     position: relative;
-    display: inline;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     font-size: 16px;
+    width: 90%;
     background: rgb(248, 248, 248);
     padding: 6px 10px;
     border-radius: 5px;
@@ -126,10 +131,10 @@
   }
   
   .direction-l .flag {
-    margin-right: 20px;
+    margin: 10px 50px 0 5px;
   }
   .direction-r .flag {
-    margin-left: 20px;
+    margin: 10px 5px 0 50px;
   }
   
   .direction-l .flag-point,.direction-r .flag-point {
@@ -137,20 +142,20 @@
     top: 20px;
     content: ' ';
     display: block;
-    width: 12px;
-    height: 12px;
+    width: 35px;
+    height: 35px;
     margin-top: -10px;
     background: #fff;
-    border-radius: 10px;
+    border-radius: 15px;
     border: 4px solid rgb(255, 80, 80);
     z-index: 10;
   }
   .direction-l .flag-point {
-    right: -3px;
+    right: 6px;
   }
   
   .direction-r .flag-point {
-    left: -3px;
+    left: 6px;
   }
   
   .direction-l .flag:after {
@@ -202,6 +207,7 @@
     padding: 4px 6px;
     background: rgb(248, 248, 248);
     max-width: 220px;
+    font-size: 0.9rem;
   }
   
   .desc {
