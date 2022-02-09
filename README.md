@@ -3,7 +3,7 @@
 </p>
 
 <p>
-    <h2 align="center"> BreatheCode's Student Web Client </h2>
+    <h2 align="center"> BreatheCode Student Web Client </h2>
 </p>
 
 This is the application used to deliver the courses on the BreatheCode's platform: [learn.breatheco.de](https://learn.breatheco.de) (previously student.breatheco.de)
