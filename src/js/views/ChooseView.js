@@ -61,7 +61,7 @@ export default class ChooseView extends Flux.View {
         });
 
         activeCohorts = activeCohorts.map((cu, i) => (
-            <li key={i}>
+            <li key={i} className="border border-grey">
                 <button
                     className="btn btn-light ml-3"
                     onClick={() => {
@@ -114,13 +114,15 @@ export default class ChooseView extends Flux.View {
                     <h4>
                         You are currently taking part on the following cohorts:
                     </h4>
+                    <p>Please choose the course you want to take today:</p>
                     <List className="courses">{activeCohorts}</List>
                     {doneCohorts.length == 0 ? null : !this.state
                           .showDoneCohorts ? (
                         <small className="a">
-                            There are additional cohorts you have already
-                            finished,{" "}
+                            There are {doneCohorts.length} additional cohorts
+                            you have already finished,{" "}
                             <a
+                                className="text-secondary"
                                 href="#"
                                 onClick={() =>
                                     this.setState({
@@ -129,15 +131,15 @@ export default class ChooseView extends Flux.View {
                                     })
                                 }
                             >
-                                click here to show them
+                                click here to display them
                             </a>
                         </small>
                     ) : (
                         <List className="courses">{doneCohorts}</List>
                     )}
-                    <div className="text-center">
+                    <div className="text-center mt-3">
                         <a
-                            className="btn btn-light"
+                            className="btn btn-secondary"
                             href="#"
                             onClick={() => logout()}
                         >
