@@ -49,11 +49,13 @@ export default class ChooseView extends Flux.View {
                 "FINAL_PROJECT",
             ].includes(cu.cohort.stage);
             const showStudent = ["ACTIVE"].includes(cu.educational_status);
-            return showCohort && showStudent;
+            return showCohort || showStudent;
         });
         let doneCohorts = this.state.student.cohorts.filter((cu) => {
             const showCohort = ["ENDED"].includes(cu.cohort.stage);
-            const showStudent = ["GRADUATED"].includes(cu.educational_status);
+            const showStudent = ["GRADUATED", "POSPONED"].includes(
+                cu.educational_status
+            );
             return (
                 cu.educational_status !== "STUDENT" ||
                 (showCohort && showStudent)
