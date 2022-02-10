@@ -32,7 +32,7 @@ export default class ChooseView extends Flux.View {
   }
 
   render() {
-    const cohorts = this.state.student.cohorts.filter((cu) => ["ENDED", "ACTIVE", "FINAL_PROJECT"].includes(cu.cohort.stage)).map((cu, i) => (
+    const cohorts = this.state.student.cohorts.filter((cu) => ["PREWORK", "ACTIVE", "FINAL_PROJECT"].includes(cu.cohort.stage)).map((cu, i) => (
       <li key={i}>
         <button className="btn btn-light ml-3"
           onClick={() => {
