@@ -40,7 +40,7 @@
         "html-webpack-plugin": "^3.2.0",
         "http-server": "^0.12.3",
         "markdown-loader": "^5.1.0",
-        "node-sass": "^4.14.1",
+        "node-sass": "^7.0.0",
         "parse-github-url": "^1.0.2",
         "prettier": "^1.14.3",
         "prettier-webpack-plugin": "^1.1.0",
