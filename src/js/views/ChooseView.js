@@ -48,7 +48,9 @@ export default class ChooseView extends Flux.View {
                 "ACTIVE",
                 "FINAL_PROJECT",
             ].includes(cu.cohort.stage);
-            const showStudent = ["ACTIVE"].includes(cu.educational_status);
+            const showStudent =
+                ["ACTIVE"].includes(cu.educational_status) &&
+                cu.role === "STUDENT";
             return showCohort || showStudent;
         });
         let doneCohorts = this.state.student.cohorts.filter((cu) => {
@@ -56,10 +58,7 @@ export default class ChooseView extends Flux.View {
             const showStudent = ["GRADUATED", "POSPONED"].includes(
                 cu.educational_status
             );
-            return (
-                cu.educational_status !== "STUDENT" ||
-                (showCohort && showStudent)
-            );
+            return cu.role !== "STUDENT" || (showCohort && showStudent);
         });
 
         activeCohorts = activeCohorts.map((cu, i) => (
