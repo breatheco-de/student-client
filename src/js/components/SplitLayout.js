@@ -14,7 +14,7 @@ class SplitLayout extends React.Component {
         this.state = {
             currentSize: 325,
             maxSize: 325,
-            minSize: 100,
+            minSize: 200,
             fixed: false,
             collapsed: false,
             dragging: false,
