@@ -14,7 +14,7 @@ export default class LessonView extends Flux.View {
   }
   
   render() {
-    const src = 'https://assessment.4geeks.com/quiz/'+this.props.match.params.quiz_slug+'?access_token='+this.state.token;
+    const src = process.env.API_URL+'/asset/'+this.props.match.params.quiz_slug+'?access_token='+this.state.token;
     return (
       <Panel padding={false}>
         <Loading show={this.state.loading} />
