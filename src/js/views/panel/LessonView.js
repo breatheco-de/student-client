@@ -59,7 +59,7 @@ export default class LessonView extends Flux.View {
     let getSlug = (as) => {
       return `/course/${course_slug}/${this.state.day.dayNumber}/${as.type.charAt(0).toLowerCase()}/${as.associated_slug}`;
     };
-    const src = `${process.env.ASSETS_URL}/apis/lesson/redirect/${this.props.match.params.lesson_slug}?plain=true&access_token=${this.state.token}`;
+    const src = `${process.env.API_URL}/asset/${this.props.match.params.lesson_slug}?plain=true&access_token=${this.state.token}`;
     return (
       <Panel padding={false} style={{overflow: 'hidden'}}>
         <Loading show={this.state.loading} />
