@@ -71,11 +71,11 @@ export const menuModes = {
                             console.log(session);
                             let token = session.payload.token ? session.payload.token : ''
                             let academySlug = session.payload.currentCohort ? session.payload.currentCohort.cohort.academy.slug : ''
-                            let newIframUrl = token && academySlug && `https://mentor.breatheco.de/academy/${academySlug}/?token=${token}`
-                            const oldIframeUrl = "https://4geeks.setmore.com"
-
+                            let syllabusSlug = session.payload.currentCohort ? session.payload.currentCohort.cohort.syllabus_version.slug : ''
+                            let newIframUrl = token && academySlug && `https://mentor.breatheco.de/academy/${academySlug}/?token=${token}&syllabus=${syllabusSlug}`
+                            // const oldIframeUrl = "https://4geeks.setmore.com"
                             return (
-                                <IFrameView src={academySlug === 'downtown-miami' ? newIframUrl : oldIframeUrl} style={{ width: "100%", marginLeft: "-1px" }} style2={{ height: "10vh", width: "100%" }} />
+                                <IFrameView src={newIframUrl} style={{ width: "100%", marginLeft: "-1px" }} style2={{ height: "10vh", width: "100%" }} />
                             )
                         },
                         size: 370
