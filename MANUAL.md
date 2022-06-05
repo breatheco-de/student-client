@@ -57,7 +57,7 @@ Also configure your package.json to use the "env" and "react" presets.
   ...
 ```
 
-5) Install react pnm libraries (react is just a library)
+5) Install react npm libraries (react is just a library)
 
 ```sh
 npm install --save react react-dom
